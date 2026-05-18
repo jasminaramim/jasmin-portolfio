@@ -60,9 +60,27 @@ const authenticateToken = (req: any, res: any, next: any) => {
 // --- API Routes ---
 
 // Admin Login
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
-  if (username === "jasmin1142005" && password === "password123") {
+  
+  let targetUsername = "jasmin1142005";
+  let targetPassword = "password123";
+
+  try {
+    if (db) {
+      const siteSettings = await db.collection("settings").findOne({});
+      if (siteSettings && siteSettings.adminUsername) {
+        targetUsername = siteSettings.adminUsername;
+        if (siteSettings.adminPassword) {
+          targetPassword = siteSettings.adminPassword;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Failed to load settings credentials from db, using defaults", e);
+  }
+
+  if (username === targetUsername && password === targetPassword) {
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "24h" });
     res.cookie("token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
     return res.json({ success: true, message: "Logged in successfully" });
@@ -83,6 +101,62 @@ app.get("/api/auth/check", (req, res) => {
     res.json({ authenticated: true });
   } catch (e) {
     res.json({ authenticated: false });
+  }
+});
+
+// Settings Special Routes
+app.get("/api/settings", async (req, res) => {
+  try {
+    if (!db) return res.json({});
+    const settings = await db.collection("settings").findOne({});
+    res.json(settings || {
+      siteTitle: 'JASMIN | Frontend & MERN Stack Developer',
+      brandLetter: 'J',
+      metaDesc: 'MERN stack and premium WordPress developer showcasing outstanding case studies and client projects.',
+      analyticsId: 'G-XXXXXXXXXX',
+      adminUsername: 'jasmin1142005'
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch settings" });
+  }
+});
+
+app.post("/api/settings", authenticateToken, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const { _id, ...settingsData } = req.body;
+    
+    // If password is blank or empty string, preserve current password
+    if (!settingsData.adminPassword) {
+      const current = await db.collection("settings").findOne({});
+      settingsData.adminPassword = current?.adminPassword || "password123";
+    }
+
+    const result = await db.collection("settings").updateOne(
+      {},
+      { $set: settingsData },
+      { upsert: true }
+    );
+    res.json({ success: true, result });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update settings" });
+  }
+});
+
+app.post("/api/settings/reset-db", authenticateToken, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected" });
+    
+    const { exec } = require("child_process");
+    exec("npx tsx seed.ts", (err: any, stdout: any, stderr: any) => {
+      if (err) {
+        console.error("Failed to run seed script:", err);
+        return res.status(500).json({ error: "Failed to execute seed script: " + err.message });
+      }
+      res.json({ success: true });
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: "Failed to reset database: " + err.message });
   }
 });
 
@@ -163,6 +237,16 @@ app.post("/api/profile", authenticateToken, async (req, res) => {
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed to update profile" });
+  }
+});
+
+app.delete("/api/profile", authenticateToken, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const result = await db.collection("profile").deleteOne({});
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete profile" });
   }
 });
 

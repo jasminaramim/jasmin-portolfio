@@ -36,7 +36,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
   const displayedCategories = isHomePage ? skillCategories.slice(0, 2) : skillCategories;
 
   return (
-    <section className={`py-32 bg-black relative overflow-hidden border-y border-white/5`}>
+    <section className={`py-32 bg-transparent relative overflow-hidden border-y border-white/5`}>
       <div className="absolute top-0 right-0 w-full h-full tech-grid pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">

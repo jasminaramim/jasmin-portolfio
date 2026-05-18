@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = () => {
   }, []);
 
   return (
-    <footer className="bg-[#050505] border-t border-white/5 pt-32 pb-12 overflow-hidden relative">
+    <footer className="bg-[#050505]/75 backdrop-blur-md border-t border-white/5 pt-32 pb-12 overflow-hidden relative">
       {/* Background Tech Elements */}
       <div className="absolute top-0 left-0 w-full h-full tech-grid pointer-events-none opacity-5"></div>
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#4B0082]/5 blur-[180px] pointer-events-none"></div>

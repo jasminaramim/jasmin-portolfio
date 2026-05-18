@@ -18,7 +18,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <div className="py-24 px-6 max-w-7xl mx-auto bg-black">
+    <div className="py-24 px-6 max-w-7xl mx-auto bg-transparent">
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <motion.div 
           initial={{ opacity: 0, x: -30 }}

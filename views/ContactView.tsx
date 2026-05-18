@@ -21,7 +21,7 @@ const ContactView: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-transparent">
       <Breadcrumbs 
         title="Connect Me" 
         subtitle="Let's Talk Business" 
@@ -61,7 +61,7 @@ const ContactView: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="p-16 border border-white/5 hover:border-[#FF69B4]/30 transition-all group bg-[#080808] text-center relative overflow-hidden rounded-[40px]"
+            className="p-16 border border-white/5 hover:border-[#FF69B4]/30 transition-all group bg-[#080808]/70 backdrop-blur-md text-center relative overflow-hidden rounded-[40px]"
           >
             <div className="flex justify-center mb-8 group-hover:scale-110 transition-transform relative z-10">{item.icon}</div>
             <h3 className="font-black uppercase tracking-[0.2em] text-[10px] mb-4 text-[#FF69B4] italic relative z-10">{item.title}</h3>
@@ -74,7 +74,7 @@ const ContactView: React.FC = () => {
       </div>
 
       {/* Embedded Map Section */}
-      <section className="py-24 px-6 border-t border-white/5 bg-[#050505] relative overflow-hidden">
+      <section className="py-24 px-6 border-t border-white/5 bg-transparent relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>

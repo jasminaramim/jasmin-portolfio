@@ -68,9 +68,9 @@ const AdminDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex font-['Plus_Jakarta_Sans']">
+    <div className="min-h-screen bg-transparent text-white flex font-['Plus_Jakarta_Sans']">
       {/* Sidebar */}
-      <aside className="w-72 bg-[#080808] border-r border-white/5 p-8 flex flex-col fixed h-full z-20">
+      <aside className="w-72 bg-[#080808]/80 backdrop-blur-md border-r border-white/5 p-8 flex flex-col fixed h-full z-20">
         <div className="flex items-center gap-4 mb-12 px-2">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#4B0082] to-[#FF69B4] flex items-center justify-center text-white font-black text-lg shadow-[0_0_20px_rgba(255,105,180,0.3)]">J</div>
           <div className="flex flex-col">
@@ -103,7 +103,7 @@ const AdminDashboard: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-grow ml-72 p-12 pb-24 bg-[#050505]">
+      <main className="flex-grow ml-72 p-12 pb-24 bg-transparent relative z-10">
         <header className="flex justify-between items-end mb-16 border-b border-white/5 pb-8">
           <div>
             <h1 className="text-4xl font-black uppercase tracking-tighter italic">
@@ -133,6 +133,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="profile" element={<ManageProfile />} />
           <Route path="experience" element={<ManageExperience />} />
           <Route path="education" element={<ManageEducation />} />
+          <Route path="settings" element={<ManageSettings />} />
           <Route path="*" element={<ManageProjects />} />
         </Routes>
       </main>
@@ -211,7 +212,8 @@ const ManageProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<Partial<Project>>({
+
+  const defaultForm: Partial<Project> = {
     title: '',
     description: '',
     tags: [],
@@ -223,11 +225,26 @@ const ManageProjects = () => {
     orderId: '',
     clientName: '',
     profileName: '',
-    achievementValue: 0,
-    totalProjectValue: 0,
+    achievementValue: undefined,
+    totalProjectValue: undefined,
     developerName: '',
     docLink: ''
-  });
+  };
+
+  const [formData, setFormData] = useState<Partial<Project>>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchProjects = async () => {
     try {
@@ -268,33 +285,33 @@ const ManageProjects = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic">Project Registry</h2>
         <button 
-          onClick={() => { setIsAdding(!isAdding); setFormData({ assignTo: 'Current Admin', type: 'Solo', status: 'Todo' }); }}
+          onClick={handleAddNewClick}
           className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
         >
-          {isAdding ? <X size={18} /> : <Plus size={18} />}
-          {isAdding ? 'Abort Entry' : 'Add New Project'}
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Project'}
         </button>
       </div>
 
-      <AnimatePresence mode="wait">
       {isAdding && (
         <motion.div 
-          initial={{ opacity: 0, height: 0 }} 
-          animate={{ opacity: 1, height: 'auto' }} 
-          exit={{ opacity: 0, height: 0 }}
-          className="bg-[#0A0A0A] p-12 rounded-[40px] border border-white/5 shadow-2xl"
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          className="glass bg-[#0A0A0A]/70 backdrop-blur-md p-12 rounded-[40px] border border-white/5 shadow-2xl"
         >
           <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div className="md:col-span-3">
-               <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-4">Add New Project</h3>
+               <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-4">
+                 {formData._id ? 'Update Project Masterpiece' : 'Add New Project'}
+               </h3>
             </div>
 
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Project Title</label>
                <input 
-                value={formData.title} 
+                value={formData.title || ''} 
                 onChange={e => setFormData({...formData, title: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none transition-all font-bold text-sm" 
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none transition-all font-bold text-sm" 
                 placeholder="e.g. Nexus Dashboard" 
                 required
                />
@@ -302,9 +319,9 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Assign To Member</label>
                <select 
-                value={formData.assignTo}
+                value={formData.assignTo || 'Current Admin'}
                 onChange={e => setFormData({...formData, assignTo: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
                >
                  <option>Current Admin</option>
                  <option>Lead Developer</option>
@@ -314,9 +331,9 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Type</label>
                <select 
-                value={formData.type}
+                value={formData.type || 'Solo'}
                 onChange={e => setFormData({...formData, type: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
                >
                  <option>Solo</option>
                  <option>Collaborative</option>
@@ -327,9 +344,9 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Project Status</label>
                <select 
-                value={formData.status}
+                value={formData.status || 'Todo'}
                 onChange={e => setFormData({...formData, status: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold appearance-none cursor-pointer"
                >
                  <option>Todo</option>
                  <option>In Progress</option>
@@ -340,18 +357,18 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Order ID</label>
                <input 
-                value={formData.orderId}
+                value={formData.orderId || ''}
                 onChange={e => setFormData({...formData, orderId: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="ORD-123"
                />
             </div>
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Client Name</label>
                <input 
-                value={formData.clientName}
+                value={formData.clientName || ''}
                 onChange={e => setFormData({...formData, clientName: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="John Doe"
                />
             </div>
@@ -359,9 +376,9 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Profile Name</label>
                <input 
-                value={formData.profileName}
+                value={formData.profileName || ''}
                 onChange={e => setFormData({...formData, profileName: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="Fiverr / Upwork"
                />
             </div>
@@ -369,9 +386,9 @@ const ManageProjects = () => {
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">My Achievement Value ($)</label>
                <input 
                 type="number"
-                value={formData.achievementValue}
-                onChange={e => setFormData({...formData, achievementValue: Number(e.target.value)})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                value={formData.achievementValue ?? ''}
+                onChange={e => setFormData({...formData, achievementValue: e.target.value === '' ? undefined : Number(e.target.value)})}
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="500"
                />
             </div>
@@ -379,9 +396,9 @@ const ManageProjects = () => {
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Total Project Value ($)</label>
                <input 
                 type="number"
-                value={formData.totalProjectValue}
-                onChange={e => setFormData({...formData, totalProjectValue: Number(e.target.value)})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                value={formData.totalProjectValue ?? ''}
+                onChange={e => setFormData({...formData, totalProjectValue: e.target.value === '' ? undefined : Number(e.target.value)})}
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="1000"
                />
             </div>
@@ -389,18 +406,18 @@ const ManageProjects = () => {
             <div>
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Tech Stack (comma separated)</label>
                <input 
-                value={formData.tags?.join(', ')}
+                value={Array.isArray(formData.tags) ? formData.tags.join(', ') : typeof formData.tags === 'string' ? formData.tags : ''}
                 onChange={e => setFormData({...formData, tags: e.target.value.split(',').map(s => s.trim())})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="React, Node, MongoDB"
                />
             </div>
             <div className="md:col-span-2">
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Developer Name</label>
                <input 
-                value={formData.developerName}
+                value={formData.developerName || ''}
                 onChange={e => setFormData({...formData, developerName: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="e.g. John Doe / Admin"
                />
             </div>
@@ -408,30 +425,30 @@ const ManageProjects = () => {
             <div className="md:col-span-3">
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Sheet / Document Link</label>
                <input 
-                value={formData.docLink}
+                value={formData.docLink || ''}
                 onChange={e => setFormData({...formData, docLink: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="https://docs.google.com/..."
                />
             </div>
 
             <div className="md:col-span-3">
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Project Image</label>
-               <div className="p-12 bg-[#111]/50 rounded-[32px] border border-white/5 flex flex-col items-center justify-center gap-6 group cursor-pointer hover:bg-white/[0.02] transition-all">
+               <div className="p-12 bg-white/5 backdrop-blur-sm rounded-[32px] border border-white/5 flex flex-col items-center justify-center gap-6 group cursor-pointer hover:bg-white/[0.02] transition-all">
                   <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform border border-white/5">
                     <ImageIcon className="text-gray-600 group-hover:text-[#FF69B4]" size={28} />
                   </div>
                   <div className="flex flex-col items-center">
                     <button type="button" className="bg-[#4B0082]/30 text-[#FF69B4] px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-[#FF69B4]/20 hover:bg-[#FF69B4] hover:text-white transition-all">
-                      <Plus size={16} /> Choose Local Device
+                       <Plus size={16} /> Choose Local Device
                     </button>
                     <span className="text-[9px] font-bold text-gray-600 uppercase tracking-[0.2em] mt-4 italic">JPG, PNG or WEBP. Max 5MB.</span>
                   </div>
                </div>
                <input 
-                value={formData.image}
+                value={formData.image || ''}
                 onChange={e => setFormData({...formData, image: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-4 rounded-xl mt-4 focus:border-[#FF69B4] outline-none text-xs"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-4 rounded-xl mt-4 focus:border-[#FF69B4] outline-none text-xs"
                 placeholder="Or paste image URL directly..."
                />
             </div>
@@ -439,9 +456,9 @@ const ManageProjects = () => {
             <div className="md:col-span-3">
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Live Link</label>
                <input 
-                value={formData.liveLink}
+                value={formData.liveLink || ''}
                 onChange={e => setFormData({...formData, liveLink: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold"
                 placeholder="https://..."
                />
             </div>
@@ -449,9 +466,9 @@ const ManageProjects = () => {
             <div className="md:col-span-3">
                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Description</label>
                <textarea 
-                value={formData.description}
+                value={formData.description || ''}
                 onChange={e => setFormData({...formData, description: e.target.value})}
-                className="w-full bg-[#111] border border-white/10 p-8 rounded-[32px] focus:border-[#FF69B4] outline-none text-sm font-bold h-48 resize-none"
+                className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-[32px] focus:border-[#FF69B4] outline-none text-sm font-bold h-48 resize-none"
                 placeholder="Describe the project masterpiece..."
                ></textarea>
             </div>
@@ -474,7 +491,6 @@ const ManageProjects = () => {
           </form>
         </motion.div>
       )}
-      </AnimatePresence>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {loading ? (
@@ -533,7 +549,22 @@ const ManageProjects = () => {
 const ManageServices = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<Partial<Service>>({ title: '', desc: '', icon: '' });
+
+  const defaultForm: Partial<Service> = { title: '', desc: '', icon: '' };
+  const [formData, setFormData] = useState<Partial<Service>>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchServices = async () => {
     const res = await fetch('/api/services');
@@ -565,32 +596,49 @@ const ManageServices = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic text-white">Dynamic Services</h2>
         <button 
-          onClick={() => setIsAdding(!isAdding)}
-          className="bg-[#4B0082] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-xl hover:bg-[#FF69B4] transition-all"
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
         >
-          {isAdding ? <X size={18} /> : <Plus size={18} />}
-          New Offering
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Service'}
         </button>
       </div>
 
       {isAdding && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-2xl mx-auto">
           <form onSubmit={handleSave} className="space-y-8">
+            <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+              {formData._id ? 'Update Service Offering' : 'Add New Service'}
+            </h3>
             <div>
               <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Service Title</label>
-              <input value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Enterprise WP Architect" required />
+              <input value={formData.title || ''} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Enterprise WP Architect" required />
             </div>
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8">
               <div>
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Emoji Icon</label>
-                <input value={formData.icon} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-2xl text-center" placeholder="🚀" required />
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Image URL / Emoji</label>
+                <input value={formData.icon || ''} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="https://example.com/icon.svg" required />
               </div>
             </div>
             <div>
               <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Description</label>
-              <textarea value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-32" required placeholder="Describe the service value proposition..."></textarea>
+              <textarea value={formData.desc || ''} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-32 resize-none" required placeholder="Describe the service value proposition..."></textarea>
             </div>
-            <button type="submit" className="w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#FF69B4] hover:text-white transition-all">Save Service Offering</button>
+            <div className="flex justify-end gap-6 pt-6">
+              <button 
+                type="button" 
+                onClick={() => setIsAdding(false)}
+                className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                Discard
+              </button>
+              <button 
+                type="submit"
+                className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl"
+              >
+                Save Service
+              </button>
+            </div>
           </form>
         </motion.div>
       )}
@@ -598,7 +646,13 @@ const ManageServices = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {services.map(s => (
           <div key={s._id} className="glass p-10 rounded-[40px] border border-white/5 group relative overflow-hidden transition-all hover:bg-white/[0.02]">
-            <div className="text-5xl mb-8 group-hover:scale-125 transition-transform duration-500">{s.icon}</div>
+            <div className="w-16 h-16 mb-8 group-hover:scale-125 transition-transform duration-500 flex items-center justify-start">
+              {s.icon && (s.icon.startsWith('http') || s.icon.startsWith('/') || s.icon.includes('.')) ? (
+                <img src={s.icon} alt={s.title} className="w-full h-full object-contain" />
+              ) : (
+                <span className="text-5xl">{s.icon}</span>
+              )}
+            </div>
             <h3 className="text-xl font-black uppercase italic tracking-tighter mb-4">{s.title}</h3>
             <p className="text-gray-500 text-[11px] font-bold uppercase tracking-widest leading-relaxed mb-10">{s.desc}</p>
             <div className="flex gap-4">
@@ -615,7 +669,22 @@ const ManageServices = () => {
 const ManageSkills = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<Partial<Skill>>({ name: '', level: 90, category: 'Frontend', logoLink: '' });
+
+  const defaultForm: Partial<Skill> = { name: '', level: 90, category: 'Frontend', logoLink: '' };
+  const [formData, setFormData] = useState<Partial<Skill>>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchSkills = async () => {
     const res = await fetch('/api/skills');
@@ -637,28 +706,35 @@ const ManageSkills = () => {
 
   return (
     <div className="space-y-12">
-       <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic">Technical Stack</h2>
-        <button onClick={() => setIsAdding(!isAdding)} className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl">
-           New Skill
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Skill'}
         </button>
       </div>
 
       {isAdding && (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-xl mx-auto">
           <form onSubmit={handleSave} className="space-y-8">
+             <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+               {formData._id ? 'Update Skill Profile' : 'Add New Skill'}
+             </h3>
              <div className="grid grid-cols-2 gap-8">
                <div className="col-span-2">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Skill Name</label>
-                  <input value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. React Native" required />
+                  <input value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. React Native" required />
                </div>
                <div>
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Proficiency (%)</label>
-                  <input type="number" value={formData.level} onChange={e => setFormData({...formData, level: Number(e.target.value)})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
+                  <input type="number" value={formData.level ?? 90} onChange={e => setFormData({...formData, level: Number(e.target.value)})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
                </div>
                <div>
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Category</label>
-                  <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-[#111] border border-white/10 p-5 rounded-2xl text-sm font-bold appearance-none">
+                  <select value={formData.category || 'Frontend'} onChange={e => setFormData({...formData, category: e.target.value})} className="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-5 rounded-2xl text-sm font-bold appearance-none">
                      <option>Frontend</option>
                      <option>Backend</option>
                      <option>WordPress</option>
@@ -667,10 +743,24 @@ const ManageSkills = () => {
                </div>
                <div className="col-span-2">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Logo Image URL</label>
-                  <input value={formData.logoLink} onChange={e => setFormData({...formData, logoLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-[10px]" placeholder="https://..." />
+                  <input value={formData.logoLink || ''} onChange={e => setFormData({...formData, logoLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-[10px]" placeholder="https://..." />
                </div>
              </div>
-             <button type="submit" className="w-full bg-gradient-to-r from-[#4B0082] to-[#FF69B4] text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs">Inject Skill Data</button>
+             <div className="flex justify-end gap-6 pt-6">
+               <button 
+                 type="button" 
+                 onClick={() => setIsAdding(false)}
+                 className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+               >
+                 Discard
+               </button>
+               <button 
+                 type="submit"
+                 className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl"
+               >
+                 Save Skill
+               </button>
+             </div>
           </form>
         </motion.div>
       )}
@@ -688,9 +778,14 @@ const ManageSkills = () => {
                </div>
                <span className="text-[9px] font-black text-[#FF69B4]">{skill.level}%</span>
             </div>
-            <button onClick={async () => { await fetch(`/api/skills/${skill._id}`, { method: 'DELETE' }); fetchSkills(); }} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-500 hover:text-red-500 transition-all">
-               <Trash2 size={14} />
-            </button>
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 flex gap-2 transition-all">
+               <button onClick={() => { setFormData(skill); setIsAdding(true); }} className="text-gray-500 hover:text-[#FF69B4] transition-colors">
+                  <Settings size={14} />
+               </button>
+               <button onClick={async () => { if (confirm('Delete skill?')) { await fetch(`/api/skills/${skill._id}`, { method: 'DELETE' }); fetchSkills(); } }} className="text-gray-500 hover:text-red-500 transition-colors">
+                  <Trash2 size={14} />
+               </button>
+            </div>
           </div>
         ))}
       </div>
@@ -701,7 +796,22 @@ const ManageSkills = () => {
 const ManageReviews = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<Partial<Review>>({ clientName: '', description: '', rating: 5 });
+
+  const defaultForm: Partial<Review> = { clientName: '', description: '', rating: 5 };
+  const [formData, setFormData] = useState<Partial<Review>>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchReviews = async () => {
     const res = await fetch('/api/reviews');
@@ -713,7 +823,9 @@ const ManageReviews = () => {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+    const method = formData._id ? 'PUT' : 'POST';
+    const url = formData._id ? `/api/reviews/${formData._id}` : '/api/reviews';
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
     setFormData({ clientName: '', description: '', rating: 5 });
     setIsAdding(false);
     fetchReviews();
@@ -723,27 +835,48 @@ const ManageReviews = () => {
     <div className="space-y-12">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic">Client Testimonials</h2>
-        <button onClick={() => setIsAdding(!isAdding)} className="bg-[#FF69B4] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl">
-           Add Feedback
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Review'}
         </button>
       </div>
 
       {isAdding && (
          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-xl mx-auto">
            <form onSubmit={handleSave} className="space-y-8">
+              <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+                {formData._id ? 'Update Client Testimonial' : 'Add New Review'}
+              </h3>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Client Name</label>
-                <input value={formData.clientName} onChange={e => setFormData({...formData, clientName: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none font-bold text-sm" placeholder="e.g. Sarah Jenkins" required />
+                <input value={formData.clientName || ''} onChange={e => setFormData({...formData, clientName: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none font-bold text-sm" placeholder="e.g. Sarah Jenkins" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Star Rating (1-5)</label>
-                <input type="number" min="1" max="5" value={formData.rating} onChange={e => setFormData({...formData, rating: Number(e.target.value)})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none font-black text-xl text-center text-yellow-500" required />
+                <input type="number" min="1" max="5" value={formData.rating ?? 5} onChange={e => setFormData({...formData, rating: Number(e.target.value)})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none font-black text-xl text-center text-yellow-500" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Testimonial</label>
-                <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none font-bold text-sm h-32 resize-none" required placeholder="Share the client's experience..."></textarea>
+                <textarea value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl outline-none font-bold text-sm h-32 resize-none" required placeholder="Share the client's experience..."></textarea>
               </div>
-              <button type="submit" className="w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-xs">Verify & Post Review</button>
+              <div className="flex justify-end gap-6 pt-6">
+                <button 
+                  type="button" 
+                  onClick={() => setIsAdding(false)}
+                  className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+                >
+                  Discard
+                </button>
+                <button 
+                  type="submit"
+                  className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl"
+                >
+                  Save Review
+                </button>
+              </div>
            </form>
          </motion.div>
       )}
@@ -756,9 +889,14 @@ const ManageReviews = () => {
              </div>
              <p className="text-gray-400 italic text-sm leading-relaxed mb-8">"{r.description}"</p>
              <h4 className="text-lg font-black uppercase italic tracking-tighter text-[#FF69B4]">{r.clientName}</h4>
-             <button onClick={async () => { await fetch(`/api/reviews/${r._id}`, { method: 'DELETE' }); fetchReviews(); }} className="absolute top-10 right-10 text-gray-600 hover:text-red-500 transition-colors">
-                <Trash2 size={18} />
-             </button>
+             <div className="absolute top-10 right-10 flex gap-4">
+                <button onClick={() => { setFormData(r); setIsAdding(true); }} className="text-gray-600 hover:text-[#FF69B4] transition-colors">
+                   <Settings size={18} />
+                </button>
+                <button onClick={async () => { if (confirm('Delete testimonial?')) { await fetch(`/api/reviews/${r._id}`, { method: 'DELETE' }); fetchReviews(); } }} className="text-gray-600 hover:text-red-500 transition-colors">
+                   <Trash2 size={18} />
+                </button>
+             </div>
           </div>
         ))}
       </div>
@@ -847,9 +985,24 @@ const ManageProfile = () => {
                 </div>
              </div>
 
-             <button type="submit" disabled={saving} className="w-full bg-white text-black py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-               {saving ? 'Syncing...' : 'Update Global Identity'}
-             </button>
+             <div className="flex gap-6">
+                <button type="submit" disabled={saving} className="flex-grow bg-white text-black py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                  {saving ? 'Syncing...' : 'Update Global Identity'}
+                </button>
+                <button 
+                  type="button"
+                  onClick={async () => {
+                    if (confirm('Are you sure you want to clear/delete your profile? This will reset your public biography and social media links.')) {
+                      await fetch('/api/profile', { method: 'DELETE' });
+                      setFormData({ image: '', bio: '', socialLinks: { linkedin: '', github: '', facebook: '', whatsapp: '', messenger: '' } });
+                      alert('Profile Identity deleted successfully.');
+                    }
+                  }}
+                  className="px-8 bg-red-950/40 text-red-500 hover:bg-red-600 hover:text-white border border-red-500/20 py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] transition-all shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                >
+                  Delete Profile
+                </button>
+             </div>
           </form>
        </div>
     </div>
@@ -859,7 +1012,22 @@ const ManageProfile = () => {
 const ManageExperience = () => {
   const [experience, setExperience] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<any>({ role: '', company: '', period: '', desc: '', companyLink: '' });
+
+  const defaultForm = { role: '', company: '', period: '', desc: '', companyLink: '' };
+  const [formData, setFormData] = useState<any>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchExperience = async () => {
     const res = await fetch('/api/experience');
@@ -890,38 +1058,58 @@ const ManageExperience = () => {
     <div className="space-y-12">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic">Professional History</h2>
-        <button onClick={() => setIsAdding(!isAdding)} className="bg-[#4B0082] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl hover:bg-[#FF69B4] transition-all">
-          {isAdding ? <X size={18} /> : <Plus size={18} />}
-          Add Entry
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Experience'}
         </button>
       </div>
 
       {isAdding && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-2xl mx-auto">
           <form onSubmit={handleSave} className="space-y-8">
+            <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+              {formData._id ? 'Update Experience Entry' : 'Add New Experience'}
+            </h3>
             <div className="grid grid-cols-2 gap-8">
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Job Role</label>
-                <input value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Senior MERN Developer" required />
+                <input value={formData.role || ''} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Senior MERN Developer" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Company Name</label>
-                <input value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Tech Solutions" required />
+                <input value={formData.company || ''} onChange={e => setFormData({...formData, company: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Tech Solutions" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Period</label>
-                <input value={formData.period} onChange={e => setFormData({...formData, period: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. 2022 - Present" required />
+                <input value={formData.period || ''} onChange={e => setFormData({...formData, period: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. 2022 - Present" required />
               </div>
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Company Link (Optional)</label>
-                <input value={formData.companyLink} onChange={e => setFormData({...formData, companyLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-[10px]" placeholder="https://..." />
+                <input value={formData.companyLink || ''} onChange={e => setFormData({...formData, companyLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-[10px]" placeholder="https://..." />
               </div>
             </div>
             <div>
               <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Description</label>
-              <textarea value={formData.desc} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-32 resize-none" placeholder="Describe your impact and achievements..."></textarea>
+              <textarea value={formData.desc || ''} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-32 resize-none" placeholder="Describe your impact and achievements..."></textarea>
             </div>
-            <button type="submit" className="w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#FF69B4] hover:text-white transition-all">Save History Entry</button>
+            <div className="flex justify-end gap-6 pt-6">
+              <button 
+                type="button" 
+                onClick={() => setIsAdding(false)}
+                className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                Discard
+              </button>
+              <button 
+                type="submit"
+                className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl"
+              >
+                Save Experience
+              </button>
+            </div>
           </form>
         </motion.div>
       )}
@@ -953,7 +1141,22 @@ const ManageExperience = () => {
 const ManageEducation = () => {
   const [education, setEducation] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<any>({ degree: '', institution: '', period: '', icon: '🎓' });
+
+  const defaultForm = { degree: '', institution: '', period: '', icon: '🎓' };
+  const [formData, setFormData] = useState<any>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
 
   const fetchEducation = async () => {
     const res = await fetch('/api/education');
@@ -984,34 +1187,54 @@ const ManageEducation = () => {
     <div className="space-y-12">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-black uppercase tracking-tighter italic">Academic Records</h2>
-        <button onClick={() => setIsAdding(!isAdding)} className="bg-[#4B0082] text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl hover:bg-[#FF69B4] transition-all">
-          {isAdding ? <X size={18} /> : <Plus size={18} />}
-          New Record
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Education'}
         </button>
       </div>
 
       {isAdding && (
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-2xl mx-auto">
           <form onSubmit={handleSave} className="space-y-8">
+            <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+              {formData._id ? 'Update Education Record' : 'Add New Education'}
+            </h3>
             <div className="grid grid-cols-2 gap-8">
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Degree / Certification</label>
-                <input value={formData.degree} onChange={e => setFormData({...formData, degree: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. B.Sc in Computer Science" required />
+                <input value={formData.degree || ''} onChange={e => setFormData({...formData, degree: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. B.Sc in Computer Science" required />
               </div>
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Institution</label>
-                <input value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Dhaka University" required />
+                <input value={formData.institution || ''} onChange={e => setFormData({...formData, institution: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. Dhaka University" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Period</label>
-                <input value={formData.period} onChange={e => setFormData({...formData, period: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. 2018 - 2022" required />
+                <input value={formData.period || ''} onChange={e => setFormData({...formData, period: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" placeholder="e.g. 2018 - 2022" required />
               </div>
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Emoji Icon</label>
-                <input value={formData.icon} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-2xl text-center" placeholder="🎓" />
+                <input value={formData.icon || ''} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-2xl text-center" placeholder="🎓" />
               </div>
             </div>
-            <button type="submit" className="w-full bg-white text-black py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-[#FF69B4] hover:text-white transition-all">Save Academic Entry</button>
+            <div className="flex justify-end gap-6 pt-6">
+              <button 
+                type="button" 
+                onClick={() => setIsAdding(false)}
+                className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                Discard
+              </button>
+              <button 
+                type="submit"
+                className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl"
+              >
+                Save Education
+              </button>
+            </div>
           </form>
         </motion.div>
       )}
@@ -1037,6 +1260,172 @@ const ManageEducation = () => {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+};
+
+const ManageSettings = () => {
+  const [formData, setFormData] = useState({
+    siteTitle: 'JASMIN | Frontend & MERN Stack Developer',
+    brandLetter: 'J',
+    metaDesc: 'MERN stack and premium WordPress developer showcasing outstanding case studies and client projects.',
+    analyticsId: 'G-XXXXXXXXXX',
+    adminUsername: 'jasmin1142005',
+    adminPassword: ''
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.siteTitle) {
+          setFormData(prev => ({ ...prev, ...data, adminPassword: '' }));
+        }
+      })
+      .catch(e => console.error(e))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Site Settings and Admin Credentials updated successfully!');
+      } else {
+        alert('Error updating settings: ' + data.error);
+      }
+    } catch (e) {
+      console.error(e);
+      alert('Failed to connect to server.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleResetDB = async () => {
+    if (confirm('CRITICAL ACTION: Are you sure you want to restore the entire database to the original seed data? This will overwrite your existing projects, services, reviews, and skills.')) {
+      setSaving(true);
+      try {
+        const res = await fetch('/api/settings/reset-db', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          alert('Database reset and seed data injected successfully!');
+          window.location.reload();
+        } else {
+          alert('Failed to reset database: ' + data.error);
+        }
+      } catch (e) {
+        alert('Error resetting database.');
+      } finally {
+        setSaving(false);
+      }
+    }
+  };
+
+  if (loading) return <div className="py-20 text-center animate-pulse font-black uppercase tracking-widest text-xs text-gray-500 italic">Retrieving Command Configurations...</div>;
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-12">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-black uppercase tracking-tighter italic">Operational Settings</h2>
+      </div>
+
+      <div className="glass p-12 rounded-[40px] border border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full tech-grid opacity-5 pointer-events-none"></div>
+        <form onSubmit={handleSave} className="space-y-10 relative z-10">
+          <div>
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#FF69B4] italic">Site Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Site Title</label>
+                <input 
+                  value={formData.siteTitle || ''} 
+                  onChange={e => setFormData({ ...formData, siteTitle: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" 
+                  placeholder="e.g. Jasmin | Portfolio"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Brand Letter</label>
+                <input 
+                  value={formData.brandLetter || ''} 
+                  onChange={e => setFormData({ ...formData, brandLetter: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" 
+                  placeholder="e.g. J"
+                  required
+                />
+              </div>
+              <div className="md:col-span-2">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Meta Description (SEO)</label>
+                <textarea 
+                  value={formData.metaDesc || ''} 
+                  onChange={e => setFormData({ ...formData, metaDesc: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-24 resize-none"
+                  placeholder="Website meta description..."
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Google Analytics ID</label>
+                <input 
+                  value={formData.analyticsId || ''} 
+                  onChange={e => setFormData({ ...formData, analyticsId: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" 
+                  placeholder="G-XXXXXXXXXX"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#FF69B4] italic">Administrative Credentials</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Username</label>
+                <input 
+                  value={formData.adminUsername || ''} 
+                  onChange={e => setFormData({ ...formData, adminUsername: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" 
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">New Password (leave blank to keep current)</label>
+                <input 
+                  type="password"
+                  value={formData.adminPassword || ''} 
+                  onChange={e => setFormData({ ...formData, adminPassword: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" 
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row gap-6">
+            <button type="submit" disabled={saving} className="flex-grow bg-white text-black py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl">
+              {saving ? 'Syncing...' : 'Save Settings & Credentials'}
+            </button>
+            <button 
+              type="button" 
+              onClick={handleResetDB} 
+              disabled={saving}
+              className="px-10 bg-red-950/40 text-red-500 border border-red-500/20 py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-red-600 hover:text-white transition-all"
+            >
+              Reset Database (Seed)
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const Experience: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto bg-black overflow-hidden">
+    <section className="py-20 px-6 max-w-7xl mx-auto bg-transparent overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
         
         {/* EXPERIENCE SUBSECTION */}
@@ -40,7 +40,7 @@ const Experience: React.FC = () => {
                 transition={{ delay: idx * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.01 }}
-                className="group relative bg-black border-l-2 border-transparent hover:border-[#FF69B4] p-8 hover:bg-[#080808] transition-all duration-300 rounded-[30px]"
+                className="group relative bg-[#080808]/50 backdrop-blur-sm border-l-2 border-transparent hover:border-[#FF69B4] p-8 hover:bg-[#080808]/80 transition-all duration-300 rounded-[30px]"
               >
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#FF69B4] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
@@ -91,7 +91,7 @@ const Experience: React.FC = () => {
                 transition={{ delay: idx * 0.15 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -3 }}
-                className="group relative bg-black border-l-2 border-transparent hover:border-[#FF69B4] p-8 hover:bg-[#080808] transition-all duration-300 rounded-[30px]"
+                className="group relative bg-[#080808]/50 backdrop-blur-sm border-l-2 border-transparent hover:border-[#FF69B4] p-8 hover:bg-[#080808]/80 transition-all duration-300 rounded-[30px]"
               >
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#FF69B4] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>

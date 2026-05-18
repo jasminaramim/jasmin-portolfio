@@ -36,14 +36,14 @@ const Hero: React.FC<HeroProps> = () => {
   const bgImage = profile.image && profile.image !== HERO_IMAGES[0] ? profile.image : HERO_IMAGES[currentImage];
 
   return (
-    <div className="relative h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-black">
+    <div className="relative h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-transparent">
       {/* Background Image Slider with Zoom Animation */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={bgImage}
             initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 0.9, scale: 1.1 }}
+            animate={{ opacity: 0.15, scale: 1.1 }} // Make highly transparent so 3D background is beautifully visible
             exit={{ opacity: 0 }}
             transition={{ duration: 6, ease: "linear" }}
             className="w-full h-full"
@@ -57,7 +57,7 @@ const Hero: React.FC<HeroProps> = () => {
         </AnimatePresence>
         
         {/* Lighter Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20 z-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent z-20"></div>
       </div>
 
       <div className="relative z-30 text-center px-4 max-w-5xl">

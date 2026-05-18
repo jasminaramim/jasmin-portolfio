@@ -19,7 +19,7 @@ const ExperienceTeaser: React.FC<ExperienceTeaserProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <section className="py-32 bg-black border-y border-white/5 relative overflow-hidden">
+    <section className="py-32 bg-transparent border-y border-white/5 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-20">
           <motion.h4 

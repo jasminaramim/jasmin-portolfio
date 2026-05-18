@@ -33,7 +33,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-transparent text-white">
       <Hero onNavigate={onNavigate} />
 
       <div className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] py-6 border-y border-white/10 relative z-20 overflow-hidden">
@@ -56,7 +56,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       
       <WhatIDo />
 
-      <section id="projects" className="py-24 bg-black relative">
+      <section id="projects" className="py-24 bg-transparent relative">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex justify-between items-end mb-16">
             <div>
@@ -76,7 +76,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <motion.div 
                 key={project._id || idx}
                 whileHover={{ y: -8 }}
-                className="group relative bg-[#0a0a0a] border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/30 shadow-2xl rounded-[32px]"
+                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/30 shadow-2xl rounded-[32px]"
               >
                 <div className="relative h-72 overflow-hidden">
                   <img 
@@ -92,13 +92,13 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   </div>
                 </div>
                 <div className="p-10">
-                  <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#FF69B4] transition-colors italic">{project.title}</h3>
-                  <div className="flex gap-4">
-                    <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Live Preview</a>
-                    {(project.hasCaseStudy || project.docLink) && (
-                      <a href={project.docLink || '#'} className="flex-1 py-4 text-center border border-[#FF69B4] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Case Study</a>
-                    )}
-                  </div>
+                   <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#FF69B4] transition-colors italic">{project.title}</h3>
+                   <div className="flex gap-4">
+                     <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Live Preview</a>
+                     {(project.hasCaseStudy || project.docLink) && (
+                       <a href={project.docLink || '#'} className="flex-1 py-4 text-center border border-[#FF69B4] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Case Study</a>
+                     )}
+                   </div>
                 </div>
               </motion.div>
             ))}

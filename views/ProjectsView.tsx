@@ -31,7 +31,7 @@ const ProjectsView: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-transparent">
       <Breadcrumbs 
         title="My Works" 
         subtitle="Full Professional Gallery" 
@@ -63,7 +63,7 @@ const ProjectsView: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="group relative bg-[#0a0a0a] border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/40 shadow-xl rounded-[40px]"
+                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/40 shadow-xl rounded-[40px]"
               >
                 <div className="relative h-[400px] overflow-hidden">
                   <img 

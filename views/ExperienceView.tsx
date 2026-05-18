@@ -5,7 +5,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 
 const ExperienceView: React.FC = () => {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-transparent">
       <Breadcrumbs 
         title="Experience" 
         subtitle="Professional Journey" 

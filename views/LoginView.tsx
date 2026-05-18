@@ -37,7 +37,7 @@ const LoginView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden px-4">
+    <div className="min-h-screen flex items-center justify-center bg-transparent relative overflow-hidden px-4">
       {/* Dynamic Background Elements */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#4B0082]/20 rounded-full blur-[100px] animate-pulse"></div>
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#FF69B4]/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
