@@ -23,7 +23,8 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Link as LinkIcon,
-  ChevronRight
+  ChevronRight,
+  Code
 } from 'lucide-react';
 import { Project, Service, Skill, Review, AdminProfile, HeroContent } from '../types';
 
