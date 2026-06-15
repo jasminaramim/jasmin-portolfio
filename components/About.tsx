@@ -8,7 +8,7 @@ interface AboutProps {
 const About: React.FC<AboutProps> = ({ onNavigate }) => {
   const [profile, setProfile] = useState<any>({
     bio: 'I am a dedicated Developer with a passion for creating pixel-perfect, highly responsive websites. My journey as a coder is defined by a relentless pursuit of excellence in both WordPress and MERN Stack development.',
-    image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=800&auto=format&fit=crop'
+    image: '/about-image.jpg'
   });
 
   useEffect(() => {
