@@ -65,6 +65,7 @@ const AdminDashboard: React.FC = () => {
     { to: "/admin/education", icon: <Star size={18} />, label: "Education" },
     { to: "/admin/profile", icon: <User size={18} />, label: "Profile" },
     { to: "/admin/hero", icon: <ImageIcon size={18} />, label: "Hero Section" },
+    { to: "/admin/techcode", icon: <Code size={18} />, label: "Tech Code" },
     { to: "/admin/about-stats", icon: <Star size={18} />, label: "About Stats" },
     { to: "/admin/settings", icon: <Settings size={18} />, label: "Settings" },
   ];
@@ -136,6 +137,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="experience" element={<ManageExperience />} />
           <Route path="education" element={<ManageEducation />} />
           <Route path="hero" element={<ManageHero />} />
+          <Route path="techcode" element={<ManageTechCode />} />
           <Route path="about-stats" element={<ManageAboutStats />} />
           <Route path="settings" element={<ManageSettings />} />
           <Route path="*" element={<ManageProjects />} />
@@ -1703,6 +1705,138 @@ const ManageAboutStats = () => {
                   <Settings size={14} />
                </button>
                <button onClick={() => handleDelete(stat._id)} className="text-gray-500 hover:text-red-500 transition-colors">
+                  <Trash2 size={14} />
+               </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ManageTechCode = () => {
+  const [techs, setTechs] = useState<any[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+
+  const defaultForm = { name: '', iconUrl: '', top: '10%', left: '10%', delay: 0, glow: 'rgba(168,85,247,0.3)' };
+  const [formData, setFormData] = useState<any>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
+
+  const fetchTechs = async () => {
+    const res = await fetch('/api/techcode');
+    const data = await res.json();
+    setTechs(data);
+  };
+
+  useEffect(() => { fetchTechs(); }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const method = formData._id ? 'PUT' : 'POST';
+    const url = formData._id ? `/api/techcode/${formData._id}` : '/api/techcode';
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({...formData, delay: Number(formData.delay)}) });
+    setFormData(defaultForm);
+    setIsAdding(false);
+    fetchTechs();
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Delete this tech icon?')) {
+      await fetch(`/api/techcode/${id}`, { method: 'DELETE' });
+      fetchTechs();
+    }
+  };
+
+  return (
+    <div className="space-y-12">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-black uppercase tracking-tighter italic">Manage Tech Code (Floating Icons)</h2>
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#a855f7] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Tech Icon'}
+        </button>
+      </div>
+
+      {isAdding && (
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-3xl mx-auto">
+          <form onSubmit={handleSave} className="space-y-8">
+            <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+              {formData._id ? 'Update Tech Icon' : 'Add Tech Icon'}
+            </h3>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="col-span-2 md:col-span-1">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Tech Name</label>
+                <input value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="e.g. React" required />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Icon Image URL</label>
+                <input value={formData.iconUrl || ''} onChange={e => setFormData({...formData, iconUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="https://..." required />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Top Position (e.g. -5%, 50%, 105%)</label>
+                <input value={formData.top || ''} onChange={e => setFormData({...formData, top: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="50%" required />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Left Position (e.g. -5%, 50%, 105%)</label>
+                <input value={formData.left || ''} onChange={e => setFormData({...formData, left: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="105%" required />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Animation Delay (seconds)</label>
+                <input type="number" step="0.1" value={formData.delay || 0} onChange={e => setFormData({...formData, delay: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="0.5" required />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Glow Color (rgba)</label>
+                <input value={formData.glow || ''} onChange={e => setFormData({...formData, glow: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="rgba(168,85,247,0.3)" required />
+              </div>
+            </div>
+            <div className="flex justify-end gap-6 pt-6">
+              <button 
+                type="button" 
+                onClick={() => setIsAdding(false)}
+                className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                Discard
+              </button>
+              <button 
+                type="submit"
+                className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#a855f7] hover:text-white transition-all shadow-xl"
+              >
+                Save Tech Icon
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      )}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {techs.map(tech => (
+          <div key={tech._id} className="glass p-8 rounded-[32px] border border-white/5 flex flex-col items-center group relative text-center">
+            <div className="w-16 h-16 rounded-full bg-[#0a0a0c] border border-white/10 flex items-center justify-center mb-4" style={{boxShadow: `0 0 20px ${tech.glow}`}}>
+               <img src={tech.iconUrl} alt={tech.name} className="w-8 h-8 object-contain" />
+            </div>
+            <div className="text-sm font-bold text-white tracking-widest">{tech.name}</div>
+            <div className="text-[10px] text-gray-500 uppercase mt-2">Top: {tech.top} | Left: {tech.left}</div>
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 flex gap-2 transition-all">
+               <button onClick={() => { setFormData(tech); setIsAdding(true); }} className="text-gray-500 hover:text-[#a855f7] transition-colors">
+                  <Settings size={14} />
+               </button>
+               <button onClick={() => handleDelete(tech._id)} className="text-gray-500 hover:text-red-500 transition-colors">
                   <Trash2 size={14} />
                </button>
             </div>

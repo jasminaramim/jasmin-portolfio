@@ -52,12 +52,16 @@ const floatingIcons = [
 
 const Hero: React.FC<HeroProps> = () => {
   const [heroData, setHeroData] = useState<HeroContent>(defaultHeroData);
+  const [techs, setTechs] = useState<any[]>([]);
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     fetch('/api/hero').then(res => res.json()).then(data => {
       if (data && data.firstName) setHeroData(data);
+    });
+    fetch('/api/techcode').then(res => res.json()).then(data => {
+      if (Array.isArray(data)) setTechs(data);
     });
   }, []);
 
@@ -272,25 +276,25 @@ const Hero: React.FC<HeroProps> = () => {
           {/* CODE CARD WITH ORBIT */}
           <div className="relative flex items-center justify-center shrink-0 mt-12 md:mt-0 max-w-[full] md:max-w-none">
             {/* Orbit Lines */}
-            <div className="absolute w-[420px] h-[420px] md:w-[480px] md:h-[480px] border border-white/5 rounded-full pointer-events-none"></div>
-            <div className="absolute w-[540px] h-[540px] md:w-[620px] md:h-[620px] border border-[#a855f7]/10 rounded-full pointer-events-none border-dashed animate-[spin_100s_linear_infinite]"></div>
+            <div className="absolute w-[300px] h-[300px] md:w-[480px] md:h-[480px] border border-white/5 rounded-full pointer-events-none"></div>
+            <div className="absolute w-[400px] h-[400px] md:w-[620px] md:h-[620px] border border-[#a855f7]/10 rounded-full pointer-events-none border-dashed animate-[spin_100s_linear_infinite]"></div>
 
             {/* Floating Tech Icons */}
-            <div className="absolute inset-0 pointer-events-none hidden md:block">
-              {floatingIcons.map((item, i) => (
+            <div className="absolute inset-0 pointer-events-none block">
+              {(techs.length > 0 ? techs : floatingIcons).map((item, i) => (
                 <motion.div
                   key={i}
                   animate={{ y: [0, -15, 0] }}
                   transition={{ duration: 4, repeat: Infinity, delay: item.delay, ease: "easeInOut" }}
-                  className="absolute z-20 flex items-center justify-center w-16 h-16 rounded-full bg-[#0a0a0c]/80 backdrop-blur-md border border-white/10"
+                  className="absolute z-20 flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#0a0a0c]/80 backdrop-blur-md border border-white/10 scale-75 md:scale-100"
                   style={{ top: item.top, left: item.left, boxShadow: `0 0 25px ${item.glow}` }}
                 >
-                  <img src={item.icon} alt="tech" className="w-8 h-8 object-contain" />
+                  <img src={item.iconUrl || item.icon} alt={item.name || "tech"} className="w-6 h-6 md:w-8 md:h-8 object-contain" />
                 </motion.div>
               ))}
             </div>
 
-            <div className="code-card relative z-10 shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:scale-[1.02] transition-transform duration-500">
+            <div className="code-card relative z-10 shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:scale-[1.02] transition-transform duration-500 max-w-[300px] md:max-w-none">
               <div className="code-bar">
                 <div className="dot" style={{background:'#ff5f57'}}></div>
                 <div className="dot" style={{background:'#febc2e'}}></div>

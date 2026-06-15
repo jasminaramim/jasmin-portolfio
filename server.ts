@@ -214,6 +214,7 @@ createCRUDRoutes("reviews");
 createCRUDRoutes("experience");
 createCRUDRoutes("education");
 createCRUDRoutes("stats");
+createCRUDRoutes("techcode");
 
 // Hero Special Routes
 app.get("/api/hero", async (req, res) => {
