@@ -18,16 +18,7 @@ const ExperienceTeaser: React.FC<ExperienceTeaserProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <section className="py-24 bg-[#07050f] relative overflow-hidden font-['Space_Grotesk']">
-      {/* Grid dotted background matching the screenshot */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-[0.06]" 
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }}
-      ></div>
-
+    <section className="py-24 bg-transparent relative overflow-hidden font-['Space_Grotesk']">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <motion.h4 
