@@ -43,6 +43,7 @@ const Background3D: React.FC = () => {
     let prevMouseY = 0;
     let mouseX = 0;
     let mouseY = 0;
+    const startTime = Date.now();
 
     // Custom Simple Noise for Procedural Continents
     function pseudoNoise(x: number, y: number, z: number) {
@@ -423,7 +424,7 @@ const Background3D: React.FC = () => {
 
         if (!isDragging) {
           // Continuous base rotation
-          const time = Date.now() * 0.0005 * config.speedMultiplier;
+          const time = (Date.now() - startTime) * 0.0005 * config.speedMultiplier;
           
           // Strongly map mouse position to earth rotation
           const targetY = time + (mouseX * 2.5); // Strong horizontal rotation based on mouse
