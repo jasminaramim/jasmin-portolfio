@@ -607,7 +607,7 @@ const Background3D: React.FC = () => {
       className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
       style={{
         background: 'radial-gradient(circle at center, #0c102b 0%, #050716 100%)',
-        opacity: 0.8
+        opacity: 0.65
       }}
     />
   );
