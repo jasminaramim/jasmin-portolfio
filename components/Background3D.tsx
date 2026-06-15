@@ -422,9 +422,15 @@ const Background3D: React.FC = () => {
         if (!renderer || !scene || !camera || !earthGroup) return;
 
         if (!isDragging) {
-          // Increased auto-rotation speed
-          targetRotationY += 0.002 * config.speedMultiplier;
-          targetRotationX *= 0.95;
+          // Continuous base rotation
+          const time = Date.now() * 0.0005 * config.speedMultiplier;
+          
+          // Strongly map mouse position to earth rotation
+          const targetY = time + (mouseX * 2.5); // Strong horizontal rotation based on mouse
+          const targetX = (mouseY * 1.2);        // Strong vertical tilt based on mouse
+
+          targetRotationY += (targetY - targetRotationY) * 0.05;
+          targetRotationX += (targetX - targetRotationX) * 0.05;
         }
 
         currentRotationX += (targetRotationX - currentRotationX) * 0.08;
@@ -498,8 +504,8 @@ const Background3D: React.FC = () => {
         prevMouseX = e.clientX;
         prevMouseY = e.clientY;
       } else {
-        const targetCamX = mouseX * 0.6;
-        const targetCamY = mouseY * 0.6;
+        const targetCamX = mouseX * 2.0;
+        const targetCamY = mouseY * 2.0;
         camera.position.x += (targetCamX - camera.position.x) * 0.05;
         camera.position.y += (targetCamY - camera.position.y) * 0.05;
         camera.lookAt(scene.position);
@@ -599,7 +605,8 @@ const Background3D: React.FC = () => {
       ref={containerRef}
       className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
       style={{
-        background: 'radial-gradient(circle at center, #0c102b 0%, #050716 100%)'
+        background: 'radial-gradient(circle at center, #0c102b 0%, #050716 100%)',
+        opacity: 0.5
       }}
     />
   );

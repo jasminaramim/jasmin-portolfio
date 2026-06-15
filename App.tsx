@@ -49,7 +49,7 @@ const App: React.FC = () => {
           <Route path="*" element={
             <>
               <NavbarWrapper />
-              <main className="flex-grow pt-20 relative z-10">
+              <main className="flex-grow relative z-10 pt-0">
                 <AnimatePresence mode="wait">
                   <Routes>
                     <Route path="/" element={<PageWrapper><Home onNavigate={() => {}} /></PageWrapper>} />

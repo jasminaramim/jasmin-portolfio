@@ -36,7 +36,7 @@ const Hero: React.FC<HeroProps> = () => {
   const bgImage = profile.image && profile.image !== HERO_IMAGES[0] ? profile.image : HERO_IMAGES[currentImage];
 
   return (
-    <div className="relative h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-transparent">
+    <div className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-transparent pt-[150px] pb-[50px]">
       {/* Background Image Slider with Zoom Animation */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
