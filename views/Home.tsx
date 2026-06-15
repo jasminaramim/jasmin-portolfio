@@ -79,7 +79,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 whileHover={{ y: -8 }}
                 className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#a855f7]/30 shadow-2xl rounded-[32px]"
               >
-                <div className="relative h-72 overflow-hidden">
+                <a href={project.docLink || project.liveLink || '#'} target={project.docLink || project.liveLink ? "_blank" : undefined} rel="noreferrer" className="block relative h-72 overflow-hidden">
                   <img 
                     src={project.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop'} 
                     alt={project.title} 
@@ -91,13 +91,15 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                       <span key={t} className="px-3 py-1 bg-black text-[#a855f7] text-[8px] font-black uppercase tracking-widest border border-[#a855f7]/30 backdrop-blur-md">{t}</span>
                     ))}
                   </div>
-                </div>
+                </a>
                 <div className="p-10">
-                   <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#a855f7] transition-colors italic">{project.title}</h3>
+                   <a href={project.docLink || project.liveLink || '#'} target={project.docLink || project.liveLink ? "_blank" : undefined} rel="noreferrer" className="block outline-none">
+                     <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#a855f7] transition-colors italic">{project.title}</h3>
+                   </a>
                    <div className="flex gap-4">
                      <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Live Preview</a>
                      {(project.hasCaseStudy || project.docLink) && (
-                       <a href={project.docLink || '#'} className="flex-1 py-4 text-center border border-[#a855f7] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Case Study</a>
+                       <a href={project.docLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center border border-[#a855f7] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Case Study</a>
                      )}
                    </div>
                 </div>

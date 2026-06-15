@@ -65,7 +65,7 @@ const ProjectsView: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#a855f7]/40 shadow-xl rounded-[40px]"
               >
-                <div className="relative h-[400px] overflow-hidden">
+                <a href={project.docLink || project.liveLink || '#'} target={project.docLink || project.liveLink ? "_blank" : undefined} rel="noreferrer" className="block relative h-[400px] overflow-hidden">
                   <img 
                     src={project.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop'} 
                     alt={project.title} 
@@ -81,16 +81,18 @@ const ProjectsView: React.FC = () => {
                       </span>
                     ))}
                   </div>
-                </div>
+                </a>
 
                 <div className="p-12 relative">
-                  <div className="absolute -top-10 left-12 w-20 h-20 bg-gradient-to-br from-[#4B0082] to-[#a855f7] flex items-center justify-center text-white font-black text-2xl italic shadow-2xl group-hover:-translate-y-2 transition-transform rounded-3xl">
+                  <div className="absolute -top-10 left-12 w-20 h-20 bg-gradient-to-br from-[#4B0082] to-[#a855f7] flex items-center justify-center text-white font-black text-2xl italic shadow-2xl group-hover:-translate-y-2 transition-transform rounded-3xl pointer-events-none">
                     {project.title.charAt(0)}
                   </div>
                   
-                  <h3 className="text-3xl font-black mb-4 group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic pt-8">
-                    {project.title}
-                  </h3>
+                  <a href={project.docLink || project.liveLink || '#'} target={project.docLink || project.liveLink ? "_blank" : undefined} rel="noreferrer" className="block outline-none">
+                    <h3 className="text-3xl font-black mb-4 group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic pt-8">
+                      {project.title}
+                    </h3>
+                  </a>
                   <p className="text-gray-500 text-xs mb-10 leading-relaxed font-bold max-w-lg italic">
                     {project.description}
                   </p>
@@ -105,7 +107,7 @@ const ProjectsView: React.FC = () => {
                       🟣 Live Deployment
                     </a>
                     {(project.hasCaseStudy || project.docLink) && (
-                      <a href={project.docLink || '#'} className="px-10 py-5 border-2 border-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#4B0082] transition-all rounded-2xl">
+                      <a href={project.docLink || '#'} target="_blank" rel="noreferrer" className="flex-1 text-center px-10 py-5 border-2 border-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#4B0082] transition-all rounded-2xl">
                         Case Study
                       </a>
                     )}
