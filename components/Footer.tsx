@@ -30,10 +30,10 @@ const Footer: React.FC<FooterProps> = () => {
   }, []);
 
   return (
-    <footer className="bg-[#050505]/75 backdrop-blur-md border-t border-white/5 pt-32 pb-12 overflow-hidden relative">
+    <footer className="bg-[#0a0a0c] border-t border-white/10 pt-32 pb-12 overflow-hidden relative z-20 shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.5)]">
       {/* Background Tech Elements */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5"></div>
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#4B0082]/5 blur-[180px] pointer-events-none"></div>
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.03]"></div>
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#4B0082]/10 blur-[180px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20 lg:mb-32">
@@ -46,7 +46,7 @@ const Footer: React.FC<FooterProps> = () => {
               <span className="text-white uppercase transition-colors group-hover:text-[#a855f7]">Jas</span>
               <span className="text-[#a855f7] uppercase transition-colors group-hover:text-white">min</span>
             </button>
-            <p className="text-gray-500 text-[13px] leading-relaxed max-w-xs font-bold italic tracking-wider">
+            <p className="text-gray-400 text-[13px] leading-relaxed max-w-xs font-bold italic tracking-wider">
               We specialize in crafting enterprise-grade web applications using the MERN Stack and custom WordPress architecture. Our mission is to transform business goals into high-performance digital reality.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -62,7 +62,7 @@ const Footer: React.FC<FooterProps> = () => {
                   target="_blank" 
                   rel="noreferrer"
                   title={social.label}
-                  className="w-10 h-10 border border-white/10 rounded-xl flex items-center justify-center text-gray-500 hover:text-[#a855f7] hover:border-[#a855f7] transition-all bg-black/50 hover:scale-110"
+                  className="w-10 h-10 border border-white/20 rounded-xl flex items-center justify-center text-gray-300 hover:text-white hover:border-[#a855f7] hover:bg-[#a855f7]/10 transition-all bg-white/5 hover:scale-110 shadow-lg"
                 >
                   {social.icon}
                 </a>
@@ -86,7 +86,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <li key={page.id}>
                   <button 
                     onClick={() => navigate(page.id)}
-                    className="group flex items-center gap-3 text-gray-500 hover:text-white font-bold uppercase tracking-widest text-[11px] transition-all"
+                    className="group flex items-center gap-3 text-gray-400 hover:text-white font-bold uppercase tracking-widest text-[11px] transition-all"
                   >
                     <ChevronRight className="w-3 h-3 text-[#a855f7] group-hover:translate-x-1 transition-transform" />
                     {page.name}
@@ -109,7 +109,7 @@ const Footer: React.FC<FooterProps> = () => {
                 'ADVANCED WOOCOMMERCE',
                 'HIGH-END PERFORMANCE SEO'
               ].map(item => (
-                <li key={item} className="text-gray-500 hover:text-white transition-colors font-bold uppercase tracking-widest text-[11px] flex items-start gap-4 leading-relaxed">
+                <li key={item} className="text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-widest text-[11px] flex items-start gap-4 leading-relaxed">
                   <span className="w-[6px] h-[6px] mt-1.5 rounded-full bg-[#a855f7] shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
                   {item}
                 </li>
@@ -124,29 +124,29 @@ const Footer: React.FC<FooterProps> = () => {
             </h4>
             <ul className="space-y-6">
               <li className="flex gap-4 items-start group">
-                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
-                  <MapPin className="w-4 h-4 text-[#a855f7]" />
+                <div className="w-10 h-10 border border-[#a855f7]/40 rounded-xl bg-[#a855f7]/10 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/80 transition-colors shadow-md">
+                  <MapPin className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex flex-col gap-1 mt-0.5">
-                  <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">BASE OF OPERATIONS</span>
+                  <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">BASE OF OPERATIONS</span>
                   <span className="text-white text-[11px] font-bold leading-relaxed">{CONTACT_INFO.address}</span>
                 </div>
               </li>
               <li className="flex gap-4 items-start group">
-                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
-                  <Mail className="w-4 h-4 text-[#a855f7]" />
+                <div className="w-10 h-10 border border-[#a855f7]/40 rounded-xl bg-[#a855f7]/10 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/80 transition-colors shadow-md">
+                  <Mail className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex flex-col gap-1 mt-0.5">
-                   <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">DIRECT INQUIRIES</span>
+                   <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">DIRECT INQUIRIES</span>
                    <span className="text-white text-[11px] font-bold">{CONTACT_INFO.email}</span>
                 </div>
               </li>
               <li className="flex gap-4 items-start group">
-                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
-                  <Phone className="w-4 h-4 text-[#a855f7]" />
+                <div className="w-10 h-10 border border-[#a855f7]/40 rounded-xl bg-[#a855f7]/10 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/80 transition-colors shadow-md">
+                  <Phone className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex flex-col gap-1 mt-0.5">
-                   <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">VOICE COMMUNICATION</span>
+                   <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">VOICE COMMUNICATION</span>
                    <span className="text-white text-[11px] font-bold">{CONTACT_INFO.phone}</span>
                 </div>
               </li>
@@ -155,14 +155,14 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
 
         {/* Legal & Copyright */}
-        <div className="pt-8 lg:pt-12 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-6">
-          <p className="text-gray-600 text-[9px] uppercase font-black tracking-[0.2em] text-center lg:text-left">
+        <div className="pt-8 lg:pt-12 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-6">
+          <p className="text-gray-400 text-[9px] uppercase font-black tracking-[0.2em] text-center lg:text-left">
             &copy; 2025 JASMIN ARA MIM. ALL ARCHITECTURAL ASSETS PROTECTED.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 lg:gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-600">
-            <span className="hover:text-[#a855f7] cursor-pointer transition-colors">SECURITY PROTOCOL</span>
-            <span className="hover:text-[#a855f7] cursor-pointer transition-colors">DATA PRIVACY</span>
-            <span className="flex items-center gap-2 cursor-pointer text-gray-400 group">
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">
+            <span className="hover:text-white cursor-pointer transition-colors">SECURITY PROTOCOL</span>
+            <span className="hover:text-white cursor-pointer transition-colors">DATA PRIVACY</span>
+            <span className="flex items-center gap-2 cursor-pointer text-gray-300 group">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
               <span className="group-hover:text-green-400 transition-colors">HIRE STATUS: AVAILABLE</span>
             </span>
