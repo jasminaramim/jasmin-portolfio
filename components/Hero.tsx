@@ -166,23 +166,23 @@ const Hero: React.FC<HeroProps> = () => {
           margin: 0 auto; padding: 0 24px; gap: 40px;
         }
         .hero-left { flex: 1; min-width: 0; }
-        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #c850c0; animation: pulse 2s infinite; }
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #8b5cf6; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .hero-name .gr { background: linear-gradient(135deg, #c850c0 0%, #4158d0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .btn-p { background: linear-gradient(135deg, #c850c0, #4158d0); transition: opacity 0.2s, transform 0.15s; }
+        .hero-name .gr { background: linear-gradient(135deg, #8b5cf6 0%, #4158d0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .btn-p { background: linear-gradient(135deg, #8b5cf6, #4158d0); transition: opacity 0.2s, transform 0.15s; }
         .btn-p:hover { opacity: 0.88; transform: translateY(-1px); }
         .btn-s { transition: border-color 0.2s, color 0.2s; }
         .btn-s:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
-        .st-n span { background: linear-gradient(135deg, #c850c0, #4158d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .st-n span { background: linear-gradient(135deg, #8b5cf6, #4158d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .code-card { width: 380px; flex-shrink: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; }
         .code-bar { display: flex; align-items: center; gap: 6px; padding: 11px 16px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .code-filename { font-size: 13px; color: rgba(255,255,255,0.28); letter-spacing: 0.8px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
         .code-body { padding: 22px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.8; }
         .ln { display: block; }
-        .cp { color: #c850c0; } .cb { color: #7088e8; } .ct { color: #56d9b1; }
+        .cp { color: #8b5cf6; } .cb { color: #7088e8; } .ct { color: #56d9b1; }
         .cw { color: rgba(255,255,255,0.78); } .cs { color: #f9c74f; } .cd { color: rgba(255,255,255,0.22); }
-        .cursor { display: inline-block; width: 7px; height: 13px; background: #c850c0; border-radius: 1px; animation: blink 1.1s infinite; vertical-align: middle; margin-left: 2px; }
+        .cursor { display: inline-block; width: 7px; height: 13px; background: #8b5cf6; border-radius: 1px; animation: blink 1.1s infinite; vertical-align: middle; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; }
         .mouse { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 11px; display: flex; justify-content: center; padding-top: 6px; }
@@ -206,7 +206,7 @@ const Hero: React.FC<HeroProps> = () => {
           <div className="hero-left">
             <div className="inline-flex items-center gap-2 bg-[rgba(200,80,192,0.1)] border border-[rgba(200,80,192,0.28)] rounded-[50px] py-1.5 px-4 mb-6">
               <div className="badge-dot"></div>
-              <span className="text-[#c850c0] text-[11px] font-semibold tracking-[1.8px] uppercase">{heroData.badgeText}</span>
+              <span className="text-[#8b5cf6] text-[11px] font-semibold tracking-[1.8px] uppercase">{heroData.badgeText}</span>
             </div>
 
             <div className="text-[68px] font-bold leading-none text-white tracking-[-3px] mb-[10px] hero-name">

@@ -45,7 +45,7 @@ const ProjectsView: React.FC = () => {
               key={cat}
               onClick={() => setFilter(cat)}
               className={`px-8 py-3 text-[9px] font-black uppercase tracking-widest transition-all rounded-full ${
-                filter === cat ? 'bg-gradient-to-r from-[#4B0082] to-[#FF69B4] text-white shadow-[0_0_15px_rgba(255,105,180,0.4)]' : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                filter === cat ? 'bg-gradient-to-r from-[#4B0082] to-[#a855f7] text-white shadow-[0_0_15px_rgba(255,105,180,0.4)]' : 'bg-white/5 text-gray-400 hover:bg-white/10'
               }`}
             >
               {cat}
@@ -63,7 +63,7 @@ const ProjectsView: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/40 shadow-xl rounded-[40px]"
+                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#a855f7]/40 shadow-xl rounded-[40px]"
               >
                 <div className="relative h-[400px] overflow-hidden">
                   <img 
@@ -76,7 +76,7 @@ const ProjectsView: React.FC = () => {
                   {/* Floating Tags */}
                   <div className="absolute top-8 left-8 flex flex-wrap gap-2">
                     {(project.tags || project.tech || []).map((tag: string) => (
-                      <span key={tag} className="text-[8px] px-4 py-1.5 bg-black/80 backdrop-blur-md text-[#FF69B4] border border-[#FF69B4]/30 font-black uppercase tracking-widest rounded-full">
+                      <span key={tag} className="text-[8px] px-4 py-1.5 bg-black/80 backdrop-blur-md text-[#a855f7] border border-[#a855f7]/30 font-black uppercase tracking-widest rounded-full">
                         {tag}
                       </span>
                     ))}
@@ -84,11 +84,11 @@ const ProjectsView: React.FC = () => {
                 </div>
 
                 <div className="p-12 relative">
-                  <div className="absolute -top-10 left-12 w-20 h-20 bg-gradient-to-br from-[#4B0082] to-[#FF69B4] flex items-center justify-center text-white font-black text-2xl italic shadow-2xl group-hover:-translate-y-2 transition-transform rounded-3xl">
+                  <div className="absolute -top-10 left-12 w-20 h-20 bg-gradient-to-br from-[#4B0082] to-[#a855f7] flex items-center justify-center text-white font-black text-2xl italic shadow-2xl group-hover:-translate-y-2 transition-transform rounded-3xl">
                     {project.title.charAt(0)}
                   </div>
                   
-                  <h3 className="text-3xl font-black mb-4 group-hover:text-[#FF69B4] transition-colors uppercase tracking-tight italic pt-8">
+                  <h3 className="text-3xl font-black mb-4 group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic pt-8">
                     {project.title}
                   </h3>
                   <p className="text-gray-500 text-xs mb-10 leading-relaxed font-bold max-w-lg italic">
@@ -100,7 +100,7 @@ const ProjectsView: React.FC = () => {
                       href={project.liveLink || '#'} 
                       target="_blank" 
                       rel="noreferrer"
-                      className="flex-1 text-center py-5 bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all shadow-lg rounded-2xl"
+                      className="flex-1 text-center py-5 bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all shadow-lg rounded-2xl"
                     >
                       🟣 Live Deployment
                     </a>

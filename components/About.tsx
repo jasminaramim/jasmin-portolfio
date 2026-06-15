@@ -25,9 +25,9 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-[#FF69B4] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Identity & Craft</h3>
+          <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Identity & Craft</h3>
           <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
-            Wordpress & <span className="text-[#FF69B4]">MERN Stack</span> Developer.
+            Wordpress & <span className="text-[#a855f7]">MERN Stack</span> Developer.
           </h2>
           <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-6 whitespace-pre-line">
             {profile.bio}
@@ -41,7 +41,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
               { title: 'Client-First', desc: 'Strategic solutions for business goals.' }
             ].map((item, i) => (
               <div key={i} className="flex gap-4">
-                <div className="w-1 h-full bg-[#FF69B4]"></div>
+                <div className="w-1 h-full bg-[#a855f7]"></div>
                 <div>
                   <h4 className="font-bold text-white text-xs uppercase tracking-wider">{item.title}</h4>
                   <p className="text-gray-500 text-[10px] mt-1 uppercase font-semibold">{item.desc}</p>
@@ -53,7 +53,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
           {onNavigate && (
             <button 
               onClick={() => onNavigate('about')}
-              className="px-8 py-4 border-2 border-[#FF69B4] text-[#FF69B4] font-black uppercase tracking-widest text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all"
+              className="px-8 py-4 border-2 border-[#a855f7] text-[#a855f7] font-black uppercase tracking-widest text-[10px] hover:bg-[#a855f7] hover:text-white transition-all"
             >
               More About Me
             </button>
@@ -73,8 +73,8 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
             {/* Visual Decor */}
-            <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-[#FF69B4]"></div>
-            <div className="absolute -bottom-4 -right-4 w-28 h-28 bg-[#FF69B4] shadow-[0_0_30px_rgba(255,105,180,0.4)] flex items-center justify-center p-3 text-center z-10">
+            <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-[#a855f7]"></div>
+            <div className="absolute -bottom-4 -right-4 w-28 h-28 bg-[#a855f7] shadow-[0_0_30px_rgba(255,105,180,0.4)] flex items-center justify-center p-3 text-center z-10">
               <span className="text-[10px] font-black text-white leading-tight uppercase tracking-widest italic">Digital Architect</span>
             </div>
           </div>

@@ -35,19 +35,19 @@ const ContactView: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { 
-            icon: <Mail className="w-8 h-8 text-[#FF69B4]" />, 
+            icon: <Mail className="w-8 h-8 text-[#a855f7]" />, 
             title: 'Direct Email', 
             value: profile.email, 
             link: `mailto:${profile.email}` 
           },
           { 
-            icon: <MapPin className="w-8 h-8 text-[#FF69B4]" />, 
+            icon: <MapPin className="w-8 h-8 text-[#a855f7]" />, 
             title: 'Office Location', 
             value: profile.address, 
             link: CONTACT_INFO.googleMapsLink 
           },
           { 
-            icon: <MessageSquare className="w-8 h-8 text-[#FF69B4]" />, 
+            icon: <MessageSquare className="w-8 h-8 text-[#a855f7]" />, 
             title: 'Instant Chat', 
             value: 'WhatsApp Active', 
             link: profile.socialLinks.whatsapp 
@@ -61,13 +61,13 @@ const ContactView: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="p-16 border border-white/5 hover:border-[#FF69B4]/30 transition-all group bg-[#080808]/70 backdrop-blur-md text-center relative overflow-hidden rounded-[40px]"
+            className="p-16 border border-white/5 hover:border-[#a855f7]/30 transition-all group bg-[#080808]/70 backdrop-blur-md text-center relative overflow-hidden rounded-[40px]"
           >
             <div className="flex justify-center mb-8 group-hover:scale-110 transition-transform relative z-10">{item.icon}</div>
-            <h3 className="font-black uppercase tracking-[0.2em] text-[10px] mb-4 text-[#FF69B4] italic relative z-10">{item.title}</h3>
+            <h3 className="font-black uppercase tracking-[0.2em] text-[10px] mb-4 text-[#a855f7] italic relative z-10">{item.title}</h3>
             <p className="text-white font-bold text-sm tracking-wide relative z-10">{item.value}</p>
             <div className="absolute bottom-6 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-              <ExternalLink className="w-4 h-4 text-[#FF69B4]" />
+              <ExternalLink className="w-4 h-4 text-[#a855f7]" />
             </div>
           </motion.a>
         ))}
@@ -78,8 +78,8 @@ const ContactView: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <h3 className="text-[#FF69B4] font-bold uppercase tracking-widest mb-4 italic text-[10px]">Geographic Location</h3>
-              <h2 className="text-4xl font-black uppercase tracking-tighter text-white italic">Banasree <span className="text-[#FF69B4]">HQ</span></h2>
+              <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-4 italic text-[10px]">Geographic Location</h3>
+              <h2 className="text-4xl font-black uppercase tracking-tighter text-white italic">Banasree <span className="text-[#a855f7]">HQ</span></h2>
             </div>
             <p className="max-w-md text-gray-500 text-xs font-bold uppercase tracking-widest italic leading-relaxed">
               Block K, Banasree, Dhaka, Bangladesh. Available for local consultations and global collaborations.
@@ -92,8 +92,8 @@ const ContactView: React.FC = () => {
             className="relative h-[500px] w-full border border-white/10 glass p-3 group rounded-[40px] overflow-hidden shadow-2xl"
           >
             {/* Live Feed Decoration */}
-            <div className="absolute top-8 left-8 z-10 flex items-center gap-3 bg-black/80 backdrop-blur-md px-4 py-2 border border-[#FF69B4]/50 rounded-lg">
-              <div className="w-2 h-2 rounded-full bg-[#FF69B4] animate-pulse"></div>
+            <div className="absolute top-8 left-8 z-10 flex items-center gap-3 bg-black/80 backdrop-blur-md px-4 py-2 border border-[#a855f7]/50 rounded-lg">
+              <div className="w-2 h-2 rounded-full bg-[#a855f7] animate-pulse"></div>
               <span className="text-[10px] font-black text-white uppercase tracking-widest">Live HQ Feed</span>
             </div>
 
@@ -107,8 +107,8 @@ const ContactView: React.FC = () => {
             ></iframe>
             
             {/* Map Corner Accents */}
-            <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-[#FF69B4] rounded-tl-3xl"></div>
-            <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-[#FF69B4] rounded-br-3xl"></div>
+            <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-[#a855f7] rounded-tl-3xl"></div>
+            <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-[#a855f7] rounded-br-3xl"></div>
           </motion.div>
 
           <div className="mt-12 flex justify-center">
@@ -116,7 +116,7 @@ const ContactView: React.FC = () => {
               href={CONTACT_INFO.googleMapsLink}
               target="_blank"
               rel="noreferrer"
-              className="px-12 py-5 border border-[#FF69B4] text-[#FF69B4] text-[9px] font-black uppercase tracking-[0.3em] hover:bg-[#FF69B4] hover:text-white transition-all shadow-[0_0_20px_rgba(255,105,180,0.2)] rounded-full"
+              className="px-12 py-5 border border-[#a855f7] text-[#a855f7] text-[9px] font-black uppercase tracking-[0.3em] hover:bg-[#a855f7] hover:text-white transition-all shadow-[0_0_20px_rgba(255,105,180,0.2)] rounded-full"
             >
               Open Large Map
             </a>

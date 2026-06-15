@@ -37,7 +37,7 @@ const WhatIDo: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#e03a7a] font-bold uppercase tracking-[0.2em] text-[11px] mb-3"
+            className="text-[#7e22ce] font-bold uppercase tracking-[0.2em] text-[11px] mb-3"
           >
             What I Offer
           </motion.h4>
@@ -49,7 +49,7 @@ const WhatIDo: React.FC = () => {
             className="text-4xl md:text-5xl lg:text-[54px] font-black uppercase tracking-[-1px] mb-6"
           >
             <span className="text-white">MY </span>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#e03a7a] to-[#c850c0]">SERVICES</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7e22ce] to-[#8b5cf6]">SERVICES</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -81,7 +81,7 @@ const WhatIDo: React.FC = () => {
               </p>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {service.tags.map(tag => (
-                  <span key={tag} className="px-3 py-1 rounded-full border border-[#c850c0]/30 text-[#e03a7a] text-[9px] font-black uppercase tracking-widest bg-[#c850c0]/5">
+                  <span key={tag} className="px-3 py-1 rounded-full border border-[#8b5cf6]/30 text-[#7e22ce] text-[9px] font-black uppercase tracking-widest bg-[#8b5cf6]/5">
                     {tag}
                   </span>
                 ))}
@@ -110,7 +110,7 @@ const WhatIDo: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-2">
               {['WPML', 'PAYMENT GATEWAY', 'PERFORMANCE', 'MULTI-LANGUAGE'].map(tag => (
-                <span key={tag} className="px-3 py-1 rounded-full border border-[#c850c0]/30 text-[#e03a7a] text-[9px] font-black uppercase tracking-widest bg-[#c850c0]/5">
+                <span key={tag} className="px-3 py-1 rounded-full border border-[#8b5cf6]/30 text-[#7e22ce] text-[9px] font-black uppercase tracking-widest bg-[#8b5cf6]/5">
                   {tag}
                 </span>
               ))}
@@ -120,15 +120,15 @@ const WhatIDo: React.FC = () => {
             <h4 className="text-gray-500 font-bold uppercase tracking-[0.15em] text-[10px] mb-6">DELIVERED RESULTS</h4>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
-                <div className="text-[26px] font-black text-[#FF69B4] leading-none mb-1">50+</div>
+                <div className="text-[26px] font-black text-[#a855f7] leading-none mb-1">50+</div>
                 <div className="text-gray-500 text-[9px] font-black uppercase tracking-widest">STORES BUILT</div>
               </div>
               <div>
-                <div className="text-[26px] font-black text-[#FF69B4] leading-none mb-1">99%</div>
+                <div className="text-[26px] font-black text-[#a855f7] leading-none mb-1">99%</div>
                 <div className="text-gray-500 text-[9px] font-black uppercase tracking-widest">UPTIME</div>
               </div>
               <div>
-                <div className="text-[26px] font-black text-[#FF69B4] leading-none mb-1">3x</div>
+                <div className="text-[26px] font-black text-[#a855f7] leading-none mb-1">3x</div>
                 <div className="text-gray-500 text-[9px] font-black uppercase tracking-widest">SPEED BOOST</div>
               </div>
             </div>

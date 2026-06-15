@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
             className="text-2xl font-black tracking-tighter outline-none z-[70]"
           >
             <span className="text-white">JAS</span>
-            <span className="text-[#FF69B4]">MIN</span>
+            <span className="text-[#a855f7]">MIN</span>
           </button>
 
           {/* Desktop Links */}
@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
                 key={link.id}
                 onClick={() => handleNavigate(link.id)}
                 className={`text-xs font-bold uppercase tracking-widest transition-colors ${
-                  (currentPage === 'home' ? '/' : '/' + currentPage) === link.id ? 'text-[#FF69B4]' : 'text-gray-400 hover:text-white'
+                  (currentPage === 'home' ? '/' : '/' + currentPage) === link.id ? 'text-[#a855f7]' : 'text-gray-400 hover:text-white'
                 }`}
               >
                 {link.name}
@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
             ))}
             <button
               onClick={handleHireMe}
-              className="px-6 py-2 bg-gradient-to-r from-[#4B0082] to-[#FF69B4] text-white text-[10px] font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-[0_0_20px_rgba(255,105,180,0.2)]"
+              className="px-6 py-2 bg-gradient-to-r from-[#4B0082] to-[#a855f7] text-white text-[10px] font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-[0_0_20px_rgba(255,105,180,0.2)]"
             >
               Hire Me
             </button>
@@ -109,14 +109,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
                   className="text-left group flex items-center gap-4"
                 >
                   <span className={`text-xl font-black uppercase tracking-tighter transition-colors ${
-                     (currentPage === 'home' ? '/' : '/' + currentPage) === link.id ? 'text-[#FF69B4]' : 'text-white group-hover:text-[#FF69B4]'
+                     (currentPage === 'home' ? '/' : '/' + currentPage) === link.id ? 'text-[#a855f7]' : 'text-white group-hover:text-[#a855f7]'
                   }`}>
                     {link.name}
                   </span>
                   {(currentPage === 'home' ? '/' : '/' + currentPage) === link.id && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="w-8 h-[2px] bg-[#FF69B4]"
+                      className="w-8 h-[2px] bg-[#a855f7]"
                     />
                   )}
                 </motion.button>
@@ -131,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
             >
               <button
                 onClick={handleHireMe}
-                className="w-full py-5 bg-gradient-to-r from-[#4B0082] to-[#FF69B4] text-white font-black uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_rgba(255,105,180,0.2)]"
+                className="w-full py-5 bg-gradient-to-r from-[#4B0082] to-[#a855f7] text-white font-black uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_rgba(255,105,180,0.2)]"
               >
                 Launch Collaboration
               </button>

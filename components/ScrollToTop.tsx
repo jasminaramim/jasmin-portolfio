@@ -35,14 +35,14 @@ const ScrollToTop: React.FC = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 z-[110] w-14 h-14 bg-[#FF69B4] text-white flex items-center justify-center shadow-[0_0_20px_rgba(255,105,180,0.6)] group overflow-hidden"
+          className="fixed bottom-10 right-10 z-[110] w-14 h-14 bg-[#a855f7] text-white flex items-center justify-center shadow-[0_0_20px_rgba(255,105,180,0.6)] group overflow-hidden"
           aria-label="Scroll to Top"
         >
           {/* Pulsing Glow Effect */}
           <motion.div 
             animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="absolute inset-0 bg-[#FF69B4] blur-xl pointer-events-none"
+            className="absolute inset-0 bg-[#a855f7] blur-xl pointer-events-none"
           />
           
           <ChevronUp className="w-6 h-6 relative z-10 transition-transform group-hover:-translate-y-1" />

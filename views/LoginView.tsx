@@ -40,7 +40,7 @@ const LoginView: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-transparent relative overflow-hidden px-4">
       {/* Dynamic Background Elements */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#4B0082]/20 rounded-full blur-[100px] animate-pulse"></div>
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#FF69B4]/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#a855f7]/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ const LoginView: React.FC = () => {
         className="glass max-w-md w-full p-8 rounded-2xl relative z-10 border border-white/10"
       >
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#4B0082] to-[#FF69B4] mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#4B0082] to-[#a855f7] mb-4">
             <Lock className="text-white w-8 h-8" />
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Admin Access</h1>
@@ -64,7 +64,7 @@ const LoginView: React.FC = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#a855f7]/50 transition-all"
                 placeholder="jasmin1142005"
                 required
               />
@@ -79,7 +79,7 @@ const LoginView: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#FF69B4]/50 transition-all"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-[#a855f7]/50 transition-all"
                 placeholder="••••••••"
                 required
               />
@@ -87,7 +87,7 @@ const LoginView: React.FC = () => {
           </div>
 
           {error && (
-            <div className="bg-[#FF69B4]/10 border border-[#FF69B4]/20 text-[#FF69B4] text-sm py-2 px-4 rounded-lg">
+            <div className="bg-[#a855f7]/10 border border-[#a855f7]/20 text-[#a855f7] text-sm py-2 px-4 rounded-lg">
               {error}
             </div>
           )}
@@ -95,7 +95,7 @@ const LoginView: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#4B0082] to-[#FF69B4] hover:opacity-90 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-[#4B0082] to-[#a855f7] hover:opacity-90 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

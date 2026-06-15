@@ -36,7 +36,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     <div className="bg-transparent text-white">
       <Hero onNavigate={onNavigate} />
 
-      <div className="bg-gradient-to-r from-[#4B0082] to-[#FF69B4] py-6 border-y border-white/10 relative z-20 overflow-hidden">
+      <div className="bg-gradient-to-r from-[#4B0082] to-[#a855f7] py-6 border-y border-white/10 relative z-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-around items-center gap-6">
           {['WORDPRESS ARCHITECTURE', 'MERN STACK DEVELOPER', '80+ DELIVERED PROJECTS', '2+ YEARS EXPERIENCE'].map((text) => (
             <span key={text} className="text-white font-black italic tracking-[0.15em] text-[10px] md:text-xs">
@@ -60,12 +60,12 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <h3 className="text-[#FF69B4] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Case Studies</h3>
-              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white italic">Featured <span className="text-[#FF69B4]">Works</span></h2>
+              <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Case Studies</h3>
+              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white italic">Featured <span className="text-[#a855f7]">Works</span></h2>
             </div>
             <a 
               href="/projects" 
-              className="hidden md:block text-[#FF69B4] font-black uppercase tracking-[0.2em] text-[9px] border-b border-[#FF69B4] pb-1.5 hover:text-white hover:border-white transition-all"
+              className="hidden md:block text-[#a855f7] font-black uppercase tracking-[0.2em] text-[9px] border-b border-[#a855f7] pb-1.5 hover:text-white hover:border-white transition-all"
             >
               Explore Full Gallery
             </a>
@@ -76,7 +76,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <motion.div 
                 key={project._id || idx}
                 whileHover={{ y: -8 }}
-                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#FF69B4]/30 shadow-2xl rounded-[32px]"
+                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#a855f7]/30 shadow-2xl rounded-[32px]"
               >
                 <div className="relative h-72 overflow-hidden">
                   <img 
@@ -87,16 +87,16 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all"></div>
                   <div className="absolute top-6 left-6 flex gap-2">
                     {(project.tags || project.tech || []).slice(0, 2).map((t: string) => (
-                      <span key={t} className="px-3 py-1 bg-black text-[#FF69B4] text-[8px] font-black uppercase tracking-widest border border-[#FF69B4]/30 backdrop-blur-md">{t}</span>
+                      <span key={t} className="px-3 py-1 bg-black text-[#a855f7] text-[8px] font-black uppercase tracking-widest border border-[#a855f7]/30 backdrop-blur-md">{t}</span>
                     ))}
                   </div>
                 </div>
                 <div className="p-10">
-                   <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#FF69B4] transition-colors italic">{project.title}</h3>
+                   <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#a855f7] transition-colors italic">{project.title}</h3>
                    <div className="flex gap-4">
-                     <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Live Preview</a>
+                     <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Live Preview</a>
                      {(project.hasCaseStudy || project.docLink) && (
-                       <a href={project.docLink || '#'} className="flex-1 py-4 text-center border border-[#FF69B4] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-xl">Case Study</a>
+                       <a href={project.docLink || '#'} className="flex-1 py-4 text-center border border-[#a855f7] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Case Study</a>
                      )}
                    </div>
                 </div>
@@ -108,7 +108,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       <GetConnected />
 
-      <section className="py-32 bg-gradient-to-tr from-[#4B0082] to-[#FF69B4] text-center relative overflow-hidden group">
+      <section className="py-32 bg-gradient-to-tr from-[#4B0082] to-[#a855f7] text-center relative overflow-hidden group">
         <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors"></div>
         <div className="relative z-10 max-w-4xl mx-auto px-6">
             <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-6 leading-tight">READY TO ELEVATE YOUR BRAND?</h3>

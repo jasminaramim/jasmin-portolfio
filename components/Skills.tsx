@@ -45,7 +45,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
             initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-[#FF69B4] font-bold uppercase tracking-[0.4em] mb-3 text-[10px]"
+            className="text-[#a855f7] font-bold uppercase tracking-[0.4em] mb-3 text-[10px]"
           >
             Full Stack Expertise
           </motion.h3>
@@ -55,13 +55,13 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white"
           >
-            💻 My <span className="text-[#FF69B4] pink-glow">Skills</span>
+            💻 My <span className="text-[#a855f7] pink-glow">Skills</span>
           </motion.h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {displayedCategories.map((category, catIdx) => (
-            <div key={category.title} className="space-y-10 p-10 glass border border-white/5 hover:border-[#FF69B4]/30 transition-all duration-500">
+            <div key={category.title} className="space-y-10 p-10 glass border border-white/5 hover:border-[#a855f7]/30 transition-all duration-500">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-[2px] bg-[#4B0082]"></div>
                 <h4 className="text-2xl font-black text-white uppercase tracking-widest">{category.title}</h4>
@@ -73,11 +73,11 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
                     <div className="flex justify-between items-end mb-3">
                       <div className="flex items-center gap-3">
                          {skill.logoLink && <img src={skill.logoLink} alt={skill.name} className="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all" />}
-                         <span className="text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-[#FF69B4] transition-colors">
+                         <span className="text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-[#a855f7] transition-colors">
                             {skill.name}
                          </span>
                       </div>
-                      <span className="text-xs font-black text-[#FF69B4]">
+                      <span className="text-xs font-black text-[#a855f7]">
                         {skill.level}%
                       </span>
                     </div>
@@ -87,7 +87,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
                         whileInView={{ width: `${skill.level}%` }}
                         viewport={{ once: true }}
                         transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 + (skillIdx * 0.05) }}
-                        className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4B0082] to-[#FF69B4] shadow-[0_0_15px_rgba(255,105,180,0.3)]"
+                        className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#4B0082] to-[#a855f7] shadow-[0_0_15px_rgba(255,105,180,0.3)]"
                       />
                     </div>
                   </div>
@@ -101,7 +101,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
           <div className="flex justify-center">
             <button 
               onClick={() => navigate('/experience')}
-              className="group flex items-center gap-4 px-10 py-5 border-2 border-[#FF69B4] text-[#FF69B4] font-black uppercase tracking-widest text-[10px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-[0_0_20px_rgba(255,105,180,0.1)]"
+              className="group flex items-center gap-4 px-10 py-5 border-2 border-[#a855f7] text-[#a855f7] font-black uppercase tracking-widest text-[10px] hover:bg-[#a855f7] hover:text-white transition-all shadow-[0_0_20px_rgba(255,105,180,0.1)]"
             >
               Load More Skills
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />

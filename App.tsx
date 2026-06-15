@@ -37,7 +37,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTopOnRoute />
-      <div className="bg-black text-white selection:bg-[#FF69B4] selection:text-white min-h-screen flex flex-col relative">
+      <div className="bg-black text-white selection:bg-[#a855f7] selection:text-white min-h-screen flex flex-col relative">
         <Background3D />
         
         <Routes>
@@ -70,7 +70,7 @@ const App: React.FC = () => {
         
         {/* Purple/Pink Background Decorative Glows */}
         <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#4B0082]/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
-        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#FF69B4]/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#a855f7]/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
       </div>
     </Router>
   );

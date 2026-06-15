@@ -21,7 +21,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ title, subtitle, image }) => 
         <motion.h4 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[#FF69B4] font-black uppercase tracking-[0.4em] text-[10px] mb-3"
+          className="text-[#a855f7] font-black uppercase tracking-[0.4em] text-[10px] mb-3"
         >
           {subtitle}
         </motion.h4>
@@ -32,13 +32,13 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ title, subtitle, image }) => 
           className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white"
         >
           {title.split(' ').map((word, i) => (
-            <span key={i} className={i % 2 === 1 ? 'text-[#FF69B4]' : ''}>{word} </span>
+            <span key={i} className={i % 2 === 1 ? 'text-[#a855f7]' : ''}>{word} </span>
           ))}
         </motion.h1>
         <div className="mt-6 flex justify-center items-center gap-4">
-          <div className="h-[1px] w-10 bg-[#FF69B4]/40"></div>
+          <div className="h-[1px] w-10 bg-[#a855f7]/40"></div>
           <span className="text-gray-400 text-[9px] font-black uppercase tracking-widest">Home / {title}</span>
-          <div className="h-[1px] w-10 bg-[#FF69B4]/40"></div>
+          <div className="h-[1px] w-10 bg-[#a855f7]/40"></div>
         </div>
       </div>
     </div>

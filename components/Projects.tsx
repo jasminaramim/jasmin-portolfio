@@ -16,8 +16,8 @@ const Projects: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
           <div>
-            <h3 className="text-[#FF69B4] font-bold uppercase tracking-widest mb-4 italic">Real Client Projects</h3>
-            <h2 className="text-5xl font-black uppercase tracking-tighter text-white italic">Selected <span className="text-[#FF69B4]">Works</span></h2>
+            <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-4 italic">Real Client Projects</h3>
+            <h2 className="text-5xl font-black uppercase tracking-tighter text-white italic">Selected <span className="text-[#a855f7]">Works</span></h2>
           </div>
           <p className="max-w-md text-gray-500 text-sm leading-relaxed italic font-medium">
             These projects were built for real clients with real business requirements. 
@@ -44,7 +44,7 @@ const Projects: React.FC = () => {
                 <div className="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all"></div>
                 <div className="absolute top-8 left-8 flex flex-wrap gap-2">
                   {(project.tags || project.tech || []).map((tag: string) => (
-                    <span key={tag} className="text-[10px] px-4 py-1.5 bg-black text-[#FF69B4] border border-[#FF69B4]/30 font-black uppercase tracking-widest rounded-full backdrop-blur-md">
+                    <span key={tag} className="text-[10px] px-4 py-1.5 bg-black text-[#a855f7] border border-[#a855f7]/30 font-black uppercase tracking-widest rounded-full backdrop-blur-md">
                       {tag}
                     </span>
                   ))}
@@ -52,7 +52,7 @@ const Projects: React.FC = () => {
               </div>
 
               <div className="p-12">
-                <h3 className="text-3xl font-black mb-4 group-hover:text-[#FF69B4] transition-colors uppercase tracking-tight italic">
+                <h3 className="text-3xl font-black mb-4 group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic">
                   {project.title}
                 </h3>
                 <p className="text-gray-500 text-sm mb-8 leading-relaxed line-clamp-2 font-medium italic">
@@ -64,7 +64,7 @@ const Projects: React.FC = () => {
                     href={project.liveLink} 
                     target="_blank" 
                     rel="noreferrer"
-                    className="flex-1 text-center py-5 bg-[#4B0082] text-white text-xs font-black uppercase tracking-widest hover:bg-[#FF69B4] transition-all rounded-2xl shadow-lg"
+                    className="flex-1 text-center py-5 bg-[#4B0082] text-white text-xs font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-2xl shadow-lg"
                   >
                     🟣 Live Website
                   </a>

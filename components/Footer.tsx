@@ -43,8 +43,8 @@ const Footer: React.FC<FooterProps> = () => {
               onClick={() => navigate('/')}
               className="text-4xl font-black tracking-tighter group outline-none"
             >
-              <span className="text-white uppercase transition-colors group-hover:text-[#FF69B4]">Jas</span>
-              <span className="text-[#FF69B4] uppercase transition-colors group-hover:text-white">min</span>
+              <span className="text-white uppercase transition-colors group-hover:text-[#a855f7]">Jas</span>
+              <span className="text-[#a855f7] uppercase transition-colors group-hover:text-white">min</span>
             </button>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs uppercase font-bold italic tracking-wider">
               We specialize in crafting enterprise-grade web applications using the MERN Stack and custom WordPress architecture. Our mission is to transform business goals into high-performance digital reality.
@@ -62,7 +62,7 @@ const Footer: React.FC<FooterProps> = () => {
                   target="_blank" 
                   rel="noreferrer"
                   title={social.label}
-                  className="w-12 h-12 border border-white/10 flex items-center justify-center text-gray-500 hover:text-[#FF69B4] hover:border-[#FF69B4] transition-all bg-black/50 hover:scale-110"
+                  className="w-12 h-12 border border-white/10 flex items-center justify-center text-gray-500 hover:text-[#a855f7] hover:border-[#a855f7] transition-all bg-black/50 hover:scale-110"
                 >
                   {social.icon}
                 </a>
@@ -73,7 +73,7 @@ const Footer: React.FC<FooterProps> = () => {
           {/* Quick Links Column */}
           <div>
             <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#FF69B4]"></span> Quick Links
+               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Quick Links
             </h4>
             <ul className="space-y-6">
               {[
@@ -86,7 +86,7 @@ const Footer: React.FC<FooterProps> = () => {
                 <li key={page.id}>
                   <button 
                     onClick={() => navigate(page.id)}
-                    className="text-gray-500 hover:text-[#FF69B4] font-bold uppercase tracking-widest text-[10px] transition-all hover:translate-x-2"
+                    className="text-gray-500 hover:text-[#a855f7] font-bold uppercase tracking-widest text-[10px] transition-all hover:translate-x-2"
                   >
                     // {page.name}
                   </button>
@@ -98,7 +98,7 @@ const Footer: React.FC<FooterProps> = () => {
           {/* Core Stacks */}
           <div>
             <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#FF69B4]"></span> Expertises
+               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Expertises
             </h4>
             <ul className="space-y-6">
               {[
@@ -109,7 +109,7 @@ const Footer: React.FC<FooterProps> = () => {
                 'High-end Performance SEO'
               ].map(item => (
                 <li key={item} className="text-gray-500 font-bold uppercase tracking-widest text-[10px] flex items-center gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[#FF69B4]/20 group-hover:bg-[#FF69B4]"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#a855f7]/20 group-hover:bg-[#a855f7]"></span>
                   {item}
                 </li>
               ))}
@@ -119,25 +119,25 @@ const Footer: React.FC<FooterProps> = () => {
           {/* Secure Contacts */}
           <div>
             <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#FF69B4]"></span> Communications
+               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Communications
             </h4>
             <ul className="space-y-8">
               <li className="flex gap-6 items-start group">
-                <MapPin className="w-5 h-5 text-[#FF69B4] shrink-0 group-hover:scale-125 transition-transform" />
+                <MapPin className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
                 <div className="flex flex-col gap-1">
                   <span className="text-white text-[10px] font-black uppercase tracking-widest">Base of Operations</span>
                   <span className="text-gray-500 text-[10px] font-bold leading-relaxed italic">{CONTACT_INFO.address}</span>
                 </div>
               </li>
               <li className="flex gap-6 items-center group">
-                <Mail className="w-5 h-5 text-[#FF69B4] shrink-0 group-hover:scale-125 transition-transform" />
+                <Mail className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
                 <div className="flex flex-col gap-1">
                    <span className="text-white text-[10px] font-black uppercase tracking-widest">Direct Inquiries</span>
-                   <span className="text-gray-500 text-[10px] font-bold underline underline-offset-4 decoration-[#FF69B4]/30">{CONTACT_INFO.email}</span>
+                   <span className="text-gray-500 text-[10px] font-bold underline underline-offset-4 decoration-[#a855f7]/30">{CONTACT_INFO.email}</span>
                 </div>
               </li>
               <li className="flex gap-6 items-center group">
-                <Phone className="w-5 h-5 text-[#FF69B4] shrink-0 group-hover:scale-125 transition-transform" />
+                <Phone className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
                 <div className="flex flex-col gap-1">
                    <span className="text-white text-[10px] font-black uppercase tracking-widest">Voice Communication</span>
                    <span className="text-gray-500 text-[10px] font-bold">{CONTACT_INFO.phone}</span>
@@ -153,9 +153,9 @@ const Footer: React.FC<FooterProps> = () => {
             &copy; 2025 JASMIN ARA MIM. ALL ARCHITECTURAL ASSETS PROTECTED.
           </p>
           <div className="flex gap-10 text-[9px] font-black uppercase tracking-[0.4em] text-gray-600">
-            <span className="hover:text-[#FF69B4] cursor-pointer transition-colors">SECURITY PROTOCOL</span>
-            <span className="hover:text-[#FF69B4] cursor-pointer transition-colors">DATA PRIVACY</span>
-            <span className="text-[#FF69B4] animate-pulse cursor-pointer">HIRE STATUS: AVAILABLE</span>
+            <span className="hover:text-[#a855f7] cursor-pointer transition-colors">SECURITY PROTOCOL</span>
+            <span className="hover:text-[#a855f7] cursor-pointer transition-colors">DATA PRIVACY</span>
+            <span className="text-[#a855f7] animate-pulse cursor-pointer">HIRE STATUS: AVAILABLE</span>
           </div>
         </div>
       </div>

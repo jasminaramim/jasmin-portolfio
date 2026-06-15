@@ -28,8 +28,8 @@ const AboutView: React.FC = () => {
         <section className="py-32 bg-transparent border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <div className="mb-20 text-center">
-              <h3 className="text-[#FF69B4] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Client Feedback</h3>
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white italic">Digital <span className="text-[#FF69B4]">Reputation</span></h2>
+              <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Client Feedback</h3>
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white italic">Digital <span className="text-[#a855f7]">Reputation</span></h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {reviews.map((review, i) => (
@@ -38,15 +38,15 @@ const AboutView: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="p-10 glass border border-white/5 rounded-[40px] hover:border-[#FF69B4]/30 transition-all"
+                  className="p-10 glass border border-white/5 rounded-[40px] hover:border-[#a855f7]/30 transition-all"
                 >
                   <div className="flex gap-1 mb-6">
                     {[...Array(review.rating)].map((_, j) => (
-                      <Star key={j} size={14} className="fill-[#FF69B4] text-[#FF69B4]" />
+                      <Star key={j} size={14} className="fill-[#a855f7] text-[#a855f7]" />
                     ))}
                   </div>
                   <p className="text-gray-400 italic text-sm mb-8 leading-relaxed">"{review.description}"</p>
-                  <h4 className="text-[#FF69B4] font-black uppercase italic tracking-tighter">{review.clientName}</h4>
+                  <h4 className="text-[#a855f7] font-black uppercase italic tracking-tighter">{review.clientName}</h4>
                 </motion.div>
               ))}
             </div>
@@ -57,12 +57,12 @@ const AboutView: React.FC = () => {
       <section className="py-32 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24">
           <div>
-            <h2 className="text-4xl font-black mb-12 uppercase text-[#FF69B4] italic tracking-tighter">Career Objectives</h2>
+            <h2 className="text-4xl font-black mb-12 uppercase text-[#a855f7] italic tracking-tighter">Career Objectives</h2>
             <div className="space-y-8">
               <p className="text-gray-400 text-xl leading-relaxed font-bold">
                 My immediate focus is joining an innovative tech environment where I can contribute to complex <span className="text-white">React.js</span> ecosystems while maintaining my edge as a premium <span className="text-white">WordPress</span> developer.
               </p>
-              <div className="p-8 border-l-4 border-[#FF69B4] bg-[#FF69B4]/5">
+              <div className="p-8 border-l-4 border-[#a855f7] bg-[#a855f7]/5">
                 <p className="text-gray-400 italic">
                   "I don't just build websites; I deliver business tools that solve real problems. My journey from a curious student to a professional developer is driven by the thrill of clean code and pixel-perfect aesthetics."
                 </p>
@@ -79,11 +79,11 @@ const AboutView: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-8">
                <div className="p-10 border border-white/5 glass text-center">
-                  <div className="text-[#FF69B4] font-black text-5xl mb-2 italic">80+</div>
+                  <div className="text-[#a855f7] font-black text-5xl mb-2 italic">80+</div>
                   <div className="text-gray-500 text-[10px] font-black uppercase tracking-widest">Projects Delivered</div>
                </div>
                <div className="p-10 border border-white/5 glass text-center">
-                  <div className="text-[#FF69B4] font-black text-5xl mb-2 italic">50+</div>
+                  <div className="text-[#a855f7] font-black text-5xl mb-2 italic">50+</div>
                   <div className="text-gray-500 text-[10px] font-black uppercase tracking-widest">Global Clients</div>
                </div>
             </div>

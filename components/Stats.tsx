@@ -23,7 +23,7 @@ const Stats: React.FC = () => {
 
   return (
     <div className="py-20 bg-transparent relative overflow-hidden">
-      <div className="absolute inset-0 bg-[#FF69B4]/5 blur-[120px]"></div>
+      <div className="absolute inset-0 bg-[#a855f7]/5 blur-[120px]"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, idx) => (
@@ -35,10 +35,10 @@ const Stats: React.FC = () => {
               viewport={{ once: true }}
               className="text-center group"
             >
-              <div className="text-4xl md:text-5xl font-black text-[#FF69B4] group-hover:text-white transition-colors duration-500 mb-2 italic tracking-tighter">
+              <div className="text-4xl md:text-5xl font-black text-[#a855f7] group-hover:text-white transition-colors duration-500 mb-2 italic tracking-tighter">
                 {stat.value}
               </div>
-              <div className="text-[9px] uppercase tracking-[0.2em] font-black text-gray-500 group-hover:text-[#FF69B4] transition-colors">
+              <div className="text-[9px] uppercase tracking-[0.2em] font-black text-gray-500 group-hover:text-[#a855f7] transition-colors">
                 {stat.label}
               </div>
             </motion.div>

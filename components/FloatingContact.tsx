@@ -48,10 +48,10 @@ const FloatingContact: React.FC = () => {
             href={social.link}
             target="_blank"
             rel="noreferrer"
-            className="w-14 h-14 glass flex items-center justify-center text-gray-400 transition-all duration-300 hover:scale-110 hover:border-[#FF69B4] hover:text-[#FF69B4] group relative border border-white/10 rounded-2xl"
+            className="w-14 h-14 glass flex items-center justify-center text-gray-400 transition-all duration-300 hover:scale-110 hover:border-[#a855f7] hover:text-[#a855f7] group relative border border-white/10 rounded-2xl"
           >
             {social.icon}
-            <div className="absolute right-full mr-6 px-4 py-2 bg-[#FF69B4] text-white text-[9px] font-black uppercase tracking-widest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0 pointer-events-none italic shadow-lg">
+            <div className="absolute right-full mr-6 px-4 py-2 bg-[#a855f7] text-white text-[9px] font-black uppercase tracking-widest whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0 pointer-events-none italic shadow-lg">
               {social.name}
             </div>
           </a>
@@ -62,7 +62,7 @@ const FloatingContact: React.FC = () => {
       <motion.div 
         initial={{ y: 100 }}
         animate={{ y: 0 }}
-        className="fixed bottom-0 left-0 w-full glass border-t border-[#FF69B4]/30 z-[100] flex md:hidden justify-around py-6 px-6 backdrop-blur-2xl"
+        className="fixed bottom-0 left-0 w-full glass border-t border-[#a855f7]/30 z-[100] flex md:hidden justify-around py-6 px-6 backdrop-blur-2xl"
       >
         {contactOptions.map((social) => (
           <a
@@ -70,7 +70,7 @@ const FloatingContact: React.FC = () => {
             href={social.link}
             target="_blank"
             rel="noreferrer"
-            className="flex flex-col items-center gap-2 group text-gray-400 active:text-[#FF69B4]"
+            className="flex flex-col items-center gap-2 group text-gray-400 active:text-[#a855f7]"
           >
             {social.icon}
             <span className="text-[8px] font-black uppercase tracking-[0.2em]">{social.name}</span>
