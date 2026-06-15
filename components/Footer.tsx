@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CONTACT_INFO } from '../constants';
-import { Github, Linkedin, MessageSquare, Phone, Mail, MapPin, Facebook } from 'lucide-react';
+import { Github, Linkedin, MessageSquare, Phone, Mail, MapPin, Facebook, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface FooterProps {
@@ -32,29 +32,29 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <footer className="bg-[#050505]/75 backdrop-blur-md border-t border-white/5 pt-32 pb-12 overflow-hidden relative">
       {/* Background Tech Elements */}
-      <div className="absolute top-0 left-0 w-full h-full tech-grid pointer-events-none opacity-5"></div>
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5"></div>
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#4B0082]/5 blur-[180px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20 lg:mb-32">
           {/* Brand & About Column */}
-          <div className="space-y-10">
+          <div className="space-y-8">
             <button 
               onClick={() => navigate('/')}
-              className="text-4xl font-black tracking-tighter group outline-none"
+              className="text-4xl font-black tracking-tighter group outline-none text-left"
             >
               <span className="text-white uppercase transition-colors group-hover:text-[#a855f7]">Jas</span>
               <span className="text-[#a855f7] uppercase transition-colors group-hover:text-white">min</span>
             </button>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-xs uppercase font-bold italic tracking-wider">
+            <p className="text-gray-500 text-[13px] leading-relaxed max-w-xs font-bold italic tracking-wider">
               We specialize in crafting enterprise-grade web applications using the MERN Stack and custom WordPress architecture. Our mission is to transform business goals into high-performance digital reality.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               {[
-                { icon: <Linkedin className="w-5 h-5" />, link: socials.linkedin, label: 'LinkedIn' },
-                { icon: <Github className="w-5 h-5" />, link: socials.github, label: 'GitHub' },
-                { icon: <Facebook className="w-5 h-5" />, link: socials.facebook, label: 'Facebook' },
-                { icon: <MessageSquare className="w-5 h-5" />, link: socials.whatsapp, label: 'WhatsApp' }
+                { icon: <Linkedin className="w-4 h-4" />, link: socials.linkedin, label: 'LinkedIn' },
+                { icon: <Github className="w-4 h-4" />, link: socials.github, label: 'GitHub' },
+                { icon: <Facebook className="w-4 h-4" />, link: socials.facebook, label: 'Facebook' },
+                { icon: <MessageSquare className="w-4 h-4" />, link: socials.whatsapp, label: 'WhatsApp' }
               ].map((social, i) => (
                 <a 
                   key={i} 
@@ -62,7 +62,7 @@ const Footer: React.FC<FooterProps> = () => {
                   target="_blank" 
                   rel="noreferrer"
                   title={social.label}
-                  className="w-12 h-12 border border-white/10 flex items-center justify-center text-gray-500 hover:text-[#a855f7] hover:border-[#a855f7] transition-all bg-black/50 hover:scale-110"
+                  className="w-10 h-10 border border-white/10 rounded-xl flex items-center justify-center text-gray-500 hover:text-[#a855f7] hover:border-[#a855f7] transition-all bg-black/50 hover:scale-110"
                 >
                   {social.icon}
                 </a>
@@ -72,23 +72,24 @@ const Footer: React.FC<FooterProps> = () => {
 
           {/* Quick Links Column */}
           <div>
-            <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Quick Links
+            <h4 className="text-[#a855f7] font-black uppercase tracking-[0.2em] mb-8 text-[11px] flex items-center gap-3">
+               <span className="w-6 h-[1px] bg-[#a855f7]"></span> QUICK LINKS
             </h4>
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               {[
-                { name: 'Home', id: '/' },
-                { name: 'About', id: '/about' },
-                { name: 'Projects', id: '/projects' },
-                { name: 'Experience', id: '/experience' },
-                { name: 'Contact', id: '/contact' }
+                { name: 'HOME', id: '/' },
+                { name: 'ABOUT', id: '/about' },
+                { name: 'PROJECTS', id: '/projects' },
+                { name: 'EXPERIENCE', id: '/experience' },
+                { name: 'CONTACT', id: '/contact' }
               ].map(page => (
                 <li key={page.id}>
                   <button 
                     onClick={() => navigate(page.id)}
-                    className="text-gray-500 hover:text-[#a855f7] font-bold uppercase tracking-widest text-[10px] transition-all hover:translate-x-2"
+                    className="group flex items-center gap-3 text-gray-500 hover:text-white font-bold uppercase tracking-widest text-[11px] transition-all"
                   >
-                    // {page.name}
+                    <ChevronRight className="w-3 h-3 text-[#a855f7] group-hover:translate-x-1 transition-transform" />
+                    {page.name}
                   </button>
                 </li>
               ))}
@@ -97,19 +98,19 @@ const Footer: React.FC<FooterProps> = () => {
 
           {/* Core Stacks */}
           <div>
-            <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Expertises
+            <h4 className="text-[#a855f7] font-black uppercase tracking-[0.2em] mb-8 text-[11px] flex items-center gap-3">
+               <span className="w-6 h-[1px] bg-[#a855f7]"></span> EXPERTISES
             </h4>
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               {[
-                'Custom React.js Ecosystems',
-                'Node.js API Architecture',
-                'WP Custom Theme Logic',
-                'Advanced WooCommerce',
-                'High-end Performance SEO'
+                'CUSTOM REACT.JS ECOSYSTEMS',
+                'NODE.JS API ARCHITECTURE',
+                'WP CUSTOM THEME LOGIC',
+                'ADVANCED WOOCOMMERCE',
+                'HIGH-END PERFORMANCE SEO'
               ].map(item => (
-                <li key={item} className="text-gray-500 font-bold uppercase tracking-widest text-[10px] flex items-center gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[#a855f7]/20 group-hover:bg-[#a855f7]"></span>
+                <li key={item} className="text-gray-500 hover:text-white transition-colors font-bold uppercase tracking-widest text-[11px] flex items-start gap-4 leading-relaxed">
+                  <span className="w-[6px] h-[6px] mt-1.5 rounded-full bg-[#a855f7] shrink-0 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
                   {item}
                 </li>
               ))}
@@ -118,29 +119,35 @@ const Footer: React.FC<FooterProps> = () => {
 
           {/* Secure Contacts */}
           <div>
-            <h4 className="text-white font-black uppercase tracking-[0.3em] mb-10 text-xs italic flex items-center gap-3">
-               <span className="w-8 h-[2px] bg-[#a855f7]"></span> Communications
+            <h4 className="text-[#a855f7] font-black uppercase tracking-[0.2em] mb-8 text-[11px] flex items-center gap-3">
+               <span className="w-6 h-[1px] bg-[#a855f7]"></span> COMMUNICATIONS
             </h4>
-            <ul className="space-y-8">
-              <li className="flex gap-6 items-start group">
-                <MapPin className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
-                <div className="flex flex-col gap-1">
-                  <span className="text-white text-[10px] font-black uppercase tracking-widest">Base of Operations</span>
-                  <span className="text-gray-500 text-[10px] font-bold leading-relaxed italic">{CONTACT_INFO.address}</span>
+            <ul className="space-y-6">
+              <li className="flex gap-4 items-start group">
+                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
+                  <MapPin className="w-4 h-4 text-[#a855f7]" />
+                </div>
+                <div className="flex flex-col gap-1 mt-0.5">
+                  <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">BASE OF OPERATIONS</span>
+                  <span className="text-white text-[11px] font-bold leading-relaxed">{CONTACT_INFO.address}</span>
                 </div>
               </li>
-              <li className="flex gap-6 items-center group">
-                <Mail className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
-                <div className="flex flex-col gap-1">
-                   <span className="text-white text-[10px] font-black uppercase tracking-widest">Direct Inquiries</span>
-                   <span className="text-gray-500 text-[10px] font-bold underline underline-offset-4 decoration-[#a855f7]/30">{CONTACT_INFO.email}</span>
+              <li className="flex gap-4 items-start group">
+                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
+                  <Mail className="w-4 h-4 text-[#a855f7]" />
+                </div>
+                <div className="flex flex-col gap-1 mt-0.5">
+                   <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">DIRECT INQUIRIES</span>
+                   <span className="text-white text-[11px] font-bold">{CONTACT_INFO.email}</span>
                 </div>
               </li>
-              <li className="flex gap-6 items-center group">
-                <Phone className="w-5 h-5 text-[#a855f7] shrink-0 group-hover:scale-125 transition-transform" />
-                <div className="flex flex-col gap-1">
-                   <span className="text-white text-[10px] font-black uppercase tracking-widest">Voice Communication</span>
-                   <span className="text-gray-500 text-[10px] font-bold">{CONTACT_INFO.phone}</span>
+              <li className="flex gap-4 items-start group">
+                <div className="w-10 h-10 border border-[#a855f7]/20 rounded-xl bg-[#a855f7]/5 flex items-center justify-center shrink-0 group-hover:border-[#a855f7]/50 transition-colors">
+                  <Phone className="w-4 h-4 text-[#a855f7]" />
+                </div>
+                <div className="flex flex-col gap-1 mt-0.5">
+                   <span className="text-gray-500 text-[10px] font-black uppercase tracking-widest">VOICE COMMUNICATION</span>
+                   <span className="text-white text-[11px] font-bold">{CONTACT_INFO.phone}</span>
                 </div>
               </li>
             </ul>
@@ -148,14 +155,17 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
 
         {/* Legal & Copyright */}
-        <div className="pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-gray-600 text-[9px] uppercase font-black tracking-[0.5em] text-center md:text-left">
+        <div className="pt-8 lg:pt-12 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-6">
+          <p className="text-gray-600 text-[9px] uppercase font-black tracking-[0.2em] text-center lg:text-left">
             &copy; 2025 JASMIN ARA MIM. ALL ARCHITECTURAL ASSETS PROTECTED.
           </p>
-          <div className="flex gap-10 text-[9px] font-black uppercase tracking-[0.4em] text-gray-600">
+          <div className="flex flex-wrap justify-center gap-6 lg:gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-600">
             <span className="hover:text-[#a855f7] cursor-pointer transition-colors">SECURITY PROTOCOL</span>
             <span className="hover:text-[#a855f7] cursor-pointer transition-colors">DATA PRIVACY</span>
-            <span className="text-[#a855f7] animate-pulse cursor-pointer">HIRE STATUS: AVAILABLE</span>
+            <span className="flex items-center gap-2 cursor-pointer text-gray-400 group">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+              <span className="group-hover:text-green-400 transition-colors">HIRE STATUS: AVAILABLE</span>
+            </span>
           </div>
         </div>
       </div>
