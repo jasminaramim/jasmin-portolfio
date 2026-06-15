@@ -41,6 +41,15 @@ const defaultHeroData: HeroContent = {
   }
 };
 
+const floatingIcons = [
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', top: '-5%', left: '80%', delay: 0, glow: 'rgba(97,218,251,0.3)' },
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg', top: '5%', left: '5%', delay: 1.5, glow: 'rgba(71,162,72,0.3)' },
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg', top: '45%', left: '105%', delay: 0.5, glow: 'rgba(104,160,99,0.3)' },
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg', top: '45%', left: '-15%', delay: 2, glow: 'rgba(33,117,155,0.3)' },
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg', top: '85%', left: '85%', delay: 1, glow: 'rgba(97,218,251,0.3)' },
+  { icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg', top: '95%', left: '20%', delay: 2.5, glow: 'rgba(104,160,99,0.3)' },
+];
+
 const Hero: React.FC<HeroProps> = () => {
   const [heroData, setHeroData] = useState<HeroContent>(defaultHeroData);
   const navigate = useNavigate();
@@ -260,18 +269,47 @@ const Hero: React.FC<HeroProps> = () => {
             </div>
           </div>
 
-          {/* CODE CARD */}
-          <div className="code-card">
-            <div className="code-bar">
-              <div className="dot" style={{background:'#ff5f57'}}></div>
-              <div className="dot" style={{background:'#febc2e'}}></div>
-              <div className="dot" style={{background:'#28c840'}}></div>
-              <span className="code-filename">developer.js</span>
+          {/* CODE CARD WITH ORBIT */}
+          <div className="relative flex items-center justify-center shrink-0 mt-12 md:mt-0 max-w-[full] md:max-w-none">
+            {/* Orbit Lines */}
+            <div className="absolute w-[420px] h-[420px] md:w-[480px] md:h-[480px] border border-white/5 rounded-full pointer-events-none"></div>
+            <div className="absolute w-[540px] h-[540px] md:w-[620px] md:h-[620px] border border-[#a855f7]/10 rounded-full pointer-events-none border-dashed animate-[spin_100s_linear_infinite]"></div>
+
+            {/* Floating Tech Icons */}
+            <div className="absolute inset-0 pointer-events-none hidden md:block">
+              {floatingIcons.map((item, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, delay: item.delay, ease: "easeInOut" }}
+                  className="absolute z-20 flex items-center justify-center w-16 h-16 rounded-full bg-[#0a0a0c]/80 backdrop-blur-md border border-white/10"
+                  style={{ top: item.top, left: item.left, boxShadow: `0 0 25px ${item.glow}` }}
+                >
+                  <img src={item.icon} alt="tech" className="w-8 h-8 object-contain" />
+                </motion.div>
+              ))}
+
+              <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute top-[-15%] left-[35%] z-20"
+              >
+                  <div className="text-white/60 font-light text-2xl tracking-widest bg-[#0a0a0c]/80 px-6 py-2 rounded-full border border-white/5 backdrop-blur-md">Express<span className="text-white font-bold">.js</span></div>
+              </motion.div>
             </div>
-            <div 
-              className="code-body" 
-              dangerouslySetInnerHTML={{ __html: heroData.codeSnippet }} 
-            />
+
+            <div className="code-card relative z-10 shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:scale-[1.02] transition-transform duration-500">
+              <div className="code-bar">
+                <div className="dot" style={{background:'#ff5f57'}}></div>
+                <div className="dot" style={{background:'#febc2e'}}></div>
+                <div className="dot" style={{background:'#28c840'}}></div>
+                <span className="code-filename">developer.js</span>
+              </div>
+              <div 
+                className="code-body" 
+                dangerouslySetInnerHTML={{ __html: heroData.codeSnippet }} 
+              />
+            </div>
           </div>
         </div>
 
