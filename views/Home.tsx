@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Reviews from '../components/Reviews';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import WhatIDo from '../components/WhatIDo';
@@ -105,6 +106,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
+
+      <Reviews />
 
       <GetConnected />
 
