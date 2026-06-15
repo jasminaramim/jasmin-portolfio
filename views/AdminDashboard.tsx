@@ -1464,11 +1464,11 @@ const ManageHero = () => {
     return 'Let\\'s build! 🚀'
   }
 };`,
-    stats: {
-      projects: { num: '50', label: 'Projects' },
-      experience: { num: '3', label: 'Experience' },
-      satisfaction: { num: '100', label: 'Satisfaction' }
-    },
+    stats: [
+      { num: '50', suffix: '+', label: 'Projects' },
+      { num: '3', suffix: '+', label: 'Experience' },
+      { num: '100', suffix: '%', label: 'Satisfaction' }
+    ],
     socials: {
       facebook: '#',
       linkedin: '#',
@@ -1539,14 +1539,34 @@ const ManageHero = () => {
           </div>
 
           <div className="pt-8 border-t border-white/5">
-            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#a855f7] italic">Statistics</h3>
-            <div className="grid grid-cols-3 gap-6">
-              {['projects', 'experience', 'satisfaction'].map((key) => (
-                <div key={key}>
-                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">{key} Number</label>
-                  <input value={(formData.stats as any)[key].num} onChange={e => setFormData({...formData, stats: {...formData.stats, [key]: {...(formData.stats as any)[key], num: e.target.value}}})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-4" />
-                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">{key} Label</label>
-                  <input value={(formData.stats as any)[key].label} onChange={e => setFormData({...formData, stats: {...formData.stats, [key]: {...(formData.stats as any)[key], label: e.target.value}}})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl" />
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#a855f7] italic">Statistics</h3>
+              <button 
+                type="button" 
+                onClick={() => setFormData({...formData, stats: Array.isArray(formData.stats) ? [...formData.stats, {num: '', suffix: '', label: ''}] : [{num: '', suffix: '', label: ''}]})}
+                className="bg-[#a855f7]/20 text-[#a855f7] hover:bg-[#a855f7] hover:text-white px-4 py-2 rounded-xl text-[10px] font-bold transition-colors flex items-center gap-2"
+              >
+                <Plus size={14} /> Add Stat
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.isArray(formData.stats) && formData.stats.map((stat: any, index: number) => (
+                <div key={index} className="bg-white/5 p-4 rounded-2xl relative border border-white/10 group">
+                  <button 
+                    type="button" 
+                    onClick={() => setFormData({...formData, stats: formData.stats.filter((_, i) => i !== index)})}
+                    className="absolute top-2 right-2 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-2 hover:bg-red-500/20 rounded-lg"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Number</label>
+                  <input value={stat.num} onChange={e => { const newStats = [...formData.stats]; newStats[index].num = e.target.value; setFormData({...formData, stats: newStats}); }} className="w-full bg-black/20 border border-white/10 p-3 rounded-xl mb-4 text-sm" placeholder="50" />
+                  
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Suffix</label>
+                  <input value={stat.suffix || ''} onChange={e => { const newStats = [...formData.stats]; newStats[index].suffix = e.target.value; setFormData({...formData, stats: newStats}); }} className="w-full bg-black/20 border border-white/10 p-3 rounded-xl mb-4 text-sm" placeholder="+" />
+                  
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Label</label>
+                  <input value={stat.label} onChange={e => { const newStats = [...formData.stats]; newStats[index].label = e.target.value; setFormData({...formData, stats: newStats}); }} className="w-full bg-black/20 border border-white/10 p-3 rounded-xl text-sm" placeholder="Projects" />
                 </div>
               ))}
             </div>

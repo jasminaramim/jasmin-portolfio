@@ -28,11 +28,11 @@ const defaultHeroData: HeroContent = {
 <span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb">return</span> <span class="cs">'Let\\'s build! 🚀'</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cw">}</span></span>
 <span class="ln"><span class="cw">};</span><span class="cursor"></span></span>`,
-  stats: {
-    projects: { num: '50', label: 'Projects' },
-    experience: { num: '3', label: 'Experience' },
-    satisfaction: { num: '100', label: 'Satisfaction' }
-  },
+  stats: [
+    { num: '50', suffix: '+', label: 'Projects' },
+    { num: '3', suffix: '+', label: 'Experience' },
+    { num: '100', suffix: '%', label: 'Satisfaction' }
+  ],
   socials: {
     facebook: '#',
     linkedin: '#',
@@ -168,12 +168,12 @@ const Hero: React.FC<HeroProps> = () => {
         .hero-left { flex: 1; min-width: 0; }
         .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #8b5cf6; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .hero-name .gr { background: linear-gradient(135deg, #8b5cf6 0%, #4158d0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .btn-p { background: linear-gradient(135deg, #8b5cf6, #4158d0); transition: opacity 0.2s, transform 0.15s; }
+        .hero-name .gr { background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .btn-p { background: linear-gradient(135deg, #8b5cf6, #a855f7); transition: opacity 0.2s, transform 0.15s; }
         .btn-p:hover { opacity: 0.88; transform: translateY(-1px); }
         .btn-s { transition: border-color 0.2s, color 0.2s; }
         .btn-s:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
-        .st-n span { background: linear-gradient(135deg, #8b5cf6, #4158d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .st-n span { background: linear-gradient(135deg, #8b5cf6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .code-card { width: 380px; flex-shrink: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; }
         .code-bar { display: flex; align-items: center; gap: 6px; padding: 11px 16px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -228,19 +228,35 @@ const Hero: React.FC<HeroProps> = () => {
               </button>
             </div>
 
-            <div className="flex gap-[36px] mt-[36px] pt-[28px] border-t border-white/10">
-              <div>
-                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.projects.num}</span>+</div>
-                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.projects.label}</div>
-              </div>
-              <div>
-                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.experience.num}</span>+</div>
-                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.experience.label}</div>
-              </div>
-              <div>
-                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.satisfaction.num}</span>%</div>
-                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.satisfaction.label}</div>
-              </div>
+            <div className="flex gap-[36px] mt-[36px] pt-[28px] border-t border-white/10 flex-wrap">
+              {Array.isArray(heroData.stats) ? heroData.stats.map((stat, idx) => (
+                <div key={idx}>
+                  <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{stat.num}</span>{stat.suffix || ''}</div>
+                  <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{stat.label}</div>
+                </div>
+              )) : (
+                <>
+                  {/* Fallback for old object structure if still in DB */}
+                  {(heroData.stats as any).projects && (
+                    <div>
+                      <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{(heroData.stats as any).projects.num}</span>+</div>
+                      <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{(heroData.stats as any).projects.label}</div>
+                    </div>
+                  )}
+                  {(heroData.stats as any).experience && (
+                    <div>
+                      <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{(heroData.stats as any).experience.num}</span>+</div>
+                      <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{(heroData.stats as any).experience.label}</div>
+                    </div>
+                  )}
+                  {(heroData.stats as any).satisfaction && (
+                    <div>
+                      <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{(heroData.stats as any).satisfaction.num}</span>%</div>
+                      <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{(heroData.stats as any).satisfaction.label}</div>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
 

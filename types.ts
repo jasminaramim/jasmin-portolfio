@@ -75,11 +75,7 @@ export interface HeroContent {
   description: string;
   cvLink: string;
   codeSnippet: string;
-  stats: {
-    projects: { num: string, label: string },
-    experience: { num: string, label: string },
-    satisfaction: { num: string, label: string }
-  };
+  stats: { num: string; label: string; suffix?: string }[];
   socials: {
     facebook: string;
     linkedin: string;
