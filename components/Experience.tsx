@@ -27,7 +27,6 @@ const Experience: React.FC = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-black mb-12 uppercase italic tracking-tighter text-white flex items-center gap-4"
           >
-            <span className="text-[#a855f7] drop-shadow-[0_0_8px_rgba(255,105,180,0.5)]">🏆</span> 
             My <span className="text-[#a855f7]">Experience</span>
           </motion.h2>
 
@@ -49,7 +48,6 @@ const Experience: React.FC = () => {
                   <span className="text-[#a855f7] font-black text-[9px] uppercase tracking-[0.2em]">
                     {exp.period}
                   </span>
-                  <span className="text-lg opacity-20 group-hover:opacity-100 transition-opacity">🏆</span>
                 </div>
                 
                 <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">
@@ -78,7 +76,6 @@ const Experience: React.FC = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-4xl font-black mb-12 uppercase italic tracking-tighter text-white flex items-center gap-4"
           >
-            <span className="text-[#a855f7] drop-shadow-[0_0_8px_rgba(255,105,180,0.5)]">🎓</span> 
             My <span className="text-[#a855f7]">Education</span>
           </motion.h2>
 
@@ -97,7 +94,6 @@ const Experience: React.FC = () => {
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#a855f7] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
                 
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-lg">{edu.icon || '🎓'}</span>
                   <span className="text-gray-500 font-black text-[9px] uppercase tracking-[0.2em]">
                     {edu.period}
                   </span>

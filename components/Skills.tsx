@@ -55,7 +55,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white"
           >
-            💻 My <span className="text-[#a855f7] pink-glow">Skills</span>
+            My <span className="text-[#a855f7] pink-glow">Skills</span>
           </motion.h2>
         </div>
 
