@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
@@ -282,7 +281,8 @@ app.delete("/api/profile", authenticateToken, async (req, res) => {
 async function startServer() {
   if (!process.env.VERCEL) {
     if (process.env.NODE_ENV !== "production") {
-      const vite = await createViteServer({
+      const { createServer } = await import("vite");
+      const vite = await createServer({
         server: { middlewareMode: true },
         appType: "spa",
       });
