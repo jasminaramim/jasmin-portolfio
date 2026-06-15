@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './views/Home';
 import AboutView from './views/AboutView';
 import ProjectsView from './views/ProjectsView';
+import ProjectDetailsView from './views/ProjectDetailsView';
 import ExperienceView from './views/ExperienceView';
 import ContactView from './views/ContactView';
 import LoginView from './views/LoginView';
@@ -55,6 +56,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<PageWrapper><Home onNavigate={() => {}} /></PageWrapper>} />
                     <Route path="/about" element={<PageWrapper><AboutView /></PageWrapper>} />
                     <Route path="/projects" element={<PageWrapper><ProjectsView /></PageWrapper>} />
+                    <Route path="/projects/:id" element={<PageWrapper><ProjectDetailsView /></PageWrapper>} />
                     <Route path="/experience" element={<PageWrapper><ExperienceView /></PageWrapper>} />
                     <Route path="/contact" element={<PageWrapper><ContactView /></PageWrapper>} />
                     <Route path="*" element={<Navigate to="/" replace />} />
