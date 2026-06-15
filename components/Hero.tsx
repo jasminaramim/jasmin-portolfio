@@ -184,19 +184,16 @@ const Hero: React.FC<HeroProps> = () => {
         .cw { color: rgba(255,255,255,0.78); } .cs { color: #f9c74f; } .cd { color: rgba(255,255,255,0.22); }
         .cursor { display: inline-block; width: 7px; height: 13px; background: #c850c0; border-radius: 1px; animation: blink 1.1s infinite; vertical-align: middle; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-        .social-bar { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 10; }
-        .s-icon { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.09); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 16px; background: rgba(255,255,255,0.03); cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-        .s-icon:hover { border-color: rgba(200,80,192,0.4); color: #c850c0; }
         .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; }
         .mouse { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 11px; display: flex; justify-content: center; padding-top: 6px; }
         .wheel { width: 3px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 2px; animation: scroll 1.8s infinite; }
         @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
         @media (max-width: 900px) {
           .hero-name { font-size: 46px !important; letter-spacing: -2px !important; }
-          .hero-inner { padding: 0 24px !important; flex-direction: column; gap: 60px; text-align: center; padding-top: 40px; }
+          .hero-inner { padding: 0 24px !important; flex-direction: column; gap: 60px; text-align: center; padding-top: 40px; padding-bottom: 80px; }
           .hero-left { display: flex; flex-direction: column; align-items: center; }
           .code-card { width: 100%; max-width: 400px; }
-          .social-bar { display: none !important; }
+          .scroll-hint { bottom: 10px; }
         }
       `}</style>
 
@@ -260,22 +257,6 @@ const Hero: React.FC<HeroProps> = () => {
               dangerouslySetInnerHTML={{ __html: heroData.codeSnippet }} 
             />
           </div>
-        </div>
-
-        {/* SOCIAL */}
-        <div className="social-bar">
-          <a href={heroData.socials.facebook} target="_blank" rel="noreferrer" className="s-icon" title="Facebook">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-          </a>
-          <a href={heroData.socials.linkedin} target="_blank" rel="noreferrer" className="s-icon" title="LinkedIn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-          </a>
-          <a href={heroData.socials.github} target="_blank" rel="noreferrer" className="s-icon" title="GitHub">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          </a>
-          <a href={`mailto:${heroData.socials.email}`} className="s-icon" title="Email">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </a>
         </div>
 
         {/* SCROLL HINT */}
