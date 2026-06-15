@@ -604,7 +604,7 @@ const Background3D: React.FC = () => {
   return (
     <div 
       ref={containerRef} 
-      className="fixed inset-0 pointer-events-none -z-10 opacity-50"
+      className="fixed inset-0 pointer-events-none -z-10 opacity-80"
     />
   );
 };
