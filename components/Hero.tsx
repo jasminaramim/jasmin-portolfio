@@ -174,11 +174,11 @@ const Hero: React.FC<HeroProps> = () => {
         .btn-s { transition: border-color 0.2s, color 0.2s; }
         .btn-s:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
         .st-n span { background: linear-gradient(135deg, #c850c0, #4158d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .code-card { width: 300px; flex-shrink: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; }
+        .code-card { width: 380px; flex-shrink: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; }
         .code-bar { display: flex; align-items: center; gap: 6px; padding: 11px 16px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .code-filename { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.8px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
-        .code-body { padding: 18px 20px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.8; }
+        .code-filename { font-size: 13px; color: rgba(255,255,255,0.28); letter-spacing: 0.8px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+        .code-body { padding: 22px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.8; }
         .ln { display: block; }
         .cp { color: #c850c0; } .cb { color: #7088e8; } .ct { color: #56d9b1; }
         .cw { color: rgba(255,255,255,0.78); } .cs { color: #f9c74f; } .cd { color: rgba(255,255,255,0.22); }
@@ -193,8 +193,9 @@ const Hero: React.FC<HeroProps> = () => {
         @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
         @media (max-width: 900px) {
           .hero-name { font-size: 46px !important; letter-spacing: -2px !important; }
-          .code-card { display: none !important; }
-          .hero-inner { padding: 0 24px !important; }
+          .hero-inner { padding: 0 24px !important; flex-direction: column; gap: 60px; text-align: center; padding-top: 40px; }
+          .hero-left { display: flex; flex-direction: column; align-items: center; }
+          .code-card { width: 100%; max-width: 400px; }
           .social-bar { display: none !important; }
         }
       `}</style>
@@ -247,7 +248,7 @@ const Hero: React.FC<HeroProps> = () => {
           </div>
 
           {/* CODE CARD */}
-          <div className="code-card hidden md:block">
+          <div className="code-card">
             <div className="code-bar">
               <div className="dot" style={{background:'#ff5f57'}}></div>
               <div className="dot" style={{background:'#febc2e'}}></div>
