@@ -9,7 +9,7 @@ const Background3D: React.FC = () => {
 
     // Configurable parameters
     const config = {
-      speedMultiplier: 1.4,  // Increased speed multiplier for faster movement
+      speedMultiplier: 0.4,  // Reduced speed multiplier for subtle movement
       plexusMaxDistance: 3.5, // Increased for wider connections
       particleCount: 1000,   // More stars for deep space look
       showGrid: true,

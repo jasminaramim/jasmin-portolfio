@@ -25,7 +25,7 @@ import {
   Link as LinkIcon,
   ChevronRight
 } from 'lucide-react';
-import { Project, Service, Skill, Review, AdminProfile } from '../types';
+import { Project, Service, Skill, Review, AdminProfile, HeroContent } from '../types';
 
 const AdminDashboard: React.FC = () => {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
@@ -64,6 +64,7 @@ const AdminDashboard: React.FC = () => {
     { to: "/admin/experience", icon: <Briefcase size={18} />, label: "Experience" },
     { to: "/admin/education", icon: <Star size={18} />, label: "Education" },
     { to: "/admin/profile", icon: <User size={18} />, label: "Profile" },
+    { to: "/admin/hero", icon: <ImageIcon size={18} />, label: "Hero Section" },
     { to: "/admin/settings", icon: <Settings size={18} />, label: "Settings" },
   ];
 
@@ -133,6 +134,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="profile" element={<ManageProfile />} />
           <Route path="experience" element={<ManageExperience />} />
           <Route path="education" element={<ManageEducation />} />
+          <Route path="hero" element={<ManageHero />} />
           <Route path="settings" element={<ManageSettings />} />
           <Route path="*" element={<ManageProjects />} />
         </Routes>
@@ -1425,6 +1427,142 @@ const ManageSettings = () => {
               Reset Database (Seed)
             </button>
           </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const ManageHero = () => {
+  const defaultForm: HeroContent = {
+    badgeText: 'WordPress & MERN Developer',
+    firstName: 'Jasmin',
+    lastName: 'Ara Mim',
+    subheading: 'Full-Stack Developer · Designer',
+    description: 'Building modern WordPress solutions & MERN stack\napplications — fast, elegant & production-ready.',
+    cvLink: '#',
+    codeSnippet: `const dev = {
+  name: 'Jasmin Ara Mim',
+  role: 'Full-Stack Dev',
+  location: 'Bangladesh',
+  stack: [
+    'React', 'Node.js',
+    'MongoDB',
+    'WordPress'
+  ],
+  available: true,
+  hire() {
+    return 'Let\\'s build! 🚀'
+  }
+};`,
+    stats: {
+      projects: { num: '50', label: 'Projects' },
+      experience: { num: '3', label: 'Experience' },
+      satisfaction: { num: '100', label: 'Satisfaction' }
+    },
+    socials: {
+      facebook: '#',
+      linkedin: '#',
+      github: '#',
+      email: '#'
+    }
+  };
+
+  const [formData, setFormData] = useState<HeroContent>(defaultForm);
+  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/hero').then(res => res.json()).then(data => {
+      if (data && data.firstName) setFormData(data);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      const res = await fetch('/api/hero', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) alert('Hero content updated successfully!');
+    } catch (err) {
+      alert('Error saving hero content');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) return <div className="py-20 text-center animate-pulse text-gray-500 italic">Loading Hero Data...</div>;
+
+  return (
+    <div className="max-w-5xl mx-auto space-y-12">
+      <h2 className="text-3xl font-black uppercase tracking-tighter italic">Manage Hero Section</h2>
+      <div className="glass p-12 rounded-[40px] border border-white/5">
+        <form onSubmit={handleSave} className="space-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Badge Text</label>
+              <input value={formData.badgeText} onChange={e => setFormData({...formData, badgeText: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
+            </div>
+            <div>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">First Name</label>
+              <input value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
+            </div>
+            <div>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Last Name</label>
+              <input value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
+            </div>
+            <div>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Subheading</label>
+              <input value={formData.subheading} onChange={e => setFormData({...formData, subheading: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" required />
+            </div>
+            <div className="md:col-span-2">
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Description</label>
+              <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold h-24" required />
+            </div>
+            <div>
+              <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">CV Link</label>
+              <input value={formData.cvLink} onChange={e => setFormData({...formData, cvLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-bold" />
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#FF69B4] italic">Statistics</h3>
+            <div className="grid grid-cols-3 gap-6">
+              {['projects', 'experience', 'satisfaction'].map((key) => (
+                <div key={key}>
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">{key} Number</label>
+                  <input value={(formData.stats as any)[key].num} onChange={e => setFormData({...formData, stats: {...formData.stats, [key]: {...(formData.stats as any)[key], num: e.target.value}}})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl mb-4" />
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">{key} Label</label>
+                  <input value={(formData.stats as any)[key].label} onChange={e => setFormData({...formData, stats: {...formData.stats, [key]: {...(formData.stats as any)[key], label: e.target.value}}})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#FF69B4] italic">Social Links</h3>
+            <div className="grid grid-cols-2 gap-6">
+              {['facebook', 'linkedin', 'github', 'email'].map((key) => (
+                <div key={key}>
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">{key}</label>
+                  <input value={(formData.socials as any)[key]} onChange={e => setFormData({...formData, socials: {...formData.socials, [key]: e.target.value}})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-white/5">
+            <h3 className="text-xs font-black uppercase tracking-[0.3em] mb-6 text-[#FF69B4] italic">Code Card Snippet</h3>
+            <textarea value={formData.codeSnippet} onChange={e => setFormData({...formData, codeSnippet: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#FF69B4] outline-none text-sm font-mono h-48" />
+          </div>
+
+          <button type="submit" disabled={saving} className="w-full bg-white text-black py-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-[#FF69B4] hover:text-white transition-all shadow-xl">
+            {saving ? 'Saving...' : 'Save Hero Content'}
+          </button>
         </form>
       </div>
     </div>

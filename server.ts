@@ -214,6 +214,32 @@ createCRUDRoutes("reviews");
 createCRUDRoutes("experience");
 createCRUDRoutes("education");
 
+// Hero Special Routes
+app.get("/api/hero", async (req, res) => {
+  try {
+    if (!db) return res.json({});
+    const hero = await db.collection("hero").findOne({});
+    res.json(hero || {});
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch hero content" });
+  }
+});
+
+app.post("/api/hero", authenticateToken, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const { _id, ...heroData } = req.body;
+    const result = await db.collection("hero").updateOne(
+      {},
+      { $set: heroData },
+      { upsert: true }
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update hero content" });
+  }
+});
+
 // Profile Special Routes
 app.get("/api/profile", async (req, res) => {
   try {

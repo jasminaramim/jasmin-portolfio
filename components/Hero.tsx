@@ -1,126 +1,289 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { HeroContent } from '../types';
 
 interface HeroProps {
   onNavigate?: (page: string) => void;
 }
 
-const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop", // Clean code on macbook
-  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop", // Terminal / Logic
-  "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop", // Code editor focus
-  "https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=2070&auto=format&fit=crop"  // Modern workspace
-];
+const defaultHeroData: HeroContent = {
+  badgeText: 'WordPress & MERN Developer',
+  firstName: 'Jasmin',
+  lastName: 'Ara Mim',
+  subheading: 'Full-Stack Developer · Designer',
+  description: 'Building modern WordPress solutions & MERN stack\napplications — fast, elegant & production-ready.',
+  cvLink: 'https://docs.google.com/document/d/10LrwL1bTOHBr_vz2jej2xxaN-_Y5VgH1rbasbPbaIYg/edit?usp=sharing',
+  codeSnippet: `<span class="ln"><span class="cp">const</span> <span class="ct">dev</span> <span class="cw">= {</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">name</span><span class="cw">:</span> <span class="cs">'Jasmin Ara Mim'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">role</span><span class="cw">:</span> <span class="cs">'Full-Stack Dev'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">location</span><span class="cw">:</span> <span class="cs">'Bangladesh'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">stack</span><span class="cw">: [</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'React'</span><span class="cw">,</span> <span class="cs">'Node.js'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'MongoDB'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'WordPress'</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cw">],</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">available</span><span class="cw">:</span> <span class="ct">true</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cp">hire</span><span class="cw">() {</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb">return</span> <span class="cs">'Let\\'s build! 🚀'</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cw">}</span></span>
+<span class="ln"><span class="cw">};</span><span class="cursor"></span></span>`,
+  stats: {
+    projects: { num: '50', label: 'Projects' },
+    experience: { num: '3', label: 'Experience' },
+    satisfaction: { num: '100', label: 'Satisfaction' }
+  },
+  socials: {
+    facebook: '#',
+    linkedin: '#',
+    github: '#',
+    email: '#'
+  }
+};
 
 const Hero: React.FC<HeroProps> = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [profile, setProfile] = useState<any>({
-    image: HERO_IMAGES[0]
-  });
+  const [heroData, setHeroData] = useState<HeroContent>(defaultHeroData);
   const navigate = useNavigate();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.image) setProfile(data);
+    fetch('/api/hero').then(res => res.json()).then(data => {
+      if (data && data.firstName) setHeroData(data);
     });
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 6000);
-    return () => clearInterval(timer);
+    // Canvas animation logic from the user's design
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let pts: any[] = [];
+
+    const initCanvas = () => {
+      const resize = () => {
+        const parent = canvas.parentElement;
+        if (parent) {
+          canvas.width = parent.clientWidth;
+          canvas.height = parent.clientHeight;
+        }
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      pts = Array.from({ length: 55 }, () => ({
+        x:      Math.random() * canvas.width,
+        y:      Math.random() * canvas.height,
+        vx:     (Math.random() - 0.5) * 0.4,
+        vy:     (Math.random() - 0.5) * 0.4,
+        r:      0.8 + Math.random() * 2,
+        bright: Math.random() > 0.6,
+        phase:  Math.random() * Math.PI * 2
+      }));
+
+      let tick = 0;
+
+      const frame = () => {
+        const W = canvas.width, H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+        tick++;
+
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        });
+
+        for (let i = 0; i < pts.length; i++) {
+          for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x;
+            const dy = pts[i].y - pts[j].y;
+            const d  = Math.sqrt(dx * dx + dy * dy);
+            if (d < 140) {
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x, pts[i].y);
+              ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = `rgba(140,100,220,${(1 - d / 140) * 0.5})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+
+        pts.forEach(p => {
+          if (p.bright) {
+            const glow = 0.5 + 0.5 * Math.sin(tick * 0.04 + p.phase);
+            const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 18 * glow);
+            g.addColorStop(0, 'rgba(200,80,192,0.3)');
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 18 * glow, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.bright
+            ? `rgba(230,200,255,${0.7 + 0.3 * Math.sin(tick * 0.05 + p.phase)})`
+            : 'rgba(140,120,200,0.45)';
+          ctx.fill();
+        });
+
+        animationFrameId = requestAnimationFrame(frame);
+      };
+
+      frame();
+
+      return () => {
+        window.removeEventListener('resize', resize);
+        cancelAnimationFrame(animationFrameId);
+      };
+    };
+
+    const cleanup = initCanvas();
+    return cleanup;
   }, []);
 
-  const bgImage = profile.image && profile.image !== HERO_IMAGES[0] ? profile.image : HERO_IMAGES[currentImage];
-
   return (
-    <div className="relative min-h-[100vh] flex flex-col items-center justify-center overflow-hidden bg-transparent pt-[150px] pb-[50px]">
-      {/* Background Image Slider with Zoom Animation */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={bgImage}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 0.15, scale: 1.1 }} // Make highly transparent so 3D background is beautifully visible
-            exit={{ opacity: 0 }}
-            transition={{ duration: 6, ease: "linear" }}
-            className="w-full h-full"
-          >
-            <img
-              src={bgImage}
-              className="w-full h-full object-cover brightness-[0.95] contrast-[1.1]"
-              alt="Premium Tech Background"
-            />
-          </motion.div>
-        </AnimatePresence>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap');
         
-        {/* Lighter Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent z-20"></div>
-      </div>
+        .hero-custom {
+          position: relative;
+          min-height: calc(100vh - 65px);
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          font-family: 'Space Grotesk', sans-serif;
+          background: #07050f; /* Solid background to hide 3D earth and make it clean */
+        }
+        .hero-inner {
+          position: relative; z-index: 5; display: flex; align-items: center;
+          justify-content: space-between; width: 100%; max-width: 1280px;
+          margin: 0 auto; padding: 0 24px; gap: 40px;
+        }
+        .hero-left { flex: 1; min-width: 0; }
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #c850c0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero-name .gr { background: linear-gradient(135deg, #c850c0 0%, #4158d0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .btn-p { background: linear-gradient(135deg, #c850c0, #4158d0); transition: opacity 0.2s, transform 0.15s; }
+        .btn-p:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-s { transition: border-color 0.2s, color 0.2s; }
+        .btn-s:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+        .st-n span { background: linear-gradient(135deg, #c850c0, #4158d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .code-card { width: 300px; flex-shrink: 0; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; overflow: hidden; }
+        .code-bar { display: flex; align-items: center; gap: 6px; padding: 11px 16px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .code-filename { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.8px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
+        .code-body { padding: 18px 20px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; line-height: 1.8; }
+        .ln { display: block; }
+        .cp { color: #c850c0; } .cb { color: #7088e8; } .ct { color: #56d9b1; }
+        .cw { color: rgba(255,255,255,0.78); } .cs { color: #f9c74f; } .cd { color: rgba(255,255,255,0.22); }
+        .cursor { display: inline-block; width: 7px; height: 13px; background: #c850c0; border-radius: 1px; animation: blink 1.1s infinite; vertical-align: middle; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .social-bar { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 10; }
+        .s-icon { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.09); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 16px; background: rgba(255,255,255,0.03); cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+        .s-icon:hover { border-color: rgba(200,80,192,0.4); color: #c850c0; }
+        .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; }
+        .mouse { width: 22px; height: 34px; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 11px; display: flex; justify-content: center; padding-top: 6px; }
+        .wheel { width: 3px; height: 7px; background: rgba(255,255,255,0.4); border-radius: 2px; animation: scroll 1.8s infinite; }
+        @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
+        @media (max-width: 900px) {
+          .hero-name { font-size: 46px !important; letter-spacing: -2px !important; }
+          .code-card { display: none !important; }
+          .hero-inner { padding: 0 24px !important; }
+          .social-bar { display: none !important; }
+        }
+      `}</style>
 
-      <div className="relative z-30 text-center px-4 max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="inline-block px-4 py-2 border border-[#4B0082]/30 mb-6 bg-black/60 backdrop-blur-md rounded-lg"
-        >
-          <span className="text-[#FF69B4] font-black uppercase tracking-[0.3em] text-[9px]">
-            WordPress & MERN Stack Developer
-          </span>
-        </motion.div>
+      <section className="hero-custom pt-[100px] md:pt-[150px] pb-[50px]">
+        {/* 2D Particle Canvas Background */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}></canvas>
 
-        <motion.h1 
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl md:text-5xl font-black tracking-tighter leading-tight mb-6 text-white uppercase italic"
-        >
-          JAS<span className="text-[#FF69B4]">MIN</span> ARA MIM
-        </motion.h1>
+        <div className="hero-inner relative z-10">
+          {/* LEFT */}
+          <div className="hero-left">
+            <div className="inline-flex items-center gap-2 bg-[rgba(200,80,192,0.1)] border border-[rgba(200,80,192,0.28)] rounded-[50px] py-1.5 px-4 mb-6">
+              <div className="badge-dot"></div>
+              <span className="text-[#c850c0] text-[11px] font-semibold tracking-[1.8px] uppercase">{heroData.badgeText}</span>
+            </div>
 
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="text-base md:text-lg font-bold text-gray-200 mb-10 uppercase tracking-[0.15em] max-w-2xl mx-auto drop-shadow-xl italic"
-        >
-          Building <span className="text-white border-b border-[#FF69B4] pb-0.5">WordPress Solutions</span> & MERN Stack Applications
-        </motion.p>
+            <div className="text-[68px] font-bold leading-none text-white tracking-[-3px] mb-[10px] hero-name">
+              <span className="gr">{heroData.firstName}</span><br/>{heroData.lastName}
+            </div>
+            <div className="text-[11px] text-white/30 tracking-[3px] uppercase mb-[18px]">
+              {heroData.subheading}
+            </div>
+            <p className="text-[15px] text-white/50 leading-[1.75] mb-[34px] max-w-[380px] font-light whitespace-pre-line">
+              {heroData.description}
+            </p>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-4"
-        >
-          <button 
-            onClick={() => window.open('https://docs.google.com/document/d/10LrwL1bTOHBr_vz2jej2xxaN-_Y5VgH1rbasbPbaIYg/edit?usp=sharing', '_blank')}
-            className="px-10 py-5 bg-gradient-to-r from-[#4B0082] to-[#FF69B4] text-white font-black uppercase tracking-widest text-[10px] hover:opacity-90 transition-all shadow-[0_0_30px_rgba(255,105,180,0.3)] rounded-full"
-          >
-            View CV
-          </button>
-          <button 
-            onClick={() => navigate('/projects')}
-            className="px-10 py-5 bg-white/5 border border-white/20 text-white font-black uppercase tracking-widest text-[10px] hover:bg-white/10 transition-all backdrop-blur-sm rounded-full"
-          >
-            Featured Works
-          </button>
-        </motion.div>
-      </div>
+            <div className="flex gap-3">
+              <button onClick={() => window.open(heroData.cvLink, '_blank')} className="btn-p text-[#fff] border-none rounded-[50px] py-[13px] px-[30px] text-[13px] font-semibold cursor-pointer">
+                View CV &nbsp;↗
+              </button>
+              <button onClick={() => navigate('/projects')} className="btn-s bg-transparent text-white/65 border border-white/15 rounded-[50px] py-[13px] px-[30px] text-[13px] font-medium cursor-pointer">
+                Featured Works
+              </button>
+            </div>
 
-      <motion.div 
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-8 z-30"
-      >
-        <div className="w-5 h-8 border border-[#FF69B4]/30 rounded-full flex justify-center p-1.5">
-          <div className="w-1 h-1.5 bg-[#FF69B4] rounded-full"></div>
+            <div className="flex gap-[36px] mt-[36px] pt-[28px] border-t border-white/10">
+              <div>
+                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.projects.num}</span>+</div>
+                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.projects.label}</div>
+              </div>
+              <div>
+                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.experience.num}</span>+</div>
+                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.experience.label}</div>
+              </div>
+              <div>
+                <div className="st-n text-[26px] font-bold text-white tracking-[-1px] leading-none"><span>{heroData.stats.satisfaction.num}</span>%</div>
+                <div className="text-[10px] text-white/30 uppercase tracking-[1.8px] mt-1">{heroData.stats.satisfaction.label}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* CODE CARD */}
+          <div className="code-card hidden md:block">
+            <div className="code-bar">
+              <div className="dot" style={{background:'#ff5f57'}}></div>
+              <div className="dot" style={{background:'#febc2e'}}></div>
+              <div className="dot" style={{background:'#28c840'}}></div>
+              <span className="code-filename">developer.js</span>
+            </div>
+            <div 
+              className="code-body" 
+              dangerouslySetInnerHTML={{ __html: heroData.codeSnippet }} 
+            />
+          </div>
         </div>
-      </motion.div>
-    </div>
+
+        {/* SOCIAL */}
+        <div className="social-bar">
+          <a href={heroData.socials.facebook} target="_blank" rel="noreferrer" className="s-icon" title="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href={heroData.socials.linkedin} target="_blank" rel="noreferrer" className="s-icon" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href={heroData.socials.github} target="_blank" rel="noreferrer" className="s-icon" title="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href={`mailto:${heroData.socials.email}`} className="s-icon" title="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+
+        {/* SCROLL HINT */}
+        <div className="scroll-hint">
+          <div className="mouse"><div className="wheel"></div></div>
+          <span className="font-['Space_Grotesk']">Scroll</span>
+        </div>
+      </section>
+    </>
   );
 };
 

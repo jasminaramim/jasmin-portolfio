@@ -64,3 +64,25 @@ export interface Stat {
   label: string;
   value: string;
 }
+
+export interface HeroContent {
+  _id?: string;
+  badgeText: string;
+  firstName: string;
+  lastName: string;
+  subheading: string;
+  description: string;
+  cvLink: string;
+  codeSnippet: string;
+  stats: {
+    projects: { num: string, label: string },
+    experience: { num: string, label: string },
+    satisfaction: { num: string, label: string }
+  };
+  socials: {
+    facebook: string;
+    linkedin: string;
+    github: string;
+    email: string;
+  };
+}
