@@ -25,6 +25,7 @@ export interface Service {
   title: string;
   desc: string;
   icon: string;
+  tags?: string[];
 }
 
 export interface Skill {

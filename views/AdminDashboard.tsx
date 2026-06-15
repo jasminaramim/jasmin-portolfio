@@ -626,6 +626,15 @@ const ManageServices = () => {
               <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Description</label>
               <textarea value={formData.desc || ''} onChange={e => setFormData({...formData, desc: e.target.value})} className="w-full bg-white/5 border border-white/10 p-6 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold h-32 resize-none" required placeholder="Describe the service value proposition..."></textarea>
             </div>
+            <div>
+               <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Tags (comma separated)</label>
+               <input 
+                value={Array.isArray(formData.tags) ? formData.tags.join(', ') : typeof formData.tags === 'string' ? formData.tags : ''}
+                onChange={e => setFormData({...formData, tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean)})}
+                className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold"
+                placeholder="REACT.JS, NEXT.JS, FRAMER"
+               />
+            </div>
             <div className="flex justify-end gap-6 pt-6">
               <button 
                 type="button" 
