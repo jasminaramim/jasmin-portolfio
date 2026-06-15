@@ -288,14 +288,6 @@ const Hero: React.FC<HeroProps> = () => {
                   <img src={item.icon} alt="tech" className="w-8 h-8 object-contain" />
                 </motion.div>
               ))}
-
-              <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute top-[-15%] left-[35%] z-20"
-              >
-                  <div className="text-white/60 font-light text-2xl tracking-widest bg-[#0a0a0c]/80 px-6 py-2 rounded-full border border-white/5 backdrop-blur-md">Express<span className="text-white font-bold">.js</span></div>
-              </motion.div>
             </div>
 
             <div className="code-card relative z-10 shadow-[0_0_50px_rgba(168,85,247,0.15)] hover:scale-[1.02] transition-transform duration-500">
