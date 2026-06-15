@@ -602,14 +602,17 @@ const Background3D: React.FC = () => {
   }, []);
 
   return (
-    <div 
-      ref={containerRef} 
-      className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
-      style={{
-        background: 'radial-gradient(circle at center, #0c102b 0%, #050716 100%)',
-        opacity: 0.65
-      }}
-    />
+    <>
+      <div 
+        ref={containerRef} 
+        className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, #0c102b 0%, #050716 100%)',
+        }}
+      />
+      {/* Black Overlay to dim the earth by 60% */}
+      <div className="fixed inset-0 bg-black/60 pointer-events-none" style={{ zIndex: 1 }} />
+    </>
   );
 };
 
