@@ -47,10 +47,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <button 
             onClick={() => handleNavigate('/')}
-            className="text-2xl font-black tracking-tighter outline-none z-[70]"
+            className="flex flex-col items-center justify-center outline-none z-[70] transition-transform hover:scale-105"
           >
-            <span className="text-white">JAS</span>
-            <span className="text-[#a855f7]">MIN</span>
+            <div className="flex items-center leading-none tracking-tighter" style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
+              <span className="text-white font-black" style={{ fontFamily: 'Arial, sans-serif' }}>J</span>
+              <span className="text-[#a855f7] font-black" style={{ fontFamily: 'Arial, sans-serif' }}>M</span>
+            </div>
+            <div className="flex text-[11px] font-black tracking-[0.3em] uppercase">
+              <span className="text-white">JAS</span>
+              <span className="text-[#a855f7]">MIN</span>
+            </div>
           </button>
 
           {/* Desktop Links */}

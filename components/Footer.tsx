@@ -41,10 +41,16 @@ const Footer: React.FC<FooterProps> = () => {
           <div className="space-y-8">
             <button 
               onClick={() => navigate('/')}
-              className="text-4xl font-black tracking-tighter group outline-none text-left"
+              className="flex flex-col items-start justify-center outline-none transition-transform hover:scale-105"
             >
-              <span className="text-white uppercase transition-colors group-hover:text-[#a855f7]">Jas</span>
-              <span className="text-[#a855f7] uppercase transition-colors group-hover:text-white">min</span>
+              <div className="flex items-center leading-none tracking-tighter" style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
+                <span className="text-white font-black" style={{ fontFamily: 'Arial, sans-serif' }}>J</span>
+                <span className="text-[#a855f7] font-black" style={{ fontFamily: 'Arial, sans-serif' }}>M</span>
+              </div>
+              <div className="flex text-[11px] font-black tracking-[0.3em] uppercase">
+                <span className="text-white">JAS</span>
+                <span className="text-[#a855f7]">MIN</span>
+              </div>
             </button>
             <p className="text-gray-400 text-[13px] leading-relaxed max-w-xs font-bold italic tracking-wider">
               We specialize in crafting enterprise-grade web applications using the MERN Stack and custom WordPress architecture. Our mission is to transform business goals into high-performance digital reality.
