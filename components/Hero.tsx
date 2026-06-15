@@ -190,14 +190,14 @@ const Hero: React.FC<HeroProps> = () => {
         @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(8px); opacity: 0; } }
         @media (max-width: 900px) {
           .hero-name { font-size: 46px !important; letter-spacing: -2px !important; }
-          .hero-inner { padding: 0 24px !important; flex-direction: column; gap: 60px; text-align: center; padding-top: 40px; padding-bottom: 80px; }
+          .hero-inner { padding: 0 24px !important; flex-direction: column; gap: 60px; text-align: center; padding-top: 40px; padding-bottom: 40px; }
           .hero-left { display: flex; flex-direction: column; align-items: center; }
           .code-card { width: 100%; max-width: 400px; }
-          .scroll-hint { bottom: 10px; }
+          .scroll-hint { bottom: 30px; }
         }
       `}</style>
 
-      <section className="hero-custom pt-[100px] md:pt-[150px] pb-[50px]">
+      <section className="hero-custom pt-[100px] md:pt-[150px] pb-[120px] md:pb-[50px]">
         {/* 2D Particle Canvas Background */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}></canvas>
 
