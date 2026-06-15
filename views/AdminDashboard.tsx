@@ -65,6 +65,7 @@ const AdminDashboard: React.FC = () => {
     { to: "/admin/education", icon: <Star size={18} />, label: "Education" },
     { to: "/admin/profile", icon: <User size={18} />, label: "Profile" },
     { to: "/admin/hero", icon: <ImageIcon size={18} />, label: "Hero Section" },
+    { to: "/admin/about-stats", icon: <Star size={18} />, label: "About Stats" },
     { to: "/admin/settings", icon: <Settings size={18} />, label: "Settings" },
   ];
 
@@ -135,6 +136,7 @@ const AdminDashboard: React.FC = () => {
           <Route path="experience" element={<ManageExperience />} />
           <Route path="education" element={<ManageEducation />} />
           <Route path="hero" element={<ManageHero />} />
+          <Route path="about-stats" element={<ManageAboutStats />} />
           <Route path="settings" element={<ManageSettings />} />
           <Route path="*" element={<ManageProjects />} />
         </Routes>
@@ -1593,6 +1595,119 @@ const ManageHero = () => {
             {saving ? 'Saving...' : 'Save Hero Content'}
           </button>
         </form>
+      </div>
+    </div>
+  );
+};
+
+const ManageAboutStats = () => {
+  const [stats, setStats] = useState<any[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+
+  const defaultForm = { label: '', value: '' };
+  const [formData, setFormData] = useState<any>(defaultForm);
+
+  const handleAddNewClick = () => {
+    if (isAdding) {
+      if (formData._id) {
+        setFormData(defaultForm);
+      } else {
+        setIsAdding(false);
+      }
+    } else {
+      setFormData(defaultForm);
+      setIsAdding(true);
+    }
+  };
+
+  const fetchStats = async () => {
+    const res = await fetch('/api/stats');
+    const data = await res.json();
+    setStats(data);
+  };
+
+  useEffect(() => { fetchStats(); }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const method = formData._id ? 'PUT' : 'POST';
+    const url = formData._id ? `/api/stats/${formData._id}` : '/api/stats';
+    await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
+    setFormData(defaultForm);
+    setIsAdding(false);
+    fetchStats();
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Delete this stat?')) {
+      await fetch(`/api/stats/${id}`, { method: 'DELETE' });
+      fetchStats();
+    }
+  };
+
+  return (
+    <div className="space-y-12">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-black uppercase tracking-tighter italic">About Statistics</h2>
+        <button 
+          onClick={handleAddNewClick}
+          className="bg-gradient-to-r from-[#4B0082] to-[#a855f7] px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center gap-3 shadow-[0_10px_40px_rgba(255,105,180,0.3)] hover:scale-105 transition-all"
+        >
+          {isAdding && !formData._id ? <X size={18} /> : <Plus size={18} />}
+          {isAdding && !formData._id ? 'Abort Entry' : 'Add New Stat'}
+        </button>
+      </div>
+
+      {isAdding && (
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass p-12 rounded-[40px] border border-white/5 max-w-2xl mx-auto">
+          <form onSubmit={handleSave} className="space-y-8">
+            <h3 className="text-2xl font-black uppercase tracking-tighter italic mb-6">
+              {formData._id ? 'Update Stat' : 'Add New Stat'}
+            </h3>
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Value (e.g. 50+)</label>
+                <input value={formData.value || ''} onChange={e => setFormData({...formData, value: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="50+" required />
+              </div>
+              <div>
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Label (e.g. Happy Clients)</label>
+                <input value={formData.label || ''} onChange={e => setFormData({...formData, label: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="Happy Clients" required />
+              </div>
+            </div>
+            <div className="flex justify-end gap-6 pt-6">
+              <button 
+                type="button" 
+                onClick={() => setIsAdding(false)}
+                className="px-10 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+              >
+                Discard
+              </button>
+              <button 
+                type="submit"
+                className="bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-[10px] hover:bg-[#a855f7] hover:text-white transition-all shadow-xl"
+              >
+                Save Stat
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      )}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {stats.map(stat => (
+          <div key={stat._id} className="glass p-8 rounded-[32px] border border-white/5 flex flex-col items-center group relative text-center">
+            <div className="text-4xl font-black italic tracking-tighter mb-2 text-[#a855f7] group-hover:text-white transition-colors">{stat.value}</div>
+            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest italic">{stat.label}</div>
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 flex gap-2 transition-all">
+               <button onClick={() => { setFormData(stat); setIsAdding(true); }} className="text-gray-500 hover:text-[#a855f7] transition-colors">
+                  <Settings size={14} />
+               </button>
+               <button onClick={() => handleDelete(stat._id)} className="text-gray-500 hover:text-red-500 transition-colors">
+                  <Trash2 size={14} />
+               </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

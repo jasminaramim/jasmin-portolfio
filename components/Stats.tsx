@@ -6,19 +6,13 @@ const Stats: React.FC = () => {
   const [stats, setStats] = useState(STATS);
 
   useEffect(() => {
-    // Dynamically calculate some stats if projects are available
-    fetch('/api/projects').then(res => res.json()).then(data => {
+    fetch('/api/stats').then(res => res.json()).then(data => {
       if (Array.isArray(data) && data.length > 0) {
-        const newStats = [...STATS];
-        const projectsCount = data.length;
-        // Find "Projects Completed" index
-        const idx = newStats.findIndex(s => s.label === 'Projects Completed');
-        if (idx !== -1) {
-          newStats[idx].value = `${projectsCount}+`;
-        }
-        setStats(newStats);
+        setStats(data);
+      } else {
+        setStats(STATS);
       }
-    });
+    }).catch(err => console.error(err));
   }, []);
 
   return (
