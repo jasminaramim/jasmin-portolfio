@@ -121,44 +121,52 @@ export const STATS: Stat[] = [
 
 export const EXPERIENCE = [
   {
-    period: 'July 2025 – Present',
-    role: 'Web Developer (Full-Time)',
-    company: 'BD Calling, Dhaka',
-    companyLink: 'https://bdcalling.com/',
-    desc: 'Leading front-end initiatives, full-stack React development, and WordPress architecture for premium business clients.'
+    period: "July 2025 – Present",
+    role: "Web Developer (Full-Time)",
+    company: "BD Calling, Dhaka",
+    companyLink: "https://bdcalling.com/",
+    desc: "Leading frontend initiatives, custom full-stack React application development, and performance-tuned WordPress architectures for premium global enterprise clients.",
+    imageUrl: "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=200&auto=format&fit=crop"
   },
   {
-    period: 'Jan 2025 – July 2025',
-    role: 'Frontend Developer',
-    company: 'Elegance IT Solution',
-    desc: 'Focused on high-fidelity UI/UX implementation and cross-browser compatibility using modern React workflows.'
+    period: "Jan 2025 – July 2025",
+    role: "Frontend Developer",
+    company: "Elegance IT Solution",
+    companyLink: "",
+    desc: "Focused on crafting high-fidelity responsive UI/UX designs, modular components, and absolute cross-browser compatibility using modern React workflows.",
+    imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=200&auto=format&fit=crop"
   },
   {
-    period: '2024 – 2025',
-    role: 'Programming Course',
-    company: 'Programming Hero, BD_online',
-    desc: 'Intensive training in MERN stack and professional software development practices.'
+    period: "2024 – 2025",
+    role: "Professional MERN Programming",
+    company: "Programming Hero, BD",
+    companyLink: "",
+    desc: "Underwent intensive hands-on training in full-stack JavaScript architectures, RESTful API design, database schemas, and modern Agile product cycles.",
+    imageUrl: "https://images.unsplash.com/photo-1627398240309-089a14150a0a?q=80&w=200&auto=format&fit=crop"
   }
 ];
 
 export const EDUCATION = [
   {
-    period: '2022 – Present',
-    degree: 'CSE Diploma',
-    institution: 'Mymensingh Polytechnic Institute',
-    icon: '🎓'
+    period: "2022 – Present",
+    degree: "Diploma in Computer Science & Engineering",
+    institution: "Mymensingh Polytechnic Institute",
+    icon: "🎓",
+    imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=200&auto=format&fit=crop"
   },
   {
-    period: '2022',
-    degree: 'SSC',
-    institution: 'Mymensingh',
-    icon: '🏫'
+    period: "2022",
+    degree: "Secondary School Certificate (SSC)",
+    institution: "Mymensingh Board",
+    icon: "🏫",
+    imageUrl: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=200&auto=format&fit=crop"
   },
   {
-    period: '2015 – 2022',
-    degree: 'Secondary School',
-    institution: 'Rahmat-e-Alam Academy',
-    icon: '🏫'
+    period: "2015 – 2022",
+    degree: "Secondary School Academy",
+    institution: "Rahmat-e-Alam Academy",
+    icon: "🏫",
+    imageUrl: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=200&auto=format&fit=crop"
   }
 ];
 
