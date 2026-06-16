@@ -24,9 +24,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       try {
         const res = await fetch('/api/projects');
         const data = await res.json();
-        setProjects(Array.isArray(data) && data.length > 0 ? data : PROJECTS);
+        setProjects(Array.isArray(data) && data.length > 0 ? [...data].reverse() : [...PROJECTS].reverse());
       } catch (e) {
-        setProjects(PROJECTS);
+        setProjects([...PROJECTS].reverse());
       } finally {
         setLoading(false);
       }
@@ -95,8 +95,11 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 </Link>
                 <div className="p-10">
                    <Link to={`/projects/${project._id || project.id || ''}`} className="block outline-none">
-                     <h3 className="text-2xl font-black mb-6 uppercase tracking-tight group-hover:text-[#a855f7] transition-colors italic">{project.title}</h3>
+                     <h3 className="text-2xl font-black mb-4 uppercase tracking-tight group-hover:text-[#a855f7] transition-colors italic">{project.title}</h3>
                    </Link>
+                   <p className="text-gray-500 text-xs mb-6 leading-relaxed font-bold italic line-clamp-2">
+                     {project.description}
+                   </p>
                    <div className="flex gap-4">
                      <a href={project.liveLink || '#'} target="_blank" rel="noreferrer" className="flex-1 py-4 text-center bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl">Live Preview</a>
                      <Link to={`/projects/${project._id || project.id || ''}`} className="flex-1 py-4 text-center border border-[#a855f7] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all rounded-xl block">View Details</Link>
