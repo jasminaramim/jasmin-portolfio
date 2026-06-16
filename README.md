@@ -1,6 +1,6 @@
 # Jasmin Ara Mim - Premium Portfolio
 
-![Portfolio Banner](https://jasmin-v01.vercel.app/favicon.ico)
+![Portfolio Banner](https://i.ibb.co.com/q3PdKz40/c7ddcc8d-9fdb-4104-bd22-da8cb2563fbd.png)
 
 This is the premium portfolio website for Jasmin Ara Mim, a Full Stack Developer. It features a modern, interactive, and fully dynamic 3D user interface powered by React and Framer Motion. 
 
@@ -20,9 +20,4 @@ This is the premium portfolio website for Jasmin Ara Mim, a Full Stack Developer
 - Database: MongoDB
 - Deployment: Vercel
 
-## 🔒 Admin Dashboard
-The portfolio includes an integrated admin panel to manage all data dynamically without changing the code.
 
-**Login URL:** `/admin/login`
-
-*Developed with ❤️*
