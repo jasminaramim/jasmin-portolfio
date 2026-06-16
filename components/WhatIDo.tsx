@@ -53,7 +53,7 @@ const WhatIDo: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-transparent relative overflow-hidden font-['Space_Grotesk']">
+    <section className="py-[50px] md:py-24 bg-transparent relative overflow-hidden font-['Space_Grotesk']">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <motion.h4 

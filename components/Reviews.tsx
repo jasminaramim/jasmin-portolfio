@@ -55,7 +55,7 @@ const Reviews: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-[#050505] relative overflow-hidden font-['Space_Grotesk'] border-y border-white/5">
+    <section className="py-[50px] md:py-24 bg-[#050505] relative overflow-hidden font-['Space_Grotesk'] border-y border-white/5">
       <style>
         {`
           @keyframes scrollMarquee {

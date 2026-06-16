@@ -36,7 +36,7 @@ const Contact: React.FC = () => {
   }, []);
 
   return (
-    <div className="py-24 px-6 bg-transparent relative overflow-hidden">
+    <div className="py-[50px] md:py-24 px-6 bg-transparent relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#4B0082]/5 blur-[150px] pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
