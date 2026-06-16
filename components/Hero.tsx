@@ -212,7 +212,7 @@ const Hero: React.FC<HeroProps> = () => {
         }
       `}</style>
 
-      <section className="hero-custom pt-[100px] md:pt-[150px] pb-[120px] md:pb-[50px]">
+      <section className="hero-custom pt-[130px] md:pt-[150px] pb-[120px] md:pb-[50px]">
         {/* 2D Particle Canvas Background */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}></canvas>
 
