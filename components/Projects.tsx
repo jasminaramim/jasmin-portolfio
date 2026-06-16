@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 
 const Projects: React.FC = () => {
@@ -68,14 +69,12 @@ const Projects: React.FC = () => {
                   >
                     🟣 Live Website
                   </a>
-                  {(project.hasCaseStudy || project.docLink) && (
-                    <a 
-                      href={project.docLink || '#'} 
-                      className="px-8 py-5 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all rounded-2xl border border-white/10"
-                    >
-                      Study
-                    </a>
-                  )}
+                  <Link 
+                    to={`/projects/${project._id || project.id}`}
+                    className="px-8 py-5 bg-white/5 text-white text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all rounded-2xl border border-white/10 whitespace-nowrap"
+                  >
+                    Details
+                  </Link>
                 </div>
               </div>
             </motion.div>
