@@ -18,7 +18,6 @@ const ProjectDetailsView: React.FC = () => {
           const data = await res.json();
           setProject(data);
         } else {
-          // Fallback to local static data
           const localProject = PROJECTS.find(p => p._id === id || p.id === id) || PROJECTS[0];
           setProject(localProject);
         }

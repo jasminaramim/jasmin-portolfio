@@ -42,8 +42,6 @@ const App: React.FC = () => {
         <Background3D />
         
         <Routes>
-          {/* Admin routes don't show the standard navbar/footer in this case or maybe they do? 
-              Usually admin panel has its own layout. Let's keep it separate. */}
           <Route path="/admin/login" element={<LoginView />} />
           <Route path="/admin/*" element={<AdminDashboard />} />
           

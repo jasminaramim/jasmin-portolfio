@@ -185,7 +185,7 @@ const createCRUDRoutes = (collectionName: string) => {
       try {
         query = { _id: new ObjectId(req.params.id) };
       } catch (e) {
-        query = { id: req.params.id }; // Fallback for string IDs like 'ratiomesh'
+        query = { id: req.params.id };
       }
       const data = await db.collection(collectionName).findOne(query);
       if (!data) return res.status(404).json({ error: "Not found" });
