@@ -16,7 +16,7 @@ const Stats: React.FC = () => {
   }, []);
 
   return (
-    <div className="py-[50px] md:py-20 bg-transparent relative overflow-hidden">
+    <div className="py-[25px] md:py-20 bg-transparent relative overflow-hidden">
       <div className="absolute inset-0 bg-[#a855f7]/5 blur-[120px]"></div>
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">

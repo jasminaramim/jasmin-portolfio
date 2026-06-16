@@ -13,7 +13,7 @@ const Projects: React.FC = () => {
   }, []);
 
   return (
-    <div className="py-[50px] md:py-32 bg-black overflow-hidden">
+    <div className="py-[25px] md:py-32 bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
           <div>

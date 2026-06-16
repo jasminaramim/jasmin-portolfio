@@ -16,7 +16,7 @@ const Experience: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-[50px] md:py-20 px-6 max-w-7xl mx-auto bg-transparent overflow-hidden">
+    <section className="py-[25px] md:py-20 px-6 max-w-7xl mx-auto bg-transparent overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
         
         {/* EXPERIENCE SUBSECTION */}

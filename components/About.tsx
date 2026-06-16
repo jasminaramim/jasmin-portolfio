@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface AboutProps {
   onNavigate?: (page: string) => void;
 }
 
 const About: React.FC<AboutProps> = ({ onNavigate }) => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<any>({
     bio: 'I am a dedicated Developer with a passion for creating pixel-perfect, highly responsive websites. My journey as a coder is defined by a relentless pursuit of excellence in both WordPress and MERN Stack development.',
     image: '/about-image.jpg'
@@ -25,7 +27,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <div className="py-[50px] md:py-24 px-6 max-w-7xl mx-auto bg-transparent">
+    <div className="py-[25px] md:py-24 px-6 max-w-7xl mx-auto bg-transparent">
       <div className="grid md:grid-cols-2 gap-16 items-center">
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
@@ -59,7 +61,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
           {onNavigate && (
             <button 
-              onClick={() => onNavigate('about')}
+              onClick={() => navigate('/about')}
               className="px-8 py-4 border-2 border-[#a855f7] text-[#a855f7] font-black uppercase tracking-widest text-[10px] hover:bg-[#a855f7] hover:text-white transition-all"
             >
               More About Me
