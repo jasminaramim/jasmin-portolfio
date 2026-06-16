@@ -16,9 +16,9 @@ const ProjectsView: React.FC = () => {
       try {
         const res = await fetch('/api/projects');
         const data = await res.json();
-        setProjects(Array.isArray(data) && data.length > 0 ? data : PROJECTS);
+        setProjects(Array.isArray(data) && data.length > 0 ? [...data].reverse() : [...PROJECTS].reverse());
       } catch (e) {
-        setProjects(PROJECTS);
+        setProjects([...PROJECTS].reverse());
       } finally {
         setLoading(false);
       }
@@ -94,7 +94,7 @@ const ProjectsView: React.FC = () => {
                       {project.title}
                     </h3>
                   </Link>
-                  <p className="text-gray-500 text-xs mb-10 leading-relaxed font-bold max-w-lg italic">
+                  <p className="text-gray-500 text-xs mb-10 leading-relaxed font-bold max-w-lg italic line-clamp-2">
                     {project.description}
                   </p>
 

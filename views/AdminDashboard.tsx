@@ -257,7 +257,7 @@ const ManageProjects = () => {
     try {
       const res = await fetch('/api/projects');
       const data = await res.json();
-      setProjects(Array.isArray(data) ? data : []);
+      setProjects(Array.isArray(data) ? [...data].reverse() : []);
     } catch (e) { console.error(e); }
     finally { setLoading(false); }
   };
