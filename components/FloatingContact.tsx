@@ -13,16 +13,18 @@ const FloatingContact: React.FC = () => {
   });
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.socialLinks) {
-        setSocials({
-          whatsapp: data.socialLinks.whatsapp || CONTACT_INFO.whatsapp,
-          messenger: data.socialLinks.messenger || CONTACT_INFO.messenger,
-          linkedin: data.socialLinks.linkedin || CONTACT_INFO.linkedin,
-          phone: data.socialLinks.phone || CONTACT_INFO.phone,
-          facebook: data.socialLinks.facebook || CONTACT_INFO.facebook
-        });
-      }
+    Promise.all([
+      fetch('/api/profile').then(res => res.json().catch(() => ({}))),
+      fetch('/api/hero').then(res => res.json().catch(() => ({})))
+    ]).then(([profileData, heroData]) => {
+      setSocials(prev => ({
+        ...prev,
+        whatsapp: profileData?.socialLinks?.whatsapp || CONTACT_INFO.whatsapp,
+        messenger: profileData?.socialLinks?.messenger || CONTACT_INFO.messenger,
+        linkedin: heroData?.socials?.linkedin || profileData?.socialLinks?.linkedin || CONTACT_INFO.linkedin,
+        phone: profileData?.socialLinks?.phone || CONTACT_INFO.phone,
+        facebook: heroData?.socials?.facebook || profileData?.socialLinks?.facebook || CONTACT_INFO.facebook
+      }));
     });
   }, []);
 

@@ -18,10 +18,12 @@ const defaultHeroData: HeroContent = {
 <span class="ln">&nbsp;&nbsp;<span class="cb">name</span><span class="cw">:</span> <span class="cs">'Jasmin Ara Mim'</span><span class="cw">,</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cb">role</span><span class="cw">:</span> <span class="cs">'Full-Stack Dev'</span><span class="cw">,</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cb">location</span><span class="cw">:</span> <span class="cs">'Bangladesh'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">experience</span><span class="cw">:</span> <span class="cs">'2+ Years'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;<span class="cb">projects</span><span class="cw">:</span> <span class="cs">'50+ Completed'</span><span class="cw">,</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cb">stack</span><span class="cw">: [</span></span>
 <span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'React'</span><span class="cw">,</span> <span class="cs">'Node.js'</span><span class="cw">,</span></span>
-<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'MongoDB'</span><span class="cw">,</span></span>
-<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'WordPress'</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'MongoDB'</span><span class="cw">,</span> <span class="cs">'Express'</span><span class="cw">,</span></span>
+<span class="ln">&nbsp;&nbsp;&nbsp;&nbsp;<span class="cs">'Next.js'</span><span class="cw">,</span> <span class="cs">'WordPress'</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cw">],</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cb">available</span><span class="cw">:</span> <span class="ct">true</span><span class="cw">,</span></span>
 <span class="ln">&nbsp;&nbsp;<span class="cp">hire</span><span class="cw">() {</span></span>
@@ -191,7 +193,7 @@ const Hero: React.FC<HeroProps> = () => {
         .code-bar { display: flex; align-items: center; gap: 6px; padding: 11px 16px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .code-filename { font-size: 13px; color: rgba(255,255,255,0.28); letter-spacing: 0.8px; margin-left: 6px; font-family: 'JetBrains Mono', monospace; }
-        .code-body { padding: 22px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.8; }
+        .code-body { padding: 32px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.9; }
         .ln { display: block; }
         .cp { color: #8b5cf6; } .cb { color: #7088e8; } .ct { color: #56d9b1; }
         .cw { color: rgba(255,255,255,0.78); } .cs { color: #f9c74f; } .cd { color: rgba(255,255,255,0.22); }
@@ -303,7 +305,32 @@ const Hero: React.FC<HeroProps> = () => {
               </div>
               <div 
                 className="code-body" 
-                dangerouslySetInnerHTML={{ __html: heroData.codeSnippet }} 
+                dangerouslySetInnerHTML={{ 
+                  __html: (() => {
+                    const rawCode = heroData.codeSnippet || '';
+                    if (rawCode.includes('<span')) return rawCode;
+
+                    const lines = rawCode.split('\n');
+                    let html = '';
+                    lines.forEach((line, index) => {
+                      let formattedLine = line
+                        .replace(/ /g, '&nbsp;')
+                        .replace(/(const)/g, '<span class="cp">$1</span>')
+                        .replace(/(dev)/g, '<span class="ct">$1</span>')
+                        .replace(/(name|role|location|experience|projects|stack|available|hire|contact|return)/g, '<span class="cb">$1</span>')
+                        .replace(/('[^']*')/g, '<span class="cs">$1</span>')
+                        .replace(/(true|false)/g, '<span class="ct">$1</span>')
+                        .replace(/([\{\}\[\]:,])/g, '<span class="cw">$1</span>');
+                      
+                      if (index === lines.length - 1) {
+                         html += `<span class="ln">${formattedLine}<span class="cursor"></span></span>`;
+                      } else {
+                         html += `<span class="ln">${formattedLine}</span>`;
+                      }
+                    });
+                    return html;
+                  })()
+                }} 
               />
             </div>
           </div>

@@ -3,6 +3,8 @@ import About from '../components/About';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import Stats from '../components/Stats';
+import Skills from '../components/Skills';
 
 const AboutView: React.FC = () => {
   const [reviews, setReviews] = useState<any[]>([]);
@@ -77,19 +79,13 @@ const AboutView: React.FC = () => {
                  By mastering both high-end custom JavaScript frameworks and the world's leading CMS, I provide a holistic development service that few can match. Whether it's a dynamic data-driven app or a content-rich e-commerce store, I have the tools to deliver.
                </p>
             </div>
-            <div className="grid grid-cols-2 gap-8">
-               <div className="p-10 border border-white/5 glass text-center">
-                  <div className="text-[#a855f7] font-black text-5xl mb-2 italic">80+</div>
-                  <div className="text-gray-500 text-[10px] font-black uppercase tracking-widest">Projects Delivered</div>
-               </div>
-               <div className="p-10 border border-white/5 glass text-center">
-                  <div className="text-[#a855f7] font-black text-5xl mb-2 italic">50+</div>
-                  <div className="text-gray-500 text-[10px] font-black uppercase tracking-widest">Global Clients</div>
-               </div>
-            </div>
           </div>
         </div>
       </section>
+      
+      <Skills />
+      
+      <Stats />
     </div>
   );
 };

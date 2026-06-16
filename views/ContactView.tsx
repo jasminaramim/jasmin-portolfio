@@ -15,8 +15,17 @@ const ContactView: React.FC = () => {
   });
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.email) setProfile(data);
+    Promise.all([
+      fetch('/api/profile').then(res => res.json().catch(() => ({}))),
+      fetch('/api/hero').then(res => res.json().catch(() => ({})))
+    ]).then(([profileData, heroData]) => {
+      setProfile(prev => ({
+        email: heroData?.socials?.email || profileData?.email || CONTACT_INFO.email,
+        address: profileData?.address || CONTACT_INFO.address,
+        socialLinks: {
+          whatsapp: profileData?.socialLinks?.whatsapp || CONTACT_INFO.whatsapp
+        }
+      }));
     });
   }, []);
 

@@ -17,15 +17,18 @@ const Footer: React.FC<FooterProps> = () => {
   });
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.socialLinks) {
-        setSocials({
-          linkedin: data.socialLinks.linkedin || CONTACT_INFO.linkedin,
-          github: data.socialLinks.github || CONTACT_INFO.github,
-          facebook: data.socialLinks.facebook || CONTACT_INFO.facebook,
-          whatsapp: data.socialLinks.whatsapp || CONTACT_INFO.whatsapp
-        });
-      }
+    // Fetch profile and hero data to merge social links as requested by user
+    Promise.all([
+      fetch('/api/profile').then(res => res.json().catch(() => ({}))),
+      fetch('/api/hero').then(res => res.json().catch(() => ({})))
+    ]).then(([profileData, heroData]) => {
+      setSocials(prev => ({
+        ...prev,
+        linkedin: heroData?.socials?.linkedin || profileData?.socialLinks?.linkedin || CONTACT_INFO.linkedin,
+        github: heroData?.socials?.github || profileData?.socialLinks?.github || CONTACT_INFO.github,
+        facebook: heroData?.socials?.facebook || profileData?.socialLinks?.facebook || CONTACT_INFO.facebook,
+        whatsapp: profileData?.socialLinks?.whatsapp || CONTACT_INFO.whatsapp
+      }));
     });
   }, []);
 

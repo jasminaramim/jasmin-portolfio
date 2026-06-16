@@ -44,25 +44,34 @@ const Experience: React.FC = () => {
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#a855f7] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
                 
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-[#a855f7] font-black text-[9px] uppercase tracking-[0.2em]">
-                    {exp.period}
-                  </span>
+                <div className="flex gap-6 items-start">
+                  {exp.imageUrl && (
+                    <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-[#8b5cf6]">
+                      <img src={exp.imageUrl} alt={exp.company} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-[#a855f7] font-black text-[9px] uppercase tracking-[0.2em]">
+                        {exp.period}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">
+                      {exp.role}
+                    </h3>
+                    <div className="text-gray-400 font-bold mb-3 text-[11px] uppercase tracking-widest italic">
+                      {exp.companyLink ? (
+                        <a href={exp.companyLink} target="_blank" rel="noreferrer" className="hover:text-[#a855f7] transition-colors">
+                          {exp.company}
+                        </a>
+                      ) : exp.company}
+                    </div>
+                    <p className="text-gray-500 leading-relaxed text-xs italic font-medium">
+                      {exp.desc}
+                    </p>
+                  </div>
                 </div>
-                
-                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">
-                  {exp.role}
-                </h3>
-                <div className="text-gray-400 font-bold mb-3 text-[11px] uppercase tracking-widest italic">
-                  {exp.companyLink ? (
-                    <a href={exp.companyLink} target="_blank" rel="noreferrer" className="hover:text-[#a855f7] transition-colors">
-                      {exp.company}
-                    </a>
-                  ) : exp.company}
-                </div>
-                <p className="text-gray-500 leading-relaxed text-xs italic font-medium">
-                  {exp.desc}
-                </p>
               </motion.div>
             ))}
           </div>
@@ -93,17 +102,26 @@ const Experience: React.FC = () => {
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#a855f7] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
                 
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-gray-500 font-black text-[9px] uppercase tracking-[0.2em]">
-                    {edu.period}
-                  </span>
-                </div>
-                
-                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">
-                  {edu.degree}
-                </h3>
-                <div className="text-gray-400 font-bold text-[11px] uppercase tracking-widest italic">
-                  {edu.institution}
+                <div className="flex gap-6 items-start">
+                  {edu.imageUrl && (
+                    <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-[#8b5cf6]">
+                      <img src={edu.imageUrl} alt={edu.institution} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-gray-500 font-black text-[9px] uppercase tracking-[0.2em]">
+                        {edu.period}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1">
+                      {edu.degree}
+                    </h3>
+                    <div className="text-gray-400 font-bold text-[11px] uppercase tracking-widest italic">
+                      {edu.institution}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}

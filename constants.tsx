@@ -125,22 +125,19 @@ export const EXPERIENCE = [
     role: 'Web Developer (Full-Time)',
     company: 'BD Calling, Dhaka',
     companyLink: 'https://bdcalling.com/',
-    desc: 'Leading front-end initiatives, full-stack React development, and WordPress architecture for premium business clients.',
-    icon: '🏆'
+    desc: 'Leading front-end initiatives, full-stack React development, and WordPress architecture for premium business clients.'
   },
   {
     period: 'Jan 2025 – July 2025',
     role: 'Frontend Developer',
     company: 'Elegance IT Solution',
-    desc: 'Focused on high-fidelity UI/UX implementation and cross-browser compatibility using modern React workflows.',
-    icon: '🏆'
+    desc: 'Focused on high-fidelity UI/UX implementation and cross-browser compatibility using modern React workflows.'
   },
   {
     period: '2024 – 2025',
     role: 'Programming Course',
     company: 'Programming Hero, BD_online',
-    desc: 'Intensive training in MERN stack and professional software development practices.',
-    icon: '🏆'
+    desc: 'Intensive training in MERN stack and professional software development practices.'
   }
 ];
 

@@ -16,8 +16,22 @@ const Contact: React.FC = () => {
   });
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.email) setProfile(data);
+    Promise.all([
+      fetch('/api/profile').then(res => res.json().catch(() => ({}))),
+      fetch('/api/hero').then(res => res.json().catch(() => ({})))
+    ]).then(([profileData, heroData]) => {
+      setProfile(prev => ({
+        email: heroData?.socials?.email || profileData?.email || CONTACT_INFO.email,
+        phone: profileData?.phone || CONTACT_INFO.phone,
+        address: profileData?.address || CONTACT_INFO.address,
+        socialLinks: {
+          linkedin: heroData?.socials?.linkedin || profileData?.socialLinks?.linkedin || CONTACT_INFO.linkedin,
+          whatsapp: profileData?.socialLinks?.whatsapp || CONTACT_INFO.whatsapp,
+          messenger: profileData?.socialLinks?.messenger || CONTACT_INFO.messenger,
+          facebook: heroData?.socials?.facebook || profileData?.socialLinks?.facebook || CONTACT_INFO.facebook,
+          github: heroData?.socials?.github || profileData?.socialLinks?.github || CONTACT_INFO.github
+        }
+      }));
     });
   }, []);
 

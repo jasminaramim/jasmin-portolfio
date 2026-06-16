@@ -1029,7 +1029,7 @@ const ManageExperience = () => {
   const [experience, setExperience] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
 
-  const defaultForm = { role: '', company: '', period: '', desc: '', companyLink: '' };
+  const defaultForm = { role: '', company: '', period: '', desc: '', companyLink: '', imageUrl: '' };
   const [formData, setFormData] = useState<any>(defaultForm);
 
   const handleAddNewClick = () => {
@@ -1058,7 +1058,7 @@ const ManageExperience = () => {
     const method = formData._id ? 'PUT' : 'POST';
     const url = formData._id ? `/api/experience/${formData._id}` : '/api/experience';
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    setFormData({ role: '', company: '', period: '', desc: '', companyLink: '' });
+    setFormData(defaultForm);
     setIsAdding(false);
     fetchExperience();
   };
@@ -1105,6 +1105,10 @@ const ManageExperience = () => {
               <div className="col-span-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Company Link (Optional)</label>
                 <input value={formData.companyLink || ''} onChange={e => setFormData({...formData, companyLink: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-[10px]" placeholder="https://..." />
+              </div>
+              <div className="col-span-2">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Image URL</label>
+                <input value={formData.imageUrl || ''} onChange={e => setFormData({...formData, imageUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="https://... (Displays as full circle on UI)" />
               </div>
             </div>
             <div>
@@ -1158,7 +1162,7 @@ const ManageEducation = () => {
   const [education, setEducation] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
 
-  const defaultForm = { degree: '', institution: '', period: '', icon: '🎓' };
+  const defaultForm = { degree: '', institution: '', period: '', icon: '🎓', imageUrl: '' };
   const [formData, setFormData] = useState<any>(defaultForm);
 
   const handleAddNewClick = () => {
@@ -1187,7 +1191,7 @@ const ManageEducation = () => {
     const method = formData._id ? 'PUT' : 'POST';
     const url = formData._id ? `/api/education/${formData._id}` : '/api/education';
     await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
-    setFormData({ degree: '', institution: '', period: '', icon: '🎓' });
+    setFormData(defaultForm);
     setIsAdding(false);
     fetchEducation();
   };
@@ -1234,6 +1238,10 @@ const ManageEducation = () => {
               <div>
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Emoji Icon</label>
                 <input value={formData.icon || ''} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-2xl text-center" placeholder="🎓" />
+              </div>
+              <div className="col-span-2">
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-3 block italic">Image URL</label>
+                <input value={formData.imageUrl || ''} onChange={e => setFormData({...formData, imageUrl: e.target.value})} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#a855f7] outline-none text-sm font-bold" placeholder="https://... (Displays as full circle on UI)" />
               </div>
             </div>
             <div className="flex justify-end gap-6 pt-6">
@@ -1459,10 +1467,12 @@ const ManageHero = () => {
   name: 'Jasmin Ara Mim',
   role: 'Full-Stack Dev',
   location: 'Bangladesh',
+  experience: '2+ Years',
+  projects: '50+ Completed',
   stack: [
     'React', 'Node.js',
-    'MongoDB',
-    'WordPress'
+    'MongoDB', 'Express',
+    'Next.js', 'WordPress'
   ],
   available: true,
   hire() {
