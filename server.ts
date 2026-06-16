@@ -178,6 +178,23 @@ const createCRUDRoutes = (collectionName: string) => {
     }
   });
 
+  app.get(`/api/${collectionName}/:id`, async (req, res) => {
+    try {
+      if (!db) return res.status(503).json({ error: "Database not connected" });
+      let query: any = {};
+      try {
+        query = { _id: new ObjectId(req.params.id) };
+      } catch (e) {
+        query = { id: req.params.id }; // Fallback for string IDs like 'ratiomesh'
+      }
+      const data = await db.collection(collectionName).findOne(query);
+      if (!data) return res.status(404).json({ error: "Not found" });
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: `Failed to fetch ${collectionName} by ID` });
+    }
+  });
+
   app.post(`/api/${collectionName}`, authenticateToken, async (req, res) => {
     try {
       if (!db) return res.status(503).json({ error: "Database not connected" });
