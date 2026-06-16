@@ -13,7 +13,14 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => {
-      if (data && data.bio) setProfile(data);
+      if (data && Object.keys(data).length > 0) {
+        setProfile(prev => ({
+          ...prev,
+          ...data,
+          bio: data.bio || prev.bio, // Use default bio if empty
+          image: data.image || prev.image // Use default image if empty
+        }));
+      }
     });
   }, []);
 
