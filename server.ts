@@ -27,17 +27,25 @@ const client = new MongoClient(uri, {
 let db: any;
 
 async function connectDB() {
-  try {
-    await client.connect();
-    db = client.db("portfolio");
-    console.log("Connected to MongoDB");
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
+  if (!db) {
+    try {
+      await client.connect();
+      db = client.db("portfolio");
+      console.log("Connected to MongoDB");
+    } catch (err) {
+      console.error("MongoDB connection error:", err);
+    }
   }
 }
 
 connectDB();
 
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    await connectDB();
+  }
+  next();
+});
 app.use(express.json());
 app.use(cookieParser());
 
