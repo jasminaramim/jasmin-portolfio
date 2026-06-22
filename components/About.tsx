@@ -79,7 +79,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             <img 
               src={profile.image} 
               alt="Professional Tech Setup" 
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              className="w-full h-full object-cover transition-all duration-700"
             />
             {/* Visual Decor */}
             <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-[#a855f7]"></div>

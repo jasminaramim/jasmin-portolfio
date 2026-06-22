@@ -44,13 +44,13 @@ const Experience: React.FC = () => {
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#a855f7] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
                 
-                <div className="flex gap-6 items-start">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start w-full">
                   {exp.imageUrl && (
                     <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-[#8b5cf6]">
                       <img src={exp.imageUrl} alt={exp.company} className="w-full h-full object-cover" />
                     </div>
                   )}
-                  <div>
+                  <div className="flex-1 w-full">
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-[#a855f7] font-black text-[9px] uppercase tracking-[0.2em]">
                         {exp.period}
@@ -102,13 +102,13 @@ const Experience: React.FC = () => {
                 {/* Timeline Dot */}
                 <div className="absolute -left-[51px] top-10 w-3.5 h-3.5 bg-[#a855f7] rounded-full border-2 border-black group-hover:scale-110 transition-transform shadow-[0_0_8px_rgba(255,105,180,0.7)]"></div>
                 
-                <div className="flex gap-6 items-start">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start w-full">
                   {edu.imageUrl && (
                     <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-[#8b5cf6]">
                       <img src={edu.imageUrl} alt={edu.institution} className="w-full h-full object-cover" />
                     </div>
                   )}
-                  <div>
+                  <div className="flex-1 w-full">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-gray-500 font-black text-[9px] uppercase tracking-[0.2em]">
                         {edu.period}

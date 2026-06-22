@@ -10,7 +10,7 @@ interface BreadcrumbsProps {
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ title, subtitle, image }) => {
   return (
     <div 
-      className="relative flex flex-col items-center justify-center overflow-hidden border-b border-[#4B0082]/10 breadcrumb-bg pt-[250px] pb-[100px]"
+      className="relative flex flex-col items-center justify-center overflow-hidden border-b border-[#4B0082]/10 breadcrumb-bg pt-[150px] md:pt-[250px] pb-[70px] md:pb-[100px]"
       style={{ backgroundImage: `url(${image})` }}
     >
       {/* Overlay */}

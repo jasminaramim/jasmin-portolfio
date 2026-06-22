@@ -90,16 +90,16 @@ const GetConnected: React.FC = () => {
                 viewport={{ once: true }}
                 className="overflow-hidden border border-white/5 rounded-3xl"
               >
-                <img src={images[0]} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img src={images[0]} className="w-full h-full object-cover transition-all duration-700" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="overflow-hidden border border-white/5 h-2/3 mt-auto rounded-3xl"
+                className="overflow-hidden border border-white/5 rounded-3xl"
               >
-                <img src={images[1]} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img src={images[1]} className="w-full h-full object-cover transition-all duration-700" />
               </motion.div>
             </div>
             <div className="grid grid-rows-2 gap-3">
@@ -108,9 +108,9 @@ const GetConnected: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="overflow-hidden border border-white/5 h-2/3 rounded-3xl"
+                className="overflow-hidden border border-white/5 rounded-3xl"
               >
-                <img src={images[2]} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img src={images[2]} className="w-full h-full object-cover transition-all duration-700" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -119,7 +119,7 @@ const GetConnected: React.FC = () => {
                 transition={{ delay: 0.3 }}
                 className="overflow-hidden border border-white/5 rounded-3xl"
               >
-                <img src={images[3]} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img src={images[3]} className="w-full h-full object-cover transition-all duration-700" />
               </motion.div>
             </div>
           </div>

@@ -40,7 +40,7 @@ const Projects: React.FC = () => {
                 <img 
                   src={project.image} 
                   alt={project.title} 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all"></div>
                 <div className="absolute top-8 left-8 flex flex-wrap gap-2">

@@ -72,7 +72,7 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
                   <div key={skill.name} className="group">
                     <div className="flex justify-between items-end mb-3">
                       <div className="flex items-center gap-3">
-                         {skill.logoLink && <img src={skill.logoLink} alt={skill.name} className="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all" />}
+                         {skill.logoLink && <img src={skill.logoLink} alt={skill.name} className="w-5 h-5 object-contain transition-all" />}
                          <span className="text-xs font-bold uppercase tracking-widest text-gray-300 group-hover:text-[#a855f7] transition-colors">
                             {skill.name}
                          </span>
