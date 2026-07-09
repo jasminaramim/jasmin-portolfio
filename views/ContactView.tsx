@@ -41,7 +41,7 @@ const ContactView: React.FC = () => {
         <Contact />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-[50px] md:py-24 grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { 
             icon: <Mail className="w-8 h-8 text-[#a855f7]" />, 
@@ -83,7 +83,7 @@ const ContactView: React.FC = () => {
       </div>
 
       {/* Embedded Map Section */}
-      <section className="py-24 px-6 border-t border-white/5 bg-transparent relative overflow-hidden">
+      <section className="py-[50px] md:py-24 px-6 border-t border-white/5 bg-transparent relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>

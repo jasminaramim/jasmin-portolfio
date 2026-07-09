@@ -58,7 +58,7 @@ const ProjectDetailsView: React.FC = () => {
         image={project.image || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop'}
       />
 
-      <div className="max-w-5xl mx-auto px-6 py-24">
+      <div className="max-w-5xl mx-auto px-6 py-[50px] md:py-24">
         <button 
           onClick={() => navigate(-1)}
           className="mb-12 flex items-center gap-2 text-[#8b5cf6] hover:text-white transition-colors font-bold uppercase tracking-widest text-[10px]"

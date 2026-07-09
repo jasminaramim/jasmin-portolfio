@@ -27,7 +27,7 @@ const AboutView: React.FC = () => {
 
       {/* Reviews Section */}
       {reviews.length > 0 && (
-        <section className="py-32 bg-transparent border-y border-white/5">
+        <section className="py-[50px] md:py-32 bg-transparent border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <div className="mb-20 text-center">
               <h3 className="text-[#a855f7] font-bold uppercase tracking-widest mb-3 italic text-[10px]">Client Feedback</h3>
@@ -56,7 +56,7 @@ const AboutView: React.FC = () => {
         </section>
       )}
 
-      <section className="py-32 bg-transparent">
+      <section className="py-[50px] md:py-32 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24">
           <div>
             <h2 className="text-4xl font-black mb-12 uppercase text-[#a855f7] italic tracking-tighter">Career Objectives</h2>

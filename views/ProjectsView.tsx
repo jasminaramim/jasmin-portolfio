@@ -39,7 +39,7 @@ const ProjectsView: React.FC = () => {
         image="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"
       />
 
-      <div className="py-20 max-w-7xl mx-auto px-6">
+      <div className="py-[50px] md:py-20 max-w-7xl mx-auto px-6">
         <div className="flex flex-wrap gap-4 mb-24 justify-center">
           {categories.map(cat => (
             <button

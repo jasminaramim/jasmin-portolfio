@@ -501,7 +501,7 @@ const ManageProjects = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {loading ? (
-          <div className="col-span-2 py-32 text-center text-gray-500 font-black uppercase tracking-[0.5em] animate-pulse italic">Scanning Database...</div>
+          <div className="col-span-2 py-[50px] md:py-32 text-center text-gray-500 font-black uppercase tracking-[0.5em] animate-pulse italic">Scanning Database...</div>
         ) : projects.length === 0 ? (
           <div className="col-span-2 text-center py-40 glass rounded-[40px] border border-dashed border-white/10">
              <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-8">
@@ -1356,7 +1356,7 @@ const ManageSettings = () => {
     }
   };
 
-  if (loading) return <div className="py-20 text-center animate-pulse font-black uppercase tracking-widest text-xs text-gray-500 italic">Retrieving Command Configurations...</div>;
+  if (loading) return <div className="py-[50px] md:py-20 text-center animate-pulse font-black uppercase tracking-widest text-xs text-gray-500 italic">Retrieving Command Configurations...</div>;
 
   return (
     <div className="max-w-4xl mx-auto space-y-12">
@@ -1519,7 +1519,7 @@ const ManageHero = () => {
     }
   };
 
-  if (loading) return <div className="py-20 text-center animate-pulse text-gray-500 italic">Loading Hero Data...</div>;
+  if (loading) return <div className="py-[50px] md:py-20 text-center animate-pulse text-gray-500 italic">Loading Hero Data...</div>;
 
   return (
     <div className="max-w-5xl mx-auto space-y-12">

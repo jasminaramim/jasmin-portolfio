@@ -13,7 +13,7 @@ const Projects: React.FC = () => {
   }, []);
 
   return (
-    <div className="py-[25px] md:py-32 bg-black overflow-hidden">
+    <div className="py-[50px] md:py-32 bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
           <div>
@@ -82,7 +82,7 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Trusted By Section */}
-        <div className="py-20 border-t border-white/5 text-center">
+        <div className="py-[50px] md:py-20 border-t border-white/5 text-center">
           <h4 className="text-gray-600 font-bold uppercase tracking-[0.4em] text-xs mb-10 italic">Trusted by Clients Worldwide</h4>
           <div className="flex flex-wrap justify-center gap-16 md:gap-32 opacity-40">
             <div className="text-2xl font-black italic">50+ CLIENTS</div>

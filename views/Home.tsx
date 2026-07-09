@@ -58,7 +58,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       
       <WhatIDo />
 
-      <section id="projects" className="py-24 bg-transparent relative">
+      <section id="projects" className="py-[50px] md:py-24 bg-transparent relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex justify-between items-end mb-16">
             <div>
@@ -115,7 +115,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       <GetConnected />
 
-      <section className="py-32 bg-gradient-to-tr from-[#4B0082] to-[#a855f7] text-center relative overflow-hidden group">
+      <section className="py-[50px] md:py-32 bg-gradient-to-tr from-[#4B0082] to-[#a855f7] text-center relative overflow-hidden group">
         <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors"></div>
         <div className="relative z-10 max-w-4xl mx-auto px-6">
             <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-6 leading-tight">READY TO ELEVATE YOUR BRAND?</h3>
