@@ -64,54 +64,55 @@ const ProjectsView: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="group relative bg-[#0a0a0a]/70 backdrop-blur-md border border-white/5 overflow-hidden transition-all hover:border-[#a855f7]/40 shadow-xl rounded-[40px]"
+                className="flex flex-col items-center w-full mb-12 group"
               >
-                <Link to={`/projects/${project._id || project.id || ''}`} className="block relative h-[400px] overflow-hidden">
-                  <img 
-                    src={project.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop'} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover grayscale-0 brightness-100 group-hover:grayscale group-hover:brightness-90 transition-all duration-1000 ease-out scale-100 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/5 group-hover:bg-black/20 transition-all duration-700"></div>
-                  
-                  {/* Floating Tags */}
-                  <div className="absolute top-8 left-8 flex flex-wrap gap-2">
-                    {(project.tags || project.tech || []).map((tag: string) => (
-                      <span key={tag} className="text-[8px] px-4 py-1.5 bg-black/80 backdrop-blur-md text-[#a855f7] border border-[#a855f7]/30 font-black uppercase tracking-widest rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </Link>
+                {/* Monitor Container */}
+                <div className="relative w-full aspect-[16/10] bg-gradient-to-b from-[#d4d4d4] to-[#a3a3a3] p-[2px] md:p-[4px] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-10">
+                  {/* Screen Bezel */}
+                  <div className="w-full h-full bg-[#111111] rounded-lg p-2 md:p-3 lg:p-4 relative flex flex-col justify-between items-center shadow-inner">
+                    
+                    {/* Camera Dot */}
+                    <div className="absolute top-1.5 md:top-2 left-1/2 -translate-x-1/2 w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-black/50 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2)]"></div>
 
-                <div className="p-12 relative">
-                  <div className="absolute -top-10 left-12 w-20 h-20 bg-gradient-to-br from-[#4B0082] to-[#a855f7] flex items-center justify-center text-white font-black text-2xl italic shadow-2xl group-hover:-translate-y-2 transition-transform rounded-3xl pointer-events-none">
-                    {project.title.charAt(0)}
-                  </div>
-                  
-                  <Link to={`/projects/${project._id || project.id || ''}`} className="block outline-none">
-                    <h3 className="text-3xl font-black mb-4 group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic pt-8">
-                      {project.title}
-                    </h3>
-                  </Link>
-                  <p className="text-gray-500 text-xs mb-10 leading-relaxed font-bold max-w-lg italic line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex gap-4">
-                    <a 
-                      href={project.liveLink || '#'} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="flex-1 text-center py-5 bg-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#a855f7] transition-all shadow-lg rounded-2xl"
-                    >
-                      🟣 Live Deployment
-                    </a>
-                    <Link to={`/projects/${project._id || project.id || ''}`} className="flex-1 text-center px-10 py-5 border-2 border-[#4B0082] text-white text-[9px] font-black uppercase tracking-widest hover:bg-[#4B0082] transition-all rounded-2xl block">
-                      View Details
-                    </Link>
+                    {/* Actual Screen */}
+                    <div className="w-full h-full bg-gray-900 rounded-sm md:rounded-md overflow-hidden relative mt-1 md:mt-2">
+                      <img 
+                        src={project.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop'} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm z-20">
+                         <Link 
+                           to={`/projects/${project._id || project.id || ''}`}
+                           className="px-6 md:px-8 py-2 md:py-3 bg-[#a855f7] text-white text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-[#9333ea] transition-all rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+                         >
+                           View Details
+                         </Link>
+                      </div>
+                    </div>
+                    
+                    {/* Bottom Bezel branding (empty for clean look) */}
+                    <div className="h-2 md:h-4 w-full"></div>
                   </div>
                 </div>
+
+                {/* Monitor Stand */}
+                <div className="relative z-0 flex flex-col items-center -mt-1 w-full">
+                  {/* Neck */}
+                  <div 
+                    className="w-16 md:w-24 h-10 md:h-14 bg-gradient-to-b from-[#8a8a8a] to-[#5a5a5a] shadow-[inset_0_5px_10px_rgba(0,0,0,0.5)]"
+                    style={{ clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' }}
+                  ></div>
+                  {/* Base */}
+                  <div className="w-32 md:w-48 h-2 md:h-3 bg-gradient-to-b from-[#cccccc] to-[#888888] rounded-t-xl shadow-2xl border-b-2 border-[#444444]"></div>
+                </div>
+
+                {/* Project Title */}
+                <h3 className="text-lg md:text-2xl font-bold mt-6 text-white group-hover:text-[#a855f7] transition-colors uppercase tracking-tight italic text-center max-w-sm px-4">
+                  {project.title}
+                </h3>
               </motion.div>
             ))}
           </AnimatePresence>
