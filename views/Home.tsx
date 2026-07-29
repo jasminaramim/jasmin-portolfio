@@ -50,14 +50,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       <About onNavigate={onNavigate} />
 
-      <Skills onNavigate={onNavigate} isHomePage={true} />
-
-      <ExperienceTeaser onNavigate={onNavigate} />
-
-      <Stats />
-      
-      <WhatIDo />
-
       <section id="projects" className="py-[50px] md:py-24 bg-transparent relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex justify-between items-end mb-16">
@@ -110,6 +102,14 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </div>
       </section>
+
+      <Skills onNavigate={onNavigate} isHomePage={true} />
+
+      <ExperienceTeaser onNavigate={onNavigate} />
+
+      <Stats />
+      
+      <WhatIDo />
 
       <Reviews />
 
