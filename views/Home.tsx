@@ -127,11 +127,11 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       <Skills onNavigate={onNavigate} isHomePage={true} />
 
+      <WhatIDo />
+
       <ExperienceTeaser onNavigate={onNavigate} />
 
       <Stats />
-      
-      <WhatIDo />
 
       <Reviews />
 

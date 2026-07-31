@@ -28,12 +28,19 @@ const Skills: React.FC<SkillsProps> = ({ isHomePage }) => {
           title,
           skills: grouped[title]
         }));
+        
+        categories.sort((a, b) => {
+          if (a.title === 'WordPress & CMS') return -1;
+          if (b.title === 'WordPress & CMS') return 1;
+          return 0;
+        });
+
         setSkillCategories(categories);
       }
     });
   }, []);
 
-  const displayedCategories = isHomePage ? skillCategories.slice(0, 2) : skillCategories;
+  const displayedCategories = skillCategories;
 
   return (
     <section className={`py-[50px] md:py-32 bg-transparent relative overflow-hidden border-y border-white/5`}>
