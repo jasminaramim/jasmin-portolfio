@@ -11,7 +11,7 @@ const defaultHeroData: HeroContent = {
   badgeText: 'WordPress & MERN Developer',
   firstName: 'Jasmin',
   lastName: 'Ara Mim',
-  subheading: 'Full-Stack Developer · Designer',
+  subheading: 'Executive Web developer',
   description: 'Building modern WordPress solutions & MERN stack\napplications — fast, elegant & production-ready.',
   cvLink: 'https://docs.google.com/document/d/10LrwL1bTOHBr_vz2jej2xxaN-_Y5VgH1rbasbPbaIYg/edit?usp=sharing',
   codeSnippet: `<span class="ln"><span class="cp">const</span> <span class="ct">dev</span> <span class="cw">= {</span></span>
