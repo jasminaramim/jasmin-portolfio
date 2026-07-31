@@ -8,10 +8,14 @@ import Skills from '../components/Skills';
 
 const AboutView: React.FC = () => {
   const [reviews, setReviews] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
 
   useEffect(() => {
     fetch('/api/reviews').then(res => res.json()).then(data => {
       if (Array.isArray(data)) setReviews(data);
+    });
+    fetch('/api/gallery').then(res => res.json()).then(data => {
+      if (Array.isArray(data)) setGallery(data);
     });
   }, []);
 
@@ -56,32 +60,29 @@ const AboutView: React.FC = () => {
         </section>
       )}
 
-      <section className="py-[50px] md:py-32 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-24">
-          <div>
-            <h2 className="text-4xl font-black mb-12 uppercase text-[#a855f7] italic tracking-tighter">Career Objectives</h2>
-            <div className="space-y-8">
-              <p className="text-gray-400 text-xl leading-relaxed font-bold">
-                My immediate focus is joining an innovative tech environment where I can contribute to complex <span className="text-white">React.js</span> ecosystems while maintaining my edge as a premium <span className="text-white">WordPress</span> developer.
-              </p>
-              <div className="p-8 border-l-4 border-[#a855f7] bg-[#a855f7]/5">
-                <p className="text-gray-400 italic">
-                  "I don't just build websites; I deliver business tools that solve real problems. My journey from a curious student to a professional developer is driven by the thrill of clean code and pixel-perfect aesthetics."
-                </p>
-              </div>
+      {gallery.length > 0 && (
+        <section className="py-[50px] md:py-32 bg-transparent">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="mb-20 text-center">
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white italic">My <span className="text-[#a855f7]">Gallery</span></h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {gallery.map((item, i) => (
+                <motion.div 
+                  key={item._id || i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (i % 3) * 0.1 }}
+                  className="rounded-[40px] overflow-hidden border border-white/5 hover:border-[#a855f7]/30 transition-all group aspect-square relative glass"
+                >
+                  <img src={item.imageUrl} alt="Work Gallery Item" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                </motion.div>
+              ))}
             </div>
           </div>
-          
-          <div className="space-y-12">
-            <div>
-               <h3 className="text-2xl font-black text-white uppercase mb-4 tracking-widest italic">The Multi-stack Approach</h3>
-               <p className="text-gray-500 leading-relaxed font-medium">
-                 By mastering both high-end custom JavaScript frameworks and the world's leading CMS, I provide a holistic development service that few can match. Whether it's a dynamic data-driven app or a content-rich e-commerce store, I have the tools to deliver.
-               </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
       
       <Skills />
       

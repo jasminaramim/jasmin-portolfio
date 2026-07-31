@@ -83,3 +83,8 @@ export interface HeroContent {
     email: string;
   };
 }
+
+export interface GalleryItem {
+  _id?: string;
+  imageUrl: string;
+}
