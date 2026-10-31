@@ -113,7 +113,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
   if (authLoading) {
     return (
       <div className="min-h-screen pt-40 pb-20 text-center max-w-md mx-auto px-6 text-white">
-        <div className="w-10 h-10 border-2 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <div className="w-10 h-10 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         <p className="text-gray-400 text-xs font-mono">Authenticating session...</p>
       </div>
     );
@@ -126,7 +126,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
         <div className="max-w-md mx-auto px-6 relative z-10">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-black uppercase tracking-tight italic">
-              Customer <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-[#a855f7]">Dashboard</span>
+              Customer <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] via-purple-400 to-indigo-400">Dashboard</span>
             </h1>
             <p className="text-gray-400 text-xs mt-1">
               Log in to view your purchases, check payment verification, and download digital source packages.
@@ -141,7 +141,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                 onClick={() => setAuthMode('login')}
                 className={`py-2 rounded-lg transition-all ${
                   authMode === 'login'
-                    ? 'bg-red-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-lg'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -152,7 +152,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                 onClick={() => setAuthMode('register')}
                 className={`py-2 rounded-lg transition-all ${
                   authMode === 'register'
-                    ? 'bg-red-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-lg'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -177,7 +177,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. John Doe"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
                   />
                 </div>
               )}
@@ -190,7 +190,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. customer@example.com"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
                 />
               </div>
 
@@ -202,7 +202,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+880 1..."
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
                   />
                 </div>
               )}
@@ -215,14 +215,14 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-red-500"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submittingAuth}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#dc2626] to-[#b91c1c] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_25px_rgba(220,38,38,0.4)] transition-all hover:opacity-90 mt-2"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all hover:opacity-90 mt-2"
               >
                 {submittingAuth
                   ? 'Processing...'
@@ -244,7 +244,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
         {/* User Welcome Banner */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-3xl bg-[#09090d]/90 border border-white/10 backdrop-blur-xl mb-8 shadow-xl">
           <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-[#a855f7] flex items-center justify-center text-white font-black text-xl shadow-lg">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#a855f7] to-[#7e22ce] flex items-center justify-center text-white font-black text-xl shadow-lg shadow-purple-900/30">
               {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
             <div>
@@ -279,7 +279,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
             onClick={() => setActiveTab('purchases')}
             className={`px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 ${
               activeTab === 'purchases'
-                ? 'bg-red-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-lg'
                 : 'text-gray-400 hover:text-white bg-white/5'
             }`}
           >
@@ -291,7 +291,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
             onClick={() => setActiveTab('downloads')}
             className={`px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 ${
               activeTab === 'downloads'
-                ? 'bg-red-600 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-lg'
                 : 'text-gray-400 hover:text-white bg-white/5'
             }`}
           >
@@ -305,7 +305,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
           <div className="space-y-6">
             {loadingOrders ? (
               <div className="text-center py-20 text-gray-400 text-xs flex items-center justify-center gap-2">
-                <RefreshCw size={16} className="animate-spin text-red-500" />
+                <RefreshCw size={16} className="animate-spin text-purple-400" />
                 <span>Loading your purchases & download access...</span>
               </div>
             ) : orders.length > 0 ? (
@@ -393,7 +393,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                               <div>
                                 <h4 className="text-sm font-black text-white">{item.title}</h4>
                                 <div className="flex flex-wrap items-center gap-2 mt-1">
-                                  <span className="text-xs text-red-400 font-bold">${item.price}</span>
+                                  <span className="text-xs text-purple-400 font-bold">${item.price}</span>
                                   <span className="text-[11px] text-gray-400">&middot;</span>
                                   <span className="text-[11px] text-gray-400 font-mono">
                                     SKU: {item.productId || `PROD-${item.slug}`}
@@ -476,7 +476,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                           )}
                           <button
                             onClick={() => setExpandedOrderHistory(isExpanded ? null : order.orderNumber)}
-                            className="text-red-400 hover:text-red-300 font-bold flex items-center gap-1"
+                            className="text-purple-400 hover:text-purple-300 font-bold flex items-center gap-1"
                           >
                             <span>Download History ({order.downloadHistory?.length || 0})</span>
                             {isExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
@@ -541,7 +541,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                 </p>
                 <Link
                   to="/store"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white text-xs font-black uppercase tracking-wider shadow-lg"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-purple-900/30"
                 >
                   Browse Store Catalog
                 </Link>
@@ -604,7 +604,7 @@ const CustomerAccountView: React.FC<CustomerAccountViewProps> = ({ defaultTab = 
                 </p>
                 <Link
                   to="/store"
-                  className="px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-black uppercase tracking-wider"
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white text-xs font-black uppercase tracking-wider shadow-lg shadow-purple-900/30"
                 >
                   Explore Store Catalog
                 </Link>

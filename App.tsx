@@ -49,7 +49,7 @@ const App: React.FC = () => {
       <CartProvider>
         <Router>
           <ScrollToTopOnRoute />
-          <div className="bg-black text-white selection:bg-[#dc2626] selection:text-white min-h-screen flex flex-col relative">
+          <div className="bg-black text-white selection:bg-[#a855f7] selection:text-white min-h-screen flex flex-col relative">
             <Background3D />
             
             <Routes>
@@ -95,8 +95,8 @@ const App: React.FC = () => {
             </Routes>
             
             {/* Ambient Background Decorative Glows */}
-            <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#dc2626]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-            <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#a855f7]/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+            <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#a855f7]/15 rounded-full blur-[140px] pointer-events-none z-0"></div>
+            <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#4B0082]/20 rounded-full blur-[140px] pointer-events-none z-0"></div>
           </div>
         </Router>
       </CartProvider>

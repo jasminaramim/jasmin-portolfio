@@ -239,7 +239,7 @@ const CheckoutView: React.FC = () => {
   return (
     <div className="min-h-screen pt-32 pb-24 text-white">
       {/* Background Accent Glow */}
-      <div className="fixed top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#dc2626]/10 blur-[160px] pointer-events-none"></div>
+      <div className="fixed top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#a855f7]/15 blur-[160px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Navigation Breadcrumb */}
@@ -256,7 +256,7 @@ const CheckoutView: React.FC = () => {
         {/* Title */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight italic">
-            Complete Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-[#a855f7]">Order</span>
+            Complete Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] via-purple-400 to-indigo-400">Order</span>
           </h1>
           <p className="text-gray-400 text-xs mt-1">
             Choose your preferred payment method: bKash, Nagad, Rocket, or Visa/MasterCard.
@@ -277,7 +277,7 @@ const CheckoutView: React.FC = () => {
             <div className="p-6 md:p-8 rounded-3xl bg-[#09090d]/90 border border-white/10 backdrop-blur-xl shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-3">
-                  <span className="w-7 h-7 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center text-xs font-black">
+                  <span className="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center text-xs font-black">
                     1
                   </span>
                   <h3 className="text-sm font-black uppercase tracking-wider text-white">
@@ -288,7 +288,7 @@ const CheckoutView: React.FC = () => {
                 {!user && (
                   <Link
                     to="/my-account"
-                    className="text-xs text-red-400 hover:text-red-300 font-semibold"
+                    className="text-xs text-purple-400 hover:text-purple-300 font-semibold"
                   >
                     Have an account? Log in
                   </Link>
@@ -306,7 +306,7 @@ const CheckoutView: React.FC = () => {
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Jasmin Ara Mim"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-red-500/50"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
 
@@ -320,7 +320,7 @@ const CheckoutView: React.FC = () => {
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     placeholder="e.g. client@example.com"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-red-500/50"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
 
@@ -333,7 +333,7 @@ const CheckoutView: React.FC = () => {
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     placeholder="e.g. +880 1700-000000"
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-red-500/50"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
 
@@ -346,7 +346,7 @@ const CheckoutView: React.FC = () => {
                     value={customerNotes}
                     onChange={(e) => setCustomerNotes(e.target.value)}
                     placeholder="Specific requests, license domain, etc."
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-red-500/50"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-gray-500 focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
               </div>
@@ -355,7 +355,7 @@ const CheckoutView: React.FC = () => {
             {/* Step 2: Payment Method Selection */}
             <div className="p-6 md:p-8 rounded-3xl bg-[#09090d]/90 border border-white/10 backdrop-blur-xl shadow-xl space-y-6">
               <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                <span className="w-7 h-7 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center text-xs font-black">
+                <span className="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center text-xs font-black">
                   2
                 </span>
                 <h3 className="text-sm font-black uppercase tracking-wider text-white">
@@ -666,7 +666,7 @@ const CheckoutView: React.FC = () => {
                   
                   <div className="flex items-center gap-4">
                     <label className="cursor-pointer px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold flex items-center gap-2">
-                      <Upload size={14} className="text-red-400" />
+                      <Upload size={14} className="text-purple-400" />
                       <span>{screenshotPreview ? 'Change Screenshot' : 'Upload Screenshot'}</span>
                       <input
                         type="file"
@@ -748,7 +748,7 @@ const CheckoutView: React.FC = () => {
               className={`w-full py-4 rounded-xl text-white font-black uppercase tracking-widest text-xs transition-all shadow-xl flex items-center justify-center gap-2 ${
                 submitting
                   ? 'bg-gray-700 cursor-wait'
-                  : 'bg-gradient-to-r from-[#dc2626] to-[#b91c1c] hover:from-[#b91c1c] hover:to-[#991b1b] shadow-[0_0_30px_rgba(220,38,38,0.4)]'
+                  : 'bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] shadow-[0_0_30px_rgba(168,85,247,0.4)]'
               }`}
             >
               <Lock size={14} />
@@ -758,7 +758,7 @@ const CheckoutView: React.FC = () => {
             {/* Process Explanation */}
             <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 text-[11px] text-gray-400 space-y-1.5">
               <div className="flex items-center gap-2 font-semibold text-gray-300">
-                <Clock size={13} className="text-red-400" />
+                <Clock size={13} className="text-purple-400" />
                 <span>Verification & Delivery Process:</span>
               </div>
               <p className="text-[10px] leading-relaxed">

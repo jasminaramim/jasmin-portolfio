@@ -116,8 +116,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
       {/* Toast Feedback */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#0f0f15]/95 backdrop-blur-md border border-[#dc2626]/40 text-white px-5 py-3 rounded-xl shadow-[0_10px_30px_rgba(220,38,38,0.3)] flex items-center gap-3 text-xs font-semibold animate-bounce">
-          <span className="w-2 h-2 rounded-full bg-[#dc2626] animate-ping" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0f0f15]/95 backdrop-blur-md border border-[#a855f7]/40 text-white px-5 py-3 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.3)] flex items-center gap-3 text-xs font-semibold animate-bounce">
+          <span className="w-2 h-2 rounded-full bg-[#a855f7] animate-ping" />
           <span>{toastMessage}</span>
         </div>
       )}

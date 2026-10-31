@@ -45,7 +45,7 @@ const OrderSuccessView: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen pt-40 pb-20 text-center max-w-lg mx-auto px-6 text-white">
-        <div className="w-12 h-12 border-2 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <div className="w-12 h-12 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
         <p className="text-gray-400 text-xs">Locating your order status...</p>
       </div>
     );
@@ -54,7 +54,7 @@ const OrderSuccessView: React.FC = () => {
   if (error || !order) {
     return (
       <div className="min-h-screen pt-40 pb-20 text-center max-w-lg mx-auto px-6 text-white">
-        <AlertCircle size={44} className="mx-auto text-red-500 mb-4" />
+        <AlertCircle size={44} className="mx-auto text-purple-400 mb-4" />
         <h2 className="text-2xl font-black uppercase tracking-tight mb-2">Order Not Found</h2>
         <p className="text-gray-400 text-xs mb-6">We could not locate order #{orderNumber}.</p>
         <Link
@@ -73,7 +73,7 @@ const OrderSuccessView: React.FC = () => {
   return (
     <div className="min-h-screen pt-32 pb-24 text-white">
       {/* Glow */}
-      <div className="fixed top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#dc2626]/10 to-transparent blur-[160px] pointer-events-none"></div>
+      <div className="fixed top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#a855f7]/15 to-transparent blur-[160px] pointer-events-none"></div>
 
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Top Celebration Card */}
@@ -156,7 +156,7 @@ const OrderSuccessView: React.FC = () => {
         <div className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-6 md:p-8 backdrop-blur-xl mb-10 shadow-2xl">
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
             <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-              <Download size={16} className="text-red-400" />
+              <Download size={16} className="text-purple-400" />
               <span>Purchased Digital Files ({order.items.length})</span>
             </h3>
 
@@ -301,7 +301,7 @@ const OrderSuccessView: React.FC = () => {
           </Link>
           <Link
             to="/store"
-            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#dc2626] to-[#b91c1c] text-white font-black uppercase tracking-widest shadow-xl transition-all"
+            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white font-black uppercase tracking-widest shadow-xl transition-all"
           >
             Continue Browsing Store
           </Link>

@@ -19,7 +19,7 @@ const CartView: React.FC = () => {
         </p>
         <Link
           to="/store"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#dc2626] to-[#b91c1c] text-white text-xs font-black uppercase tracking-widest shadow-[0_0_30px_rgba(220,38,38,0.4)] hover:opacity-90 transition-all"
+          className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white text-xs font-black uppercase tracking-widest shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:opacity-90 transition-all"
         >
           <span>Explore Digital Store</span>
           <ArrowRight size={14} />
@@ -35,14 +35,14 @@ const CartView: React.FC = () => {
         <div className="flex items-center justify-between mb-10 pb-6 border-b border-white/10">
           <div>
             <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight italic">
-              Shopping <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-[#a855f7]">Cart</span>
+              Shopping <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] via-purple-400 to-indigo-400">Cart</span>
             </h1>
             <p className="text-gray-400 text-xs mt-1">Review your selected digital products before checkout</p>
           </div>
 
           <button
             onClick={clearCart}
-            className="text-xs font-semibold text-gray-400 hover:text-red-400 transition-colors"
+            className="text-xs font-semibold text-gray-400 hover:text-purple-400 transition-colors"
           >
             Clear Cart
           </button>
@@ -71,12 +71,12 @@ const CartView: React.FC = () => {
                       className="w-20 h-16 rounded-xl object-cover border border-white/10 flex-shrink-0"
                     />
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-400 block mb-0.5">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 block mb-0.5">
                         {p.category}
                       </span>
                       <Link
                         to={`/store/${p.slug}`}
-                        className="text-sm font-bold text-white hover:text-red-400 transition-colors line-clamp-1"
+                        className="text-sm font-bold text-white hover:text-purple-400 transition-colors line-clamp-1"
                       >
                         {p.title}
                       </Link>
@@ -171,7 +171,7 @@ const CartView: React.FC = () => {
 
             <button
               onClick={() => navigate('/checkout')}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-[#dc2626] to-[#b91c1c] hover:from-[#b91c1c] hover:to-[#991b1b] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(220,38,38,0.4)] transition-all flex items-center justify-center gap-2 group"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all flex items-center justify-center gap-2 group"
             >
               <span>Proceed to Checkout</span>
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
@@ -180,7 +180,7 @@ const CartView: React.FC = () => {
             {/* Trust Badges */}
             <div className="space-y-2 pt-2 text-[11px] text-gray-400">
               <div className="flex items-center gap-2">
-                <Download size={14} className="text-red-400" />
+                <Download size={14} className="text-purple-400" />
                 <span>Instant download link upon payment</span>
               </div>
               <div className="flex items-center gap-2">

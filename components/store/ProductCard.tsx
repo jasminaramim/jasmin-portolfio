@@ -37,10 +37,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ duration: 0.25 }}
-      className="group relative flex flex-col justify-between rounded-2xl bg-[#09090c]/90 border border-white/10 hover:border-[#dc2626]/40 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_15px_40px_rgba(220,38,38,0.15)] overflow-hidden backdrop-blur-xl"
+      className="group relative flex flex-col justify-between rounded-2xl bg-[#09090c]/90 border border-white/10 hover:border-[#a855f7]/50 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_15px_40px_rgba(168,85,247,0.25)] overflow-hidden backdrop-blur-xl"
     >
-      {/* Decorative Red & Purple Ambient Glow on Hover */}
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-[#dc2626]/20 to-[#a855f7]/10 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
+      {/* Decorative Purple Ambient Glow on Hover */}
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-[#a855f7]/25 to-[#4B0082]/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
 
       <div>
         {/* Thumbnail Preview Container */}
@@ -57,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           {/* Category Badge */}
           <div className="absolute top-3 left-3 z-10">
-            <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-black/80 backdrop-blur-md text-red-400 border border-red-500/30 shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+            <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-black/80 backdrop-blur-md text-purple-300 border border-purple-500/30 shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
               {product.category}
             </span>
           </div>
@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {/* Featured or Discount Badge */}
           <div className="absolute top-3 right-3 z-10 flex gap-1.5">
             {hasDiscount && (
-              <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-gradient-to-r from-[#dc2626] to-[#e11d48] text-white shadow-[0_0_12px_rgba(220,38,38,0.5)]">
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-[0_0_12px_rgba(168,85,247,0.5)]">
                 Save ${((product.price - (product.discountPrice || 0))).toFixed(0)}
               </span>
             )}
@@ -82,7 +82,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               href={product.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-3 right-3 z-10 px-3 py-1.5 rounded-lg bg-black/70 hover:bg-[#dc2626] text-white text-[11px] font-bold tracking-wider backdrop-blur-md border border-white/10 hover:border-red-500 transition-all flex items-center gap-1.5 shadow-lg group-hover:opacity-100"
+              className="absolute bottom-3 right-3 z-10 px-3 py-1.5 rounded-lg bg-black/70 hover:bg-[#a855f7] text-white text-[11px] font-bold tracking-wider backdrop-blur-md border border-white/10 hover:border-purple-400 transition-all flex items-center gap-1.5 shadow-lg group-hover:opacity-100"
               title="Open Live Preview Demo"
             >
               <span>Demo</span>
@@ -108,7 +108,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
 
           {/* Product Title */}
-          <Link to={`/store/${product.slug}`} className="group-hover:text-red-400 transition-colors">
+          <Link to={`/store/${product.slug}`} className="group-hover:text-purple-400 transition-colors">
             <h3 className="text-base font-bold text-white line-clamp-1 mb-2 tracking-tight">
               {product.title}
             </h3>
@@ -124,7 +124,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className="mb-4 space-y-1">
               {product.features.slice(0, 2).map((feat, idx) => (
                 <div key={idx} className="flex items-center gap-1.5 text-[11px] text-gray-300">
-                  <ShieldCheck size={12} className="text-red-500 flex-shrink-0" />
+                  <ShieldCheck size={12} className="text-purple-400 flex-shrink-0" />
                   <span className="truncate">{feat}</span>
                 </div>
               ))}
@@ -170,13 +170,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-white/20 transition-all text-xs font-bold tracking-wider flex items-center justify-center gap-1.5"
                 title="Add to Shopping Cart"
               >
-                <ShoppingBag size={14} className="text-red-400" />
+                <ShoppingBag size={14} className="text-purple-400" />
                 <span>Add Cart</span>
               </button>
 
               <button
                 onClick={handleBuyNow}
-                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#dc2626] to-[#b91c1c] hover:from-[#b91c1c] hover:to-[#991b1b] text-white text-xs font-black tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(220,38,38,0.35)] flex items-center justify-center gap-1.5"
+                className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white text-xs font-black tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(168,85,247,0.4)] flex items-center justify-center gap-1.5"
                 title="Instant Buy & Checkout"
               >
                 <Zap size={14} />

@@ -83,14 +83,14 @@ const ProductDetailsView: React.FC = () => {
   if (!product) {
     return (
       <div className="min-h-screen pt-40 pb-20 text-center max-w-xl mx-auto px-6">
-        <Layers size={48} className="mx-auto text-red-500 mb-4" />
+        <Layers size={48} className="mx-auto text-purple-400 mb-4" />
         <h2 className="text-2xl font-black uppercase text-white mb-2">Product Not Found</h2>
         <p className="text-gray-400 text-xs mb-6">
           The requested digital asset may have been moved or unpublished.
         </p>
         <Link
           to="/store"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white text-xs font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(168,85,247,0.3)]"
         >
           <ArrowLeft size={14} />
           <span>Back to Store Catalog</span>
@@ -129,7 +129,7 @@ const ProductDetailsView: React.FC = () => {
   return (
     <div className="min-h-screen pt-32 pb-24 text-white">
       {/* Background radial accent glow */}
-      <div className="fixed top-24 left-1/3 w-[600px] h-[350px] bg-[#dc2626]/10 blur-[160px] pointer-events-none"></div>
+      <div className="fixed top-24 left-1/3 w-[600px] h-[350px] bg-[#a855f7]/15 blur-[160px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Navigation Breadcrumb */}
@@ -165,7 +165,7 @@ const ProductDetailsView: React.FC = () => {
 
               {/* Status Badge */}
               <div className="absolute top-4 left-4 z-10">
-                <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black/80 backdrop-blur-md text-red-400 border border-red-500/30">
+                <span className="px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black/80 backdrop-blur-md text-purple-300 border border-purple-500/30">
                   {product.category}
                 </span>
               </div>
@@ -176,7 +176,7 @@ const ProductDetailsView: React.FC = () => {
                   href={product.liveLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-4 right-4 z-10 px-4 py-2 rounded-xl bg-black/80 hover:bg-[#dc2626] text-white text-xs font-bold tracking-wider backdrop-blur-md border border-white/10 hover:border-red-500 transition-all flex items-center gap-2 shadow-2xl"
+                  className="absolute bottom-4 right-4 z-10 px-4 py-2 rounded-xl bg-black/80 hover:bg-[#a855f7] text-white text-xs font-bold tracking-wider backdrop-blur-md border border-white/10 hover:border-purple-400 transition-all flex items-center gap-2 shadow-2xl"
                 >
                   <span>Launch Live Preview Demo</span>
                   <ExternalLink size={14} />
@@ -193,7 +193,7 @@ const ProductDetailsView: React.FC = () => {
                     onClick={() => setActiveImage(img)}
                     className={`relative w-24 h-16 rounded-xl overflow-hidden flex-shrink-0 border transition-all ${
                       activeImage === img
-                        ? 'border-red-500 scale-105 shadow-[0_0_15px_rgba(220,38,38,0.4)]'
+                        ? 'border-purple-500 scale-105 shadow-[0_0_15px_rgba(168,85,247,0.4)]'
                         : 'border-white/10 opacity-70 hover:opacity-100'
                     }`}
                   >
@@ -206,7 +206,7 @@ const ProductDetailsView: React.FC = () => {
             {/* Instant Delivery Guarantee Box */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
               <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
-                <Download size={20} className="text-red-400 flex-shrink-0" />
+                <Download size={20} className="text-purple-400 flex-shrink-0" />
                 <div>
                   <h4 className="text-xs font-bold text-white">Instant Delivery</h4>
                   <p className="text-[10px] text-gray-400">Download starts upon payment verification</p>
@@ -236,7 +236,7 @@ const ProductDetailsView: React.FC = () => {
             {/* Header info */}
             <div>
               <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                <span className="font-bold tracking-widest uppercase text-red-400">
+                <span className="font-bold tracking-widest uppercase text-purple-400">
                   {product.shopName || 'Jasmin Studio'}
                 </span>
                 <div className="flex items-center gap-1.5 text-amber-400 font-bold">
@@ -272,7 +272,7 @@ const ProductDetailsView: React.FC = () => {
               </div>
 
               {hasDiscount && (
-                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#dc2626] to-[#e11d48] text-white shadow-lg">
+                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#a855f7] to-[#7e22ce] text-white shadow-lg">
                   Save ${((product.price - (product.discountPrice || 0))).toFixed(0)}
                 </span>
               )}
@@ -289,7 +289,7 @@ const ProductDetailsView: React.FC = () => {
                 <>
                   <button
                     onClick={handleBuyNow}
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#dc2626] to-[#b91c1c] hover:from-[#b91c1c] hover:to-[#991b1b] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(220,38,38,0.4)] transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7e22ce] hover:from-[#9333ea] hover:to-[#6b21a8] text-white font-black uppercase tracking-widest text-xs shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-all flex items-center justify-center gap-2"
                   >
                     <Zap size={16} />
                     <span>Instant Buy Now (${currentPrice})</span>
@@ -299,7 +299,7 @@ const ProductDetailsView: React.FC = () => {
                     onClick={handleAddToCart}
                     className="w-full py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider text-xs border border-white/10 hover:border-white/20 transition-all flex items-center justify-center gap-2"
                   >
-                    <ShoppingBag size={16} className="text-red-400" />
+                    <ShoppingBag size={16} className="text-purple-400" />
                     <span>Add to Shopping Cart</span>
                   </button>
                 </>
@@ -371,7 +371,7 @@ const ProductDetailsView: React.FC = () => {
         {relatedProducts.length > 0 && (
           <div className="mb-20">
             <h3 className="text-2xl font-black uppercase tracking-tighter text-white italic mb-8">
-              Related <span className="text-red-500">Products</span>
+              Related <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a855f7] to-purple-400">Products</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedProducts.map((relProduct) => (
