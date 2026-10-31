@@ -10,7 +10,6 @@ import { DEFAULT_STORE_PRODUCTS } from '../data/defaultStoreProducts';
 const CATEGORIES = [
   'All',
   'Website Templates',
-  'WordPress Themes',
 ];
 
 const StoreView: React.FC = () => {
