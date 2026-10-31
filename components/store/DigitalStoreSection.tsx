@@ -5,6 +5,7 @@ import { ShoppingBag, ArrowRight, Layers, Sparkles, Filter } from 'lucide-react'
 import { StoreProduct } from '../../types';
 import ProductCard from './ProductCard';
 import StorePromoBanner from './StorePromoBanner';
+import { DEFAULT_STORE_PRODUCTS } from '../../data/defaultStoreProducts';
 
 const CATEGORIES = [
   'All',
@@ -17,17 +18,19 @@ const CATEGORIES = [
 ];
 
 const DigitalStoreSection: React.FC = () => {
-  const [products, setProducts] = useState<StoreProduct[]>([]);
+  const [products, setProducts] = useState<StoreProduct[]>(DEFAULT_STORE_PRODUCTS);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await fetch('/api/store/products');
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setProducts(data);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setProducts(data);
+          }
         }
       } catch (err) {
         console.error('Failed to load store products:', err);

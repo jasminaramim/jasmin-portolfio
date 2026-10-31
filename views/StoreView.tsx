@@ -5,6 +5,7 @@ import { StoreProduct } from '../types';
 import ProductCard from '../components/store/ProductCard';
 import StorePromoBanner from '../components/store/StorePromoBanner';
 import StoreCTA from '../components/store/StoreCTA';
+import { DEFAULT_STORE_PRODUCTS } from '../data/defaultStoreProducts';
 
 const CATEGORIES = [
   'All',
@@ -17,8 +18,8 @@ const CATEGORIES = [
 ];
 
 const StoreView: React.FC = () => {
-  const [products, setProducts] = useState<StoreProduct[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<StoreProduct[]>(DEFAULT_STORE_PRODUCTS);
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortOption, setSortOption] = useState<string>('newest');
@@ -27,7 +28,6 @@ const StoreView: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
       try {
         let url = '/api/store/products';
         const params = new URLSearchParams();
@@ -37,12 +37,52 @@ const StoreView: React.FC = () => {
         if (params.toString()) url += `?${params.toString()}`;
 
         const res = await fetch(url);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setProducts(data);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setProducts(data);
+            return;
+          }
         }
+        
+        // Fallback filter over default products if database is unreachable or empty
+        let fallback = [...DEFAULT_STORE_PRODUCTS];
+        if (selectedCategory !== 'All') {
+          fallback = fallback.filter((p) => p.category === selectedCategory);
+        }
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          fallback = fallback.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              p.description.toLowerCase().includes(q) ||
+              p.tags?.some((t) => t.toLowerCase().includes(q))
+          );
+        }
+        if (featuredOnly) {
+          fallback = fallback.filter((p) => p.isFeatured);
+        }
+        setProducts(fallback);
       } catch (err) {
         console.error('Failed to load store products:', err);
+        // Fallback filter on error
+        let fallback = [...DEFAULT_STORE_PRODUCTS];
+        if (selectedCategory !== 'All') {
+          fallback = fallback.filter((p) => p.category === selectedCategory);
+        }
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          fallback = fallback.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              p.description.toLowerCase().includes(q) ||
+              p.tags?.some((t) => t.toLowerCase().includes(q))
+          );
+        }
+        if (featuredOnly) {
+          fallback = fallback.filter((p) => p.isFeatured);
+        }
+        setProducts(fallback);
       } finally {
         setLoading(false);
       }

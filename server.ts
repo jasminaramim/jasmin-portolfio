@@ -18,28 +18,51 @@ const JWT_SECRET = process.env.JWT_SECRET || "jasmin_premium_secret_key_123";
 const CUSTOMER_JWT_SECRET = process.env.CUSTOMER_JWT_SECRET || "jasmin_store_customer_secret_key_456";
 
 // Static routes for public uploads & secure private downloads
-const uploadsDir = path.join(process.cwd(), "public", "uploads");
-const downloadsDir = path.join(process.cwd(), "public", "downloads");
-const privateDownloadsDir = path.join(process.cwd(), "storage", "private_downloads");
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-if (!fs.existsSync(downloadsDir)) fs.mkdirSync(downloadsDir, { recursive: true });
-if (!fs.existsSync(privateDownloadsDir)) fs.mkdirSync(privateDownloadsDir, { recursive: true });
+const isVercel = Boolean(process.env.VERCEL);
+const uploadsDir = isVercel ? path.join("/tmp", "uploads") : path.join(process.cwd(), "public", "uploads");
+const downloadsDir = isVercel ? path.join("/tmp", "downloads") : path.join(process.cwd(), "public", "downloads");
+const privateDownloadsDir = isVercel ? path.join("/tmp", "private_downloads") : path.join(process.cwd(), "storage", "private_downloads");
+
+try {
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  if (!fs.existsSync(downloadsDir)) fs.mkdirSync(downloadsDir, { recursive: true });
+  if (!fs.existsSync(privateDownloadsDir)) fs.mkdirSync(privateDownloadsDir, { recursive: true });
+} catch (e) {
+  // Read-only filesystem warning in serverless
+}
 
 app.use("/uploads", express.static(uploadsDir));
 app.use("/downloads", express.static(downloadsDir));
 // NOTE: privateDownloadsDir is intentionally NOT mounted as public static to ensure zero unauthorized access
 
-// MongoDB Configuration
-const uri = process.env.MONGODB_URI || "mongodb+srv://Jasmin:Ele%2FSq9%3FuA.d3Z%236%21yR@cluster0.ssmpl.mongodb.net/?appName=Cluster0";
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+// Fix for Vercel serverless rewrites where req.url might be rewritten to /api/server or /api/index
+app.use((req, res, next) => {
+  const originalUrlHeader = (req.headers["x-vercel-original-url"] as string) 
+    || (req.headers["x-matched-path"] as string)
+    || (req.headers["x-forwarded-uri"] as string)
+    || (req.headers["x-now-route-matches"] as string);
+
+  if (req.query && req.query.__path) {
+    const subpath = Array.isArray(req.query.__path) ? req.query.__path.join('/') : req.query.__path;
+    const urlObj = new URL(req.url, 'http://localhost');
+    urlObj.searchParams.delete('__path');
+    const remainingQuery = urlObj.searchParams.toString();
+    req.url = `/api/${subpath}${remainingQuery ? '?' + remainingQuery : ''}`;
+  } else if (
+    (req.url === '/api/server' || req.url === '/api/index' || req.url === '/api' || req.url.startsWith('/api/server?') || req.url.startsWith('/api/index?')) &&
+    originalUrlHeader &&
+    originalUrlHeader.startsWith('/api')
+  ) {
+    req.url = originalUrlHeader;
   }
+  next();
 });
 
-let db: any;
+// MongoDB Configuration (supports both MONGODB_URI env and direct multi-shard fallback)
+const uri = process.env.MONGODB_URI || "mongodb://Jasmin:Ele%2FSq9%3FuA.d3Z%236%21yR@cluster0-shard-00-00.ssmpl.mongodb.net:27017,cluster0-shard-00-01.ssmpl.mongodb.net:27017,cluster0-shard-00-02.ssmpl.mongodb.net:27017/?ssl=true&authSource=admin&replicaSet=atlas-islggq-shard-0&retryWrites=true&w=majority";
+
+let client: MongoClient | null = null;
+let db: any = null;
 
 async function seedStoreData() {
   try {
@@ -85,22 +108,34 @@ async function seedStoreData() {
 }
 
 async function connectDB() {
-  if (!db) {
-    try {
+  if (db) return db;
+  try {
+    if (!client) {
+      client = new MongoClient(uri, {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        },
+        connectTimeoutMS: 8000,
+        serverSelectionTimeoutMS: 8000,
+      });
       await client.connect();
-      db = client.db("portfolio");
-      console.log("Connected to MongoDB");
-      await seedStoreData();
-    } catch (err) {
-      console.error("MongoDB connection error:", err);
     }
+    db = client.db("portfolio");
+    console.log("Connected to MongoDB");
+    await seedStoreData();
+    return db;
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    return null;
   }
 }
 
 connectDB();
 
 app.use(async (req, res, next) => {
-  if (req.path.startsWith('/api/')) {
+  if (req.path.startsWith('/api') || req.url.startsWith('/api')) {
     await connectDB();
   }
   next();
@@ -1905,7 +1940,8 @@ app.get("/api/store/admin/customers", authenticateToken, async (req, res) => {
 async function startServer() {
   if (!process.env.VERCEL) {
     if (process.env.NODE_ENV !== "production") {
-      const { createServer } = await import("vite");
+      const viteModule = "vite";
+      const { createServer } = await import(viteModule);
       const vite = await createServer({
         server: { middlewareMode: true },
         appType: "spa",

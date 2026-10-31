@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/index.js && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/server.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -31,6 +31,7 @@
     "@types/node": "^22.14.0",
     "@types/nodemailer": "^8.0.2",
     "@vitejs/plugin-react": "^5.0.0",
+    "esbuild": "^0.25.0",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
