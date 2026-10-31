@@ -107,36 +107,64 @@ async function seedStoreData() {
   }
 }
 
-async function connectDB() {
-  if (db) return db;
+function isClientConnected(): boolean {
+  if (!client) return false;
   try {
-    if (!client) {
-      client = new MongoClient(uri, {
-        serverApi: {
-          version: ServerApiVersion.v1,
-          strict: true,
-          deprecationErrors: true,
-        },
-        connectTimeoutMS: 8000,
-        serverSelectionTimeoutMS: 8000,
-      });
-      await client.connect();
-    }
+    const topology = (client as any).topology;
+    if (!topology) return false;
+    if (typeof topology.isDestroyed === 'function' && topology.isDestroyed()) return false;
+    if (typeof topology.isConnected === 'function' && !topology.isConnected()) return false;
+    const state = topology.s?.state;
+    if (state === 'destroyed' || state === 'closing' || state === 'closed') return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function connectDB() {
+  if (client && db && isClientConnected()) {
+    return db;
+  }
+
+  // Clean up any stale client
+  if (client) {
+    try {
+      await client.close();
+    } catch (e) {}
+    client = null;
+    db = null;
+  }
+
+  try {
+    client = new MongoClient(uri, {
+      connectTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 10,
+      minPoolSize: 0,
+      maxIdleTimeMS: 15000,
+      socketTimeoutMS: 20000,
+    });
+    await client.connect();
     db = client.db("portfolio");
     console.log("Connected to MongoDB");
-    await seedStoreData();
+    seedStoreData().catch((err) => console.error("Error during store data seeding:", err));
     return db;
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
+  } catch (err: any) {
+    console.error("MongoDB connection error:", err.message);
+    client = null;
+    db = null;
     return null;
   }
 }
 
-connectDB();
-
 app.use(async (req, res, next) => {
   if (req.path.startsWith('/api') || req.url.startsWith('/api')) {
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (e) {
+      console.error("Middleware DB connect error:", e);
+    }
   }
   next();
 });
@@ -512,11 +540,15 @@ app.post("/api/settings/reset-db", authenticateToken, async (req, res) => {
 const createCRUDRoutes = (collectionName: string) => {
   app.get(`/api/${collectionName}`, async (req, res) => {
     try {
-      if (!db) return res.json([]);
-      const data = await db.collection(collectionName).find().toArray();
+      const activeDb = await connectDB();
+      if (!activeDb) return res.json([]);
+      const data = await activeDb.collection(collectionName).find().toArray();
       res.json(data);
-    } catch (err) {
-      res.status(500).json({ error: `Failed to fetch ${collectionName}` });
+    } catch (err: any) {
+      console.error(`Failed to fetch ${collectionName}:`, err.message);
+      client = null;
+      db = null;
+      res.json([]);
     }
   });
 
@@ -670,8 +702,9 @@ app.post("/api/store/upload", async (req, res) => {
 // 2. Store Settings (Public & Admin)
 app.get("/api/store/settings", async (req, res) => {
   try {
-    if (!db) return res.json(DEFAULT_STORE_SETTINGS);
-    const settings = await db.collection("store_settings").findOne({});
+    const activeDb = await connectDB();
+    if (!activeDb) return res.json(DEFAULT_STORE_SETTINGS);
+    const settings = await activeDb.collection("store_settings").findOne({});
     if (!settings) return res.json(DEFAULT_STORE_SETTINGS);
 
     // Omit sensitive payment gateway secret in public response
@@ -686,8 +719,11 @@ app.get("/api/store/settings", async (req, res) => {
       ...safeSettings,
       gateway: safeGateway
     });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch store settings" });
+  } catch (err: any) {
+    console.error("Failed to fetch store settings:", err.message);
+    client = null;
+    db = null;
+    res.json(DEFAULT_STORE_SETTINGS);
   }
 });
 
@@ -831,7 +867,8 @@ app.post("/api/store/auth/logout", (req, res) => {
 // 4. Products APIs (Public & Admin)
 app.get("/api/store/products", async (req, res) => {
   try {
-    if (!db) return res.json(DEFAULT_STORE_PRODUCTS);
+    const activeDb = await connectDB();
+    if (!activeDb) return res.json(DEFAULT_STORE_PRODUCTS);
     const { category, search, featured, status, sort } = req.query;
 
     const query: any = {};
@@ -865,29 +902,34 @@ app.get("/api/store/products", async (req, res) => {
     if (sort === "price-high") sortOption = { price: -1 };
     if (sort === "popular") sortOption = { salesCount: -1 };
 
-    const products = await db.collection("store_products").find(query).sort(sortOption).toArray();
+    const products = await activeDb.collection("store_products").find(query).sort(sortOption).toArray();
     res.json(products.length > 0 ? products : DEFAULT_STORE_PRODUCTS);
   } catch (err: any) {
-    res.status(500).json({ error: "Failed to fetch store products: " + err.message });
+    console.error("Failed to fetch store products:", err.message);
+    client = null;
+    db = null;
+    res.json(DEFAULT_STORE_PRODUCTS);
   }
 });
 
 app.get("/api/store/products/:slugOrId", async (req, res) => {
   try {
-    if (!db) {
-      const fallback = DEFAULT_STORE_PRODUCTS.find(p => p.slug === req.params.slugOrId);
+    const activeDb = await connectDB();
+    const { slugOrId } = req.params;
+
+    if (!activeDb) {
+      const fallback = DEFAULT_STORE_PRODUCTS.find(p => p.slug === slugOrId || (p as any)._id === slugOrId);
       return fallback ? res.json(fallback) : res.status(404).json({ error: "Product not found" });
     }
 
-    const { slugOrId } = req.params;
     let product: any = null;
 
     if (ObjectId.isValid(slugOrId)) {
-      product = await db.collection("store_products").findOne({ _id: new ObjectId(slugOrId) });
+      product = await activeDb.collection("store_products").findOne({ _id: new ObjectId(slugOrId) });
     }
 
     if (!product) {
-      product = await db.collection("store_products").findOne({ slug: slugOrId });
+      product = await activeDb.collection("store_products").findOne({ slug: slugOrId });
     }
 
     if (!product) {
@@ -898,6 +940,11 @@ app.get("/api/store/products/:slugOrId", async (req, res) => {
 
     res.json(product);
   } catch (err: any) {
+    console.error("Failed to fetch product details:", err.message);
+    client = null;
+    db = null;
+    const fallback = DEFAULT_STORE_PRODUCTS.find(p => p.slug === req.params.slugOrId);
+    if (fallback) return res.json(fallback);
     res.status(500).json({ error: "Failed to fetch product details: " + err.message });
   }
 });
