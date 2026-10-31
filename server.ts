@@ -65,6 +65,19 @@ async function seedStoreData() {
         updatedAt: new Date()
       });
       console.log("Seeded default store settings.");
+    } else {
+      // Sync latest bKash and Nagad payment numbers
+      await db.collection("store_settings").updateOne(
+        {},
+        {
+          $set: {
+            "bkash.number": "+8801613475871",
+            "bkash.instructions": "Send Money or Make Payment to our bKash number +8801613475871 (01613475871). Copy the TrxID from your SMS or bKash app and enter it below.",
+            "nagad.number": "+8801613475871",
+            "nagad.instructions": "Send Money to our Nagad number +8801613475871 (01613475871) via Nagad App or USSD *167#. Enter your Transaction ID and Sender Number for instant verification."
+          }
+        }
+      );
     }
   } catch (err) {
     console.error("Error during store data seeding:", err);

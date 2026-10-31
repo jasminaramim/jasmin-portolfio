@@ -216,16 +216,16 @@ const CheckoutView: React.FC = () => {
 
   // Get active payment details from settings
   const currentBkash = settings?.bkash || {
-    number: '01915996145',
+    number: '+8801613475871',
     qrImage: '',
-    instructions: 'Send money to our bKash personal number 01915996145 and enter your TrxID below.',
+    instructions: 'Send money to our bKash personal/merchant number +8801613475871 (01613475871) and enter your TrxID below.',
     enabled: true
   };
 
   const currentNagad = settings?.nagad || {
-    number: '01800-000000',
+    number: '+8801613475871',
     qrImage: '',
-    instructions: 'Send money via Nagad app or USSD *167# and enter your TrxID.',
+    instructions: 'Send money to our Nagad number +8801613475871 (01613475871) via Nagad app or USSD *167# and enter your TrxID.',
     enabled: true
   };
 

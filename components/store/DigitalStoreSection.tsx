@@ -5,7 +5,6 @@ import { ShoppingBag, ArrowRight, Layers, Sparkles, Filter } from 'lucide-react'
 import { StoreProduct } from '../../types';
 import ProductCard from './ProductCard';
 import StorePromoBanner from './StorePromoBanner';
-import StoreCTA from './StoreCTA';
 
 const CATEGORIES = [
   'All',
@@ -128,9 +127,6 @@ const DigitalStoreSection: React.FC = () => {
 
         {/* Small Promotional Banner */}
         <StorePromoBanner />
-
-        {/* Call to Action: Need Custom Website or Plugin */}
-        <StoreCTA />
       </div>
     </section>
   );

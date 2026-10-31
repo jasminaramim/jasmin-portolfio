@@ -7,15 +7,15 @@ export const DEFAULT_STORE_SETTINGS: StoreSettings = {
   currency: 'USD',
   announcement: "🚀 Special Launch Offer: Get 20% off all WordPress themes & plugins with instant delivery!",
   bkash: {
-    number: "01915996145",
+    number: "+8801613475871",
     qrImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop",
-    instructions: "Send Money or Make Payment to our bKash number 01915996145. Copy the TrxID from your SMS or bKash app and enter it below.",
+    instructions: "Send Money or Make Payment to our bKash number +8801613475871 (01613475871). Copy the TrxID from your SMS or bKash app and enter it below.",
     enabled: true
   },
   nagad: {
-    number: "01800-000000",
+    number: "+8801613475871",
     qrImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop",
-    instructions: "Send Money via Nagad App or USSD *167#. Enter your Transaction ID and Sender Number for instant verification.",
+    instructions: "Send Money to our Nagad number +8801613475871 (01613475871) via Nagad App or USSD *167#. Enter your Transaction ID and Sender Number for instant verification.",
     enabled: true
   },
   rocket: {
