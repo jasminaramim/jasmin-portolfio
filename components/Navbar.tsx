@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CONTACT_INFO } from '../constants';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingBag, User } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 interface NavbarProps {
   currentPage: string;
@@ -12,6 +13,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
 
   const navLinks = [
     { name: 'Home', id: '/' },
+    { name: 'Store', id: '/store' },
     { name: 'About', id: '/about' },
     { name: 'Projects', id: '/projects' },
     { name: 'Experience', id: '/experience' },
@@ -53,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
           </button>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex space-x-8 items-center">
+          <div className="hidden md:flex space-x-7 items-center">
             {navLinks.map((link) => (
               <button
                 key={link.id}
@@ -65,6 +68,30 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
                 {link.name}
               </button>
             ))}
+
+            {/* Shopping Cart Button */}
+            <button
+              onClick={() => handleNavigate('/cart')}
+              className="relative p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all border border-white/10 hover:border-red-500/30"
+              title="Shopping Cart"
+            >
+              <ShoppingBag size={18} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-black text-[10px] flex items-center justify-center shadow-lg animate-pulse">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* User Account / Profile */}
+            <button
+              onClick={() => handleNavigate('/my-account')}
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all border border-white/10"
+              title="My Account & Downloads"
+            >
+              <User size={18} />
+            </button>
+
             <button
               onClick={handleHireMe}
               className="px-6 py-2 bg-gradient-to-r from-[#4B0082] to-[#a855f7] text-white text-[10px] font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-[0_0_20px_rgba(255,105,180,0.2)]"
@@ -73,14 +100,29 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage }) => {
             </button>
           </div>
 
-          {/* Mobile Toggle */}
-          <button 
-            className="md:hidden text-white cursor-pointer p-2 z-[70]" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle Menu"
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Mobile Right Controls: Cart & Hamburger Toggle */}
+          <div className="md:hidden flex items-center gap-3 z-[70]">
+            <button
+              onClick={() => handleNavigate('/cart')}
+              className="relative p-2 rounded-xl bg-white/5 text-gray-300 border border-white/10"
+              title="Shopping Cart"
+            >
+              <ShoppingBag size={20} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-red-600 text-white font-black text-[9px] flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            <button 
+              className="text-white cursor-pointer p-2" 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </nav>
 

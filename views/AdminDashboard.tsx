@@ -24,7 +24,8 @@ import {
   Image as ImageIcon,
   Link as LinkIcon,
   ChevronRight,
-  Code
+  Code,
+  ShoppingBag
 } from 'lucide-react';
 import { Project, Service, Skill, Review, AdminProfile, HeroContent, GalleryItem } from '../types';
 
@@ -58,6 +59,7 @@ const AdminDashboard: React.FC = () => {
   if (authenticated === null) return <div className="min-h-screen bg-black flex items-center justify-center text-white font-black uppercase tracking-[0.5em] animate-pulse">Initializing Terminal...</div>;
 
   const sidebarLinks = [
+    { to: "/admin/store", icon: <ShoppingBag size={18} />, label: "Digital Store" },
     { to: "/admin/projects", icon: <FolderCode size={18} />, label: "My Projects" },
     { to: "/admin/services", icon: <Monitor size={18} />, label: "Services" },
     { to: "/admin/skills", icon: <Settings size={18} />, label: "Skills" },

@@ -4,6 +4,7 @@ import Reviews from '../components/Reviews';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import WhatIDo from '../components/WhatIDo';
+import DigitalStoreSection from '../components/store/DigitalStoreSection';
 import About from '../components/About';
 import Skills from '../components/Skills';
 import ExperienceTeaser from '../components/ExperienceTeaser';
@@ -49,6 +50,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </div>
 
       <About onNavigate={onNavigate} />
+
+      {/* Digital Store - What I Sell Section */}
+      <DigitalStoreSection />
 
       <section id="projects" className="py-[50px] md:py-24 bg-transparent relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
