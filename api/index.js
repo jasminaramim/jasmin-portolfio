@@ -750,7 +750,9 @@ app.post("/api/profile", authenticateToken, async (req, res) => {
   }
 });
 function generateSlug(text) {
-  return text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+  if (!text) return `product-${Date.now().toString().slice(-6)}`;
+  const slug = text.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+  return slug || `product-${Date.now().toString().slice(-6)}`;
 }
 app.post("/api/store/upload", async (req, res) => {
   try {
@@ -801,8 +803,9 @@ app.get("/api/store/settings", async (req, res) => {
 });
 app.get("/api/store/admin/settings", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
-    const settings = await db.collection("store_settings").findOne({});
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
+    const settings = await activeDb.collection("store_settings").findOne({});
     res.json(settings || DEFAULT_STORE_SETTINGS);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch admin store settings" });
@@ -810,10 +813,11 @@ app.get("/api/store/admin/settings", authenticateToken, async (req, res) => {
 });
 app.post("/api/store/admin/settings", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
     const { _id, ...settingsData } = req.body;
     settingsData.updatedAt = /* @__PURE__ */ new Date();
-    const result = await db.collection("store_settings").updateOne(
+    const result = await activeDb.collection("store_settings").updateOne(
       {},
       { $set: settingsData },
       { upsert: true }
@@ -920,9 +924,10 @@ app.get("/api/store/products", async (req, res) => {
     if (!activeDb) return res.json(DEFAULT_STORE_PRODUCTS);
     const { category, search, featured, status, sort } = req.query;
     const query = {};
-    if (status) {
+    const statusStr = typeof status === "string" ? status.trim().toLowerCase() : "";
+    if (statusStr && statusStr !== "all") {
       query.status = status;
-    } else {
+    } else if (!statusStr) {
       query.status = { $ne: "Draft" };
     }
     if (category && category !== "All") {
@@ -944,12 +949,14 @@ app.get("/api/store/products", async (req, res) => {
     if (sort === "price-low") sortOption = { price: 1 };
     if (sort === "price-high") sortOption = { price: -1 };
     if (sort === "popular") sortOption = { salesCount: -1 };
+    const totalInCollection = await activeDb.collection("store_products").countDocuments();
+    if (totalInCollection === 0) {
+      await seedStoreData();
+    }
     const products = await activeDb.collection("store_products").find(query).sort(sortOption).toArray();
-    res.json(products.length > 0 ? products : DEFAULT_STORE_PRODUCTS);
+    res.json(products);
   } catch (err) {
     console.error("Failed to fetch store products:", err.message);
-    client = null;
-    db = null;
     res.json(DEFAULT_STORE_PRODUCTS);
   }
 });
@@ -985,14 +992,15 @@ app.get("/api/store/products/:slugOrId", async (req, res) => {
 });
 app.post("/api/store/admin/products", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
     const productData = req.body;
     if (!productData.title || productData.price === void 0) {
       return res.status(400).json({ error: "Title and price are required." });
     }
-    const slug = productData.slug ? generateSlug(productData.slug) : generateSlug(productData.title);
-    const existingSlug = await db.collection("store_products").findOne({ slug });
-    const finalSlug = existingSlug ? `${slug}-${Date.now().toString().slice(-4)}` : slug;
+    const baseSlug = productData.slug ? generateSlug(productData.slug) : generateSlug(productData.title);
+    const existingSlug = await activeDb.collection("store_products").findOne({ slug: baseSlug });
+    const finalSlug = existingSlug ? `${baseSlug}-${Date.now().toString().slice(-4)}` : baseSlug;
     const newProduct = {
       ...productData,
       slug: finalSlug,
@@ -1005,7 +1013,7 @@ app.post("/api/store/admin/products", authenticateToken, async (req, res) => {
       createdAt: /* @__PURE__ */ new Date(),
       updatedAt: /* @__PURE__ */ new Date()
     };
-    const result = await db.collection("store_products").insertOne(newProduct);
+    const result = await activeDb.collection("store_products").insertOne(newProduct);
     res.json({ success: true, result, product: { ...newProduct, _id: result.insertedId } });
   } catch (err) {
     res.status(500).json({ error: "Failed to create product: " + err.message });
@@ -1013,14 +1021,15 @@ app.post("/api/store/admin/products", authenticateToken, async (req, res) => {
 });
 app.put("/api/store/admin/products/:id", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
     const { _id, ...updateData } = req.body;
     updateData.updatedAt = /* @__PURE__ */ new Date();
     if (updateData.price !== void 0) updateData.price = Number(updateData.price);
     if (updateData.discountPrice !== void 0) {
       updateData.discountPrice = updateData.discountPrice ? Number(updateData.discountPrice) : void 0;
     }
-    const result = await db.collection("store_products").updateOne(
+    const result = await activeDb.collection("store_products").updateOne(
       { _id: new ObjectId(req.params.id) },
       { $set: updateData }
     );
@@ -1031,8 +1040,9 @@ app.put("/api/store/admin/products/:id", authenticateToken, async (req, res) => 
 });
 app.delete("/api/store/admin/products/:id", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
-    const result = await db.collection("store_products").deleteOne({ _id: new ObjectId(req.params.id) });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
+    const result = await activeDb.collection("store_products").deleteOne({ _id: new ObjectId(req.params.id) });
     res.json({ success: true, result });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete product: " + err.message });
@@ -1050,10 +1060,18 @@ app.post(["/api/store/admin/upload-image", "/api/store/upload"], authenticateTok
     const ext = path.extname(fileName).toLowerCase() || ".png";
     const uniqueFileName = `img-${Date.now()}-${Math.floor(Math.random() * 1e3)}${ext}`;
     const destinationPath = path.join(uploadsDir, uniqueFileName);
-    fs.writeFileSync(destinationPath, buffer);
+    let finalUrl = `/uploads/${uniqueFileName}`;
+    try {
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      fs.writeFileSync(destinationPath, buffer);
+    } catch (fsErr) {
+      finalUrl = fileData.startsWith("data:") ? fileData : `data:image/${ext.replace(".", "")};base64,${cleanBase64}`;
+    }
     res.json({
       success: true,
-      url: `/uploads/${uniqueFileName}`
+      url: finalUrl
     });
   } catch (err) {
     res.status(500).json({ error: "Failed to upload image: " + err.message });
@@ -1589,16 +1607,17 @@ app.get("/api/store/customer/downloads", authenticateCustomerToken, async (req, 
 });
 app.get("/api/store/admin/stats", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
-    const totalProducts = await db.collection("store_products").countDocuments();
-    const totalOrders = await db.collection("store_orders").countDocuments();
-    const pendingVerifications = await db.collection("store_orders").countDocuments({ paymentStatus: "Pending Verification" });
-    const totalCustomers = await db.collection("store_users").countDocuments();
-    const paidOrders = await db.collection("store_orders").find({
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
+    const totalProducts = await activeDb.collection("store_products").countDocuments();
+    const totalOrders = await activeDb.collection("store_orders").countDocuments();
+    const pendingVerifications = await activeDb.collection("store_orders").countDocuments({ paymentStatus: "Pending Verification" });
+    const totalCustomers = await activeDb.collection("store_users").countDocuments();
+    const paidOrders = await activeDb.collection("store_orders").find({
       $or: [{ paymentStatus: "Paid" }, { orderStatus: "Completed" }]
     }).toArray();
     const totalRevenue = paidOrders.reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
-    const recentOrders = await db.collection("store_orders").find().sort({ createdAt: -1 }).limit(6).toArray();
+    const recentOrders = await activeDb.collection("store_orders").find().sort({ createdAt: -1 }).limit(6).toArray();
     res.json({
       totalRevenue,
       totalOrders,
@@ -1613,7 +1632,8 @@ app.get("/api/store/admin/stats", authenticateToken, async (req, res) => {
 });
 app.get("/api/store/admin/orders", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
     const { status, paymentStatus, search } = req.query;
     const query = {};
     if (status && status !== "All") query.orderStatus = status;
@@ -1627,7 +1647,7 @@ app.get("/api/store/admin/orders", authenticateToken, async (req, res) => {
         { "paymentDetails.transactionId": regex }
       ];
     }
-    const orders = await db.collection("store_orders").find(query).sort({ createdAt: -1 }).toArray();
+    const orders = await activeDb.collection("store_orders").find(query).sort({ createdAt: -1 }).toArray();
     res.json(orders);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch orders: " + err.message });
@@ -1818,8 +1838,9 @@ app.get("/api/store/customer/purchases", authenticateCustomerToken, async (req, 
 });
 app.delete("/api/store/admin/orders/:id", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
-    const result = await db.collection("store_orders").deleteOne({ _id: new ObjectId(req.params.id) });
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
+    const result = await activeDb.collection("store_orders").deleteOne({ _id: new ObjectId(req.params.id) });
     res.json({ success: true, result });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete order: " + err.message });
@@ -1827,11 +1848,12 @@ app.delete("/api/store/admin/orders/:id", authenticateToken, async (req, res) =>
 });
 app.get("/api/store/admin/customers", authenticateToken, async (req, res) => {
   try {
-    if (!db) return res.status(503).json({ error: "Database not connected" });
-    const customers = await db.collection("store_users").find().sort({ createdAt: -1 }).toArray();
+    const activeDb = await connectDB();
+    if (!activeDb) return res.status(503).json({ error: "Database not connected" });
+    const customers = await activeDb.collection("store_users").find().sort({ createdAt: -1 }).toArray();
     const enrichedCustomers = await Promise.all(
       customers.map(async (c) => {
-        const orders = await db.collection("store_orders").find({
+        const orders = await activeDb.collection("store_orders").find({
           $or: [{ userId: c._id.toString() }, { "customer.email": c.email }]
         }).toArray();
         const totalSpend = orders.filter((o) => o.paymentStatus === "Paid").reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
