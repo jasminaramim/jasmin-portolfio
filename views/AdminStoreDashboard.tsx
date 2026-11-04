@@ -126,6 +126,9 @@ const AdminStoreDashboard: React.FC = () => {
   const handleTabChange = (newTab: AdminTab) => {
     setActiveTab(newTab);
     setSearchParams({ tab: newTab });
+    if (newTab === 'products' || newTab === 'overview' || newTab === 'categories') {
+      loadData();
+    }
   };
 
   // Add / Edit Product Form State
@@ -222,7 +225,12 @@ const AdminStoreDashboard: React.FC = () => {
       ]);
 
       if (statsRes.ok) setStats(await statsRes.json());
-      if (productsRes.ok) setProducts(await productsRes.json());
+      if (productsRes.ok) {
+        const prodData = await productsRes.json();
+        if (Array.isArray(prodData)) {
+          setProducts(prodData);
+        }
+      }
       if (ordersRes.ok) setOrders(await ordersRes.json());
       if (customersRes.ok) setCustomers(await customersRes.json());
       if (settingsRes.ok) setSettings(await settingsRes.json());
@@ -411,7 +419,7 @@ const AdminStoreDashboard: React.FC = () => {
         notify(editingProduct ? 'Product updated successfully!' : 'Product added successfully!');
         setEditingProduct(null);
         resetProductForm();
-        loadData();
+        await loadData();
         handleTabChange('products');
       } else {
         alert(data.error || 'Failed to save product');
@@ -653,7 +661,8 @@ const AdminStoreDashboard: React.FC = () => {
 
   // Filter products
   const filteredProducts = products.filter(p => {
-    const matchesSearch = !productSearch || p.title.toLowerCase().includes(productSearch.toLowerCase());
+    const title = (p.title || (p as any).name || '').toLowerCase();
+    const matchesSearch = !productSearch || title.includes(productSearch.toLowerCase());
     const matchesCat = productCategoryFilter === 'All' || p.category === productCategoryFilter;
     return matchesSearch && matchesCat;
   });
