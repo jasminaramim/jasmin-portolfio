@@ -34,9 +34,11 @@ const StoreView: React.FC = () => {
         const res = await fetch(url);
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setProducts(data);
-            return;
+          if (Array.isArray(data)) {
+            if (data.length > 0 || selectedCategory !== 'All' || searchQuery.trim() || featuredOnly) {
+              setProducts(data);
+              return;
+            }
           }
         }
         
@@ -49,13 +51,13 @@ const StoreView: React.FC = () => {
           const q = searchQuery.toLowerCase();
           fallback = fallback.filter(
             (p) =>
-              p.name.toLowerCase().includes(q) ||
-              p.description.toLowerCase().includes(q) ||
+              (p.title || (p as any).name || '').toLowerCase().includes(q) ||
+              (p.description || '').toLowerCase().includes(q) ||
               p.tags?.some((t) => t.toLowerCase().includes(q))
           );
         }
         if (featuredOnly) {
-          fallback = fallback.filter((p) => p.isFeatured);
+          fallback = fallback.filter((p) => p.featured || (p as any).isFeatured);
         }
         setProducts(fallback);
       } catch (err) {
@@ -69,13 +71,13 @@ const StoreView: React.FC = () => {
           const q = searchQuery.toLowerCase();
           fallback = fallback.filter(
             (p) =>
-              p.name.toLowerCase().includes(q) ||
-              p.description.toLowerCase().includes(q) ||
+              (p.title || (p as any).name || '').toLowerCase().includes(q) ||
+              (p.description || '').toLowerCase().includes(q) ||
               p.tags?.some((t) => t.toLowerCase().includes(q))
           );
         }
         if (featuredOnly) {
-          fallback = fallback.filter((p) => p.isFeatured);
+          fallback = fallback.filter((p) => p.featured || (p as any).isFeatured);
         }
         setProducts(fallback);
       } finally {

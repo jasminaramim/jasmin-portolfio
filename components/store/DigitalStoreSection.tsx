@@ -9,7 +9,12 @@ import { DEFAULT_STORE_PRODUCTS } from '../../data/defaultStoreProducts';
 
 const CATEGORIES = [
   'All',
+  'WordPress Themes',
+  'WordPress Plugins',
+  'Elementor Templates',
   'Website Templates',
+  'UI Kits & Components',
+  'Canva Templates'
 ];
 
 const DigitalStoreSection: React.FC = () => {
