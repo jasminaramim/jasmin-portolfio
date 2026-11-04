@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/index.js && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/server.js",
+    "dev": "node init && tsx server.ts",
+    "build": "node init && vite build && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/index.js && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=api/server.js",
     "preview": "vite preview"
   },
   "dependencies": {
